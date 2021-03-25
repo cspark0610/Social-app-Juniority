@@ -5,7 +5,7 @@ import Learning from '../assets/53882-distance-education.json'
 import rocket from '../assets/rocket.svg'
 
 const Register = () => {
-    const[formData, setFormData]=useState({fullNanem:'', email:'', password1:'',password2:''});
+    const[formData, setFormData]=useState({fullName :'', email:'', password1:'',password2:''});
     const { fullName , email, password1, password2 } = formData;
     const handleChange = text=> e => {
         //console.log(e.target.value);
