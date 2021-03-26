@@ -1,12 +1,15 @@
 import React ,{ useState }from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useFirebaseApp } from "reactfire";
 
 import juniority from '../assets/juniority.svg'
 
 
 const Login = () => {
-    const[formData, setFormData]=useState({fullName :'', email:'', password1:'',password2:''});
+    const firebase = useFirebaseApp();
+    const[formData, setFormData]=useState({ email:'', password1:'' });
     const { fullName , email, password1, password2 } = formData;
+    const history = useHistory();
     const handleChange = text=> e => {
         //console.log(e.target.value);
         setFormData({...formData, [text]: e.target.value});
@@ -14,6 +17,10 @@ const Login = () => {
     };
     const handleSubmit = e =>{
         e.preventDefault();
+        firebase.auth().signInWithEmailAndPassword(email, password1)
+        .then( userCredentials => {
+            history.push('/')
+        })
     };
     return (
              
@@ -24,21 +31,13 @@ const Login = () => {
                     <div className='mt-12 flex flex-col items-center'>
                         <h1 className='text-4xl xl:text-3xl font-black'> LOGIN</h1>
                     </div>
-                    <div className='mt-12 flex flex-row justify-center items-center'>
-                            <button type='submit' className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-3/6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
-                            > User</button>
-                            <button type='submit' className='mt-5 ml-2 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-3/6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
-                            > Company </button>
-                    </div>
                     <form onSubmit={handleSubmit} className='w-full flex-1 mt-8 text-indigo-800'>
                         <div className='mx-auto max-w-xs relative'>
-                            <input type="text" placeholder='Full Name' onChange={handleChange('fullName')} value={fullName} className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'/>
                             <input type="email" placeholder='Email' onChange={handleChange('email')} value={email} className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'/>
                             <input type="password" placeholder='Password' onChange={handleChange('password1')} value={password1} className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'/>
-                            <input type="password" placeholder='Confirm Password' onChange={handleChange('password2')} value={password2} className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'/>
 
                             <button type='submit' className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
-                            > <i className='fas fa-sign-in-alt fa 1x w-6-ml-2' />  <span className='ml-3'>GET STARTED </span> </button>
+                            > <i className='fas fa-sign-in-alt fa 1x w-6-ml-2' />  <span className='ml-3'>LOG IN </span> </button>
                         </div>
                         <div className='my-12 border-b text-center'>
                         
