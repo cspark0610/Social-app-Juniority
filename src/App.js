@@ -1,6 +1,6 @@
 import './App.css';
 import { Switch, Route } from "react-router-dom";
-import UserProfile from "./componentes/userViews/UserProfile"
+import UserProfile from './componentes/sidebarIzq/UserProfile'
 import Login from "./componentes/login/Login"
 import Register from "./componentes/register/Register"
 import Home from "./componentes/home/Home"

@@ -1,10 +1,11 @@
 import React ,{ useState }from 'react';
 import { Link } from 'react-router-dom';
-import login from '../assets/login.svg';
+
+import juniority from '../assets/juniority.svg'
 
 
 const Login = () => {
-    const[formData, setFormData]=useState({fullNanem:'', email:'', password1:'',password2:''});
+    const[formData, setFormData]=useState({fullName :'', email:'', password1:'',password2:''});
     const { fullName , email, password1, password2 } = formData;
     const handleChange = text=> e => {
         //console.log(e.target.value);
@@ -54,7 +55,7 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
-                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex' style={{ backgroundImage: `url(${login})`, minHeight:'300px', backgroundSize:'contain' }}>
+                <div className='flex-1 bg-indigo-100 text-center hidden lg:flex' style={{ backgroundImage: `url(${juniority})`, minHeight:'500px', objectFit:'cover' }}>
                     <div className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'
                     >
                         <h1 className='text-2xl xl:text-3xl font-black'> JUNIORITY</h1>
