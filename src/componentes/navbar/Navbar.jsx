@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     background: "linear-gradient(180deg, #162D27 30%, #263D37 90%)",
       // background: "linear-gradient(45deg, #B4DCD6 30%, #3CB4E5 90%)",
     color: '#B4DCD6',
+    // boxShadow: '0 3px 5px 2px #3CB4E5',
 
     menuButton: {
       marginRight: theme.spacing(2),
