@@ -1,0 +1,9 @@
+azul back perfil : #3CB4E5
+
+Verde oscuro nav : #162D27
+campana roja nav : #F2422D
+
+celeste claro botones : #E8F4F2
+
+celeste oscuro botones  post Profile : #B4DCD6
+
