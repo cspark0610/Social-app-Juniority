@@ -55,9 +55,7 @@ const Register = () => {
                     </form>
                 </div>
                 <div className='flex-1 bg-indigo-100 text-center hidden lg:flex' style={{ backgroundImage: `url(${rocket})`, objectFit:'contain' }}>
-                    <div className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'
-                     
-                    >
+                    <div className='m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat'>
                         <h1 className='text-2xl xl:text-3xl font-black'> JUNIORITY</h1>
                         <Animation src={Learning}/>
                     </div>
