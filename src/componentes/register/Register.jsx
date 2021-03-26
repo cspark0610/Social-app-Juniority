@@ -1,20 +1,39 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Animation from "../animation/Animation";
 import Learning from '../assets/53882-distance-education.json'
 import rocket from '../assets/rocket.svg'
+import { useFirebaseApp } from "reactfire";
+import { db } from '../../firebase/firebase';
+import firbaseTime from 'firebase'
 
 const Register = () => {
     const[formData, setFormData]=useState({fullName :'', email:'', password1:'',password2:''});
+    const [passwordError, setPasswordError] = useState();
     const { fullName , email, password1, password2 } = formData;
+    const firebase = useFirebaseApp();
+    const history = useHistory();
     const handleChange = text=> e => {
         //console.log(e.target.value);
         setFormData({...formData, [text]: e.target.value});
-
+        
     };
     const handleSubmit = e =>{
         e.preventDefault();
-    }
+        if(password1 !== password2) {
+            setPasswordError(true)
+        } else {
+            firebase.auth().createUserWithEmailAndPassword(email, password1)
+            .then(user => {
+                db.collection('user').add({
+                uid: user.user.uid,
+                fullName,
+                email,
+                timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp()
+            }).then( () => history.push('/login'))
+            })
+        }
+    };
 
     return (
         
@@ -40,6 +59,9 @@ const Register = () => {
 
                             <button type='submit' className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                             > <i className='fas fa-user-plus fa 1x w-6  -ml-2' />  <span className='ml-3'>REGISTER </span> </button>
+                            {passwordError ? (
+                                <p>Las contraseña deben ser iguales</p>
+                            ) : null}
                         </div>
                         <div className='my-12 border-b text-center'>
                             <div className=' flex-1 leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2'>

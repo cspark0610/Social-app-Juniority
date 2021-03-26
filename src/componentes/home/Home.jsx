@@ -9,9 +9,22 @@ import Jobs from '../sidebarIzq/Jobs';
 import Login from '../login/Login';
 import Register from '../register/Register';
 import { Grid } from '@material-ui/core'
+import { useFirebaseApp } from "reactfire";
+import { useHistory } from 'react-router';
 
 const Home = () => {
+    const firebase = useFirebaseApp();
+    const user = firebase.auth().currentUser;
+    const history = useHistory();
+
+    const logOut = (e) => {
+        e.preventDefault();
+        firebase.auth().signOut();
+    }
+
     return (
+        <>
+        {!user ? history.push('/login') : (
         <>
         <Navbar/>
         <Grid container display ='flex' align="center">
@@ -28,6 +41,9 @@ const Home = () => {
                 <Widget/>
             </Grid>               
         </Grid>
+        <button onClick={(e) => logOut(e)}>LOG OUT</button>
+        </>
+        )}
         </>
     );
 };
