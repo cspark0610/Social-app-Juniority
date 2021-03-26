@@ -13,8 +13,9 @@ import moment  from 'moment'
 const Post = ({name, message, photo, timestamp }) => {
     
     const classes = useStyles();
-    //const time = (timestamp?.toDate()).toUTCString()
-    const time = moment(timestamp.toJSON()).fromNow()
+    const time = (timestamp?.toDate()).toUTCString()
+    //const time = moment(timestamp.toJSON()).fromNow()
+    
     return (
         <div className={classes.post}>
             <div className={classes.header}>
