@@ -3,8 +3,9 @@ import { db } from "../../firebase/firebase.js";
 import firebase from "firebase";
 import { Card } from '@material-ui/core';
 import useStyles from './InputMessageStyle.js';
-import {inputStyle} from './InputMessageStyle.js';
-import {createIconStyle} from './InputMessageStyle.js';
+import { inputStyle } from './InputMessageStyle.js';
+import { createIconStyle } from './InputMessageStyle.js';
+import { useAvatarStyles } from './InputMessageStyle.js';
 import CreateIcon from "@material-ui/icons/Create";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
@@ -13,7 +14,7 @@ import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import InputOption from './InputOption';
 import Post from './Post';
 import { Avatar } from "@material-ui/core";
-import imagen from '../assets/ag.jpg'
+import imagen from '../assets/ag.jpg';
 
 const InputMessage = () => {
 
@@ -21,6 +22,9 @@ const InputMessage = () => {
     const [posts, setPosts]= useState([]);
 
     const classes = useStyles();
+    const avatarClasses = useAvatarStyles();
+
+
     const handleSubmit =(e)=>{
         //https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
         e.preventDefault();
@@ -45,7 +49,8 @@ const InputMessage = () => {
                 data: doc.data(),
             })))
         })
-    },[])
+    },[]);
+    
     
     return (
         <div className='min-h-screen max-w-full my-3.5 shadow-xl'>
@@ -56,7 +61,7 @@ const InputMessage = () => {
                 </div>
             <Card className={classes.container}>
                 <div className={classes.container_input}>
-                    <Avatar src={imagen}/>
+                    <Avatar className={avatarClasses.large} src={imagen}/>
                     
                     <form onSubmit={handleSubmit} style={{display:'flex', width:'100%'}} >
                         <CreateIcon style={createIconStyle}/>

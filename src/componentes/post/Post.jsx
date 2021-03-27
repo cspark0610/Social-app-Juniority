@@ -7,14 +7,14 @@ import InputOption  from './InputOption';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import moment  from 'moment'
+import moment from 'moment'
 
 
 const Post = ({name, message, photo, timestamp }) => {
     
     const classes = useStyles();
-    const time = (timestamp?.toDate()).toUTCString()
-    //const time = moment(timestamp.toJSON()).fromNow()
+    const date = new Date(timestamp?.toDate()).toUTCString()
+  
     
     return (
         <div className={classes.post}>
@@ -24,7 +24,7 @@ const Post = ({name, message, photo, timestamp }) => {
                     <h1 className='font-bold text-transform: uppercase'>alan gosiker</h1>
                     <h4 className='text-gray-400'>Fullstack Developer</h4>
                 </div>
-                <p>{time}</p>
+                <p>{moment(date).fromNow()}</p>
             </div>
             <hr/>
             <div className={classes.body}>

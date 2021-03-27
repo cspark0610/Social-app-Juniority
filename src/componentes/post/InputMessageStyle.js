@@ -10,8 +10,24 @@ export const inputStyle ={
 export const createIconStyle={
     marginLeft:'10px', 
     position:'relative', 
-    top:'20%'
+    top:'27%'
 }
+export const useAvatarStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    small: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
+    large: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+    },
+}));
 
 
 export default makeStyles({

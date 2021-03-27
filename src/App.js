@@ -36,7 +36,7 @@ function App() {
   return (
     <>
         <Switch>
-          <Route path exact="/"><Home /></Route>
+          <Route path="/" exact><Home /></Route>
           <Route path="/login" component={Login} />
           <Route path="/userProfile" component={UserProfile} />
           <Route path="/register" component={Register} />
