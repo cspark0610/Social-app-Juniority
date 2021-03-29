@@ -14,25 +14,8 @@ import { setCurrentUser } from './store/currentUser';
 function App() {
   const currentUser = useSelector(state => state.currentUser);
   const dispatch = useDispatch();
-  const currentUserSessionStorage = JSON.parse(sessionStorage.getItem('currentUser'));
-  //https://firebase.google.com/docs/auth/web/manage-users
-  //persistencia de la sesion 
-  useEffect(()=>{
-    auth.onAuthStateChanged( userAuth=>{
-      
-      if(userAuth){
-        dispatch(login({
-          uid:userAuth.uid,
-          fullName:userAuth.fullName, 
-          email:userAuth.email,
-          //photo:userAuth.photo, 
-        }))
-      }else{
-        dispatch(logout());
-      }
-    })
-  },[dispatch])
-  
+  const currentUserSessionStorage = JSON.parse(sessionStorage.getItem('currentUser')); 
+
   useEffect(() => {
     dispatch(setCurrentUser(currentUserSessionStorage))
   }, [])
