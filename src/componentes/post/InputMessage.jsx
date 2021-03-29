@@ -15,9 +15,11 @@ import InputOption from './InputOption';
 import Post from './Post';
 import { Avatar } from "@material-ui/core";
 import imagen from '../assets/ag.jpg';
+import { useSelector } from 'react-redux';
 
 const InputMessage = () => {
 
+    const currentUser = useSelector(state => state.currentUser);
     const [input, setInput]= useState('');
     const [posts, setPosts]= useState([]);
 
@@ -29,7 +31,7 @@ const InputMessage = () => {
         //https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
         e.preventDefault();
         db.collection('posts').add({
-            name:'alan',
+            name:currentUser.fullName,
             description :'description',
             message: input,
             photo: 'https://pbs.twimg.com/profile_images/1353676146844565505/QpmdpDvT_400x400.jpg',

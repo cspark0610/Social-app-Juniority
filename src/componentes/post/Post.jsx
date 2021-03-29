@@ -21,7 +21,7 @@ const Post = ({name, message, photo, timestamp }) => {
             <div className={classes.header}>
                 <Avatar src={imagen} className={avatarStyle}/>
                 <div className={classes.info}>
-                    <h1 className='font-bold text-transform: uppercase'>alan gosiker</h1>
+                    <h1 className='font-bold text-transform: uppercase'>{name}</h1>
                     <h4 className='text-gray-400'>Fullstack Developer</h4>
                 </div>
                 <p>{moment(date).fromNow()}</p>
