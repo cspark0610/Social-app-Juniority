@@ -6,6 +6,5 @@ const Jobs = () => {
             vista de posibles jobs
         </div>
     )
-}
-
+} 
 export default Jobs

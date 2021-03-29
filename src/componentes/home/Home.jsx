@@ -22,26 +22,26 @@ const Home = () => {
 
     return (
         <>
-        {!user ? history.push('/login') : (
+        {/* {!user ? history.push('/login') : ( */}
         <>
         <Navbar/>
         <Grid container display ='flex' align="center">
-            <Grid item md={2} >
+            <Grid item md={3} >
                 <UserProfile/>
                 <Jobs />
             </Grid>    
             
-            <Grid item md={8} >
+            <Grid item md={6} >
                 <InputMessage/>
                 
             </Grid>            
-            <Grid item md={2}>
+            <Grid item md={3}>
                 <Widget/>
             </Grid>               
         </Grid>
         <button onClick={(e) => logOut(e)}>LOG OUT</button>
         </>
-        )}
+        )
         </>
     );
 };

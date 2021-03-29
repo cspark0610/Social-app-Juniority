@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import useStyles from "./NavbarStyle.js";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,76 +15,8 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import logo from "../assets/juniority.svg";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
-import { spacing } from "@material-ui/system";
 import Box from "@material-ui/core/Box";
-import { borders } from '@material-ui/system';
 
-const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-    background: "linear-gradient(180deg, #162D27 30%, #263D37 90%)",
-    // background: "linear-gradient(45deg, #B4DCD6 30%, #3CB4E5 90%)",
-    color: "#B4DCD6",
-    // boxShadow: '0 3px 5px 2px #3CB4E5',
-
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-  },
-  title: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
-    },
-  },
-  search: {
-    position: "relative",
-    borderWidth: "3px",
-
-    borderRadius: 50,
-    backgroundColor: "#E8F4F2",
-
-    marginLeft: 0,
-    width: "100%",
-  },
-
-  searchIcon: {
-    color: "#3CB4E5",
-
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    // color: "#162D27",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
-  },
-}));
 export default function NavBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -196,7 +128,7 @@ export default function NavBar() {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={4} color="primary">
                   <MailIcon />
                 </Badge>
               </IconButton>
