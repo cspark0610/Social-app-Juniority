@@ -1,5 +1,5 @@
 import React from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,13 +15,16 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import logo from "../assets/juniority.svg";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
+import { spacing } from "@material-ui/system";
+import Box from "@material-ui/core/Box";
+import { borders } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
     background: "linear-gradient(180deg, #162D27 30%, #263D37 90%)",
-      // background: "linear-gradient(45deg, #B4DCD6 30%, #3CB4E5 90%)",
-    color: '#B4DCD6',
+    // background: "linear-gradient(45deg, #B4DCD6 30%, #3CB4E5 90%)",
+    color: "#B4DCD6",
     // boxShadow: '0 3px 5px 2px #3CB4E5',
 
     menuButton: {
@@ -35,23 +38,18 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   search: {
-    
     position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
+    borderWidth: "3px",
+
+    borderRadius: 50,
+    backgroundColor: "#E8F4F2",
+
     marginLeft: 0,
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
   },
+
   searchIcon: {
-    // color: "#162D27",
+    color: "#3CB4E5",
 
     padding: theme.spacing(0, 2),
     height: "100%",
@@ -65,8 +63,6 @@ const useStyles = makeStyles((theme) => ({
     // color: "#162D27",
   },
   inputInput: {
-    // color: "#162D27",
-
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
@@ -125,8 +121,8 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Tu perfil</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
     </Menu>
   );
 
@@ -177,23 +173,26 @@ export default function NavBar() {
         <Container fixed>
           <Toolbar>
             <Link to="/">
-              <div>
-                <img src={logo} width="40px"></img>
-              </div>
+              <Box mx={3}>
+                <img src={logo} width="40px" alt="Logo Juniority"></img>
+              </Box>
             </Link>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+            <Box borderColor="primary.main">
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder=""
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
+            </Box>
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">
