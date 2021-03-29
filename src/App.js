@@ -19,6 +19,7 @@ function App() {
   //persistencia de la sesion 
   useEffect(()=>{
     auth.onAuthStateChanged( userAuth=>{
+      
       if(userAuth){
         dispatch(login({
           uid:userAuth.uid,

@@ -29,6 +29,17 @@ export const useAvatarStyles = makeStyles((theme) => ({
     },
 }));
 
+export const useInputStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  input: {
+    display: 'none',
+  },
+}));
+
 
 export default makeStyles({
     container:{
