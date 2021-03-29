@@ -8,7 +8,6 @@ import { Provider } from "react-redux";
 import { firebaseConfig } from './firebase/firebase';
 import { FirebaseAppProvider } from 'reactfire';
 
-
 ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={ firebaseConfig }>
     <Suspense fallback={'Conectando la app'}>
@@ -19,6 +18,5 @@ ReactDOM.render(
       </Provider>
     </Suspense>
   </FirebaseAppProvider>
-  
   ,document.getElementById("root")
 );

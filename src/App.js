@@ -8,9 +8,7 @@ import Home from "./componentes/home/Home"
 import { useSelector, useDispatch } from 'react-redux';
 import {login, logout} from './store/userSlice.js';
 import {auth} from './firebase/firebase.js';
-
-
-
+import PasswordRecovery from "./componentes/passwordRecovery/PaswordRecovery";
 
 function App() {
   //const user = useSelector(state => state.user.user)
@@ -35,13 +33,15 @@ function App() {
   
   return (
     <>
-        <Switch>
-          <Route path="/" exact><Home /></Route>
-          <Route path="/login" component={Login} />
-          <Route path="/userProfile" component={UserProfile} />
-          <Route path="/register" component={Register} />
-        </Switch>
-      
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/login" component={Login} />
+        <Route path="/userProfile" component={UserProfile} />
+        <Route path="/register" component={Register} />
+        <Route path="/password-recovery" component={PasswordRecovery} />
+      </Switch>
     </>
   );
 }
