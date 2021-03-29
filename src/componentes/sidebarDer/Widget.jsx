@@ -1,8 +1,11 @@
 import React from 'react';
-import { Paper } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import useStyles from './widgetStyle.js';
-import RecordIcon from "@material-ui/icons/FiberManualRecord";
+import { Avatar } from "@material-ui/core";
+import { avatarStyle } from '../post/PostStyle.js';
+import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 
+import imagen from '../assets/ag.jpg'
 
 const Widget = () => {
     const classes = useStyles();
@@ -10,11 +13,49 @@ const Widget = () => {
         <div className={classes.body}>
             <Paper className={classes.top}>
                 <div className={classes.heading}>
-                    <RecordIcon/>
                     <h4><b>People you might know</b></h4>
                 </div>
                 <hr/>
-               
+                <div className={classes.people}>
+                    <div className={classes.people_left}>
+                        <Avatar src={imagen} className={avatarStyle}/>
+                    </div>
+                    <div className={classes.people_right}>
+                        <Typography variant='h7'>John Doe</Typography>
+                        <p style={{color:'gray', fontSize:'12px'}}>Full Stack Developer</p>
+                    </div>
+                    <div className={classes.icon}>
+                        <PersonAddOutlinedIcon />
+                    </div>
+                </div> 
+                {/*repetido*/ }
+                <hr/>
+                <div className={classes.people}>
+                    <div className={classes.people_left}>
+                        <Avatar src={imagen} className={avatarStyle}/>
+                    </div>
+                    <div className={classes.people_right}>
+                        <Typography variant='h7'>John Doe</Typography>
+                        <p style={{color:'gray', fontSize:'12px'}}>Full Stack Developer</p>
+                    </div>
+                    <div className={classes.icon}>
+                        <PersonAddOutlinedIcon />
+                    </div>
+                </div>    
+                {/*repetido*/ }
+                <hr/>
+                <div className={classes.people}>
+                    <div className={classes.people_left}>
+                        <Avatar src={imagen} className={avatarStyle}/>
+                    </div>
+                    <div className={classes.people_right}>
+                        <Typography variant='h7'>John Doe</Typography>
+                        <p style={{color:'gray', fontSize:'12px'}}>Full Stack Developer</p>
+                    </div>
+                    <div className={classes.icon}>
+                        <PersonAddOutlinedIcon />
+                    </div>
+                </div>                            
             </Paper>
         </div>
     )
