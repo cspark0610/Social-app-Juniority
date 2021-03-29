@@ -12,7 +12,7 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 import InputOption from './InputOption';
 import Post from './Post';
 import { Avatar } from "@material-ui/core";

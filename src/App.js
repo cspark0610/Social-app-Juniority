@@ -6,8 +6,8 @@ import Login from "./componentes/login/Login"
 import Register from "./componentes/register/Register"
 import Home from "./componentes/home/Home"
 import { useSelector, useDispatch } from 'react-redux';
-import {login, logout} from './store/userSlice.js';
-import {auth} from './firebase/firebase.js';
+//import {login, logout} from './store/userSlice.js';
+//import {auth} from './firebase/firebase.js';
 import PasswordRecovery from "./componentes/passwordRecovery/PaswordRecovery";
 import { setCurrentUser } from './store/currentUser';
 
