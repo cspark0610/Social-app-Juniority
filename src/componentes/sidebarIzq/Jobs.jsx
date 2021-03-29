@@ -1,11 +1,65 @@
-import React from 'react'
+import React from 'react';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { useStyles } from './jobsStyle'; 
 
-const Jobs = () => {
-    return (
-        <div>
-            vista de posibles jobs
-        </div>
-    )
+
+
+export default function Jobs() {
+
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            <img src='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fblog.saleslayer.com%2Fhubfs%2Fmercado-libre-logo.jpg&f=1&nofb=1'></img>
+          </Avatar>
+        }
+        title="Mercado Libre"
+        subheader="September 14, 2016"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          Python engineer
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam quae ipsum doloremque in commodi, ex iusto, eos odio, exercitationem velit culpa quaerat voluptas? Eveniet, perferendis! Praesentium beatae mollitia nemo? Placeat.
+          </Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
+  );
 }
-
-export default Jobs
