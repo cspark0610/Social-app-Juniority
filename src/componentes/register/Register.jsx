@@ -15,12 +15,19 @@ const Register = () => {
     password2: "",
   });
   const [passwordError, setPasswordError] = useState();
+  const [lengthError, setLengthError] = useState(false);
   const { fullName, email, password1, password2 } = formData;
   const firebase = useFirebaseApp();
   const history = useHistory();
   const handleChange = (text) => (e) => {
-    //console.log(e.target.value);
     setFormData({ ...formData, [text]: e.target.value });
+    if(text === 'password1') {
+        if(password1.length < 6) {
+            setLengthError(true);
+        } else {
+            setLengthError(false);
+        };
+    };
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,8 +39,9 @@ const Register = () => {
         .createUserWithEmailAndPassword(email, password1)
         .then((user) => {
           db.collection("user")
-            .add({
-              uid: user.user.uid,
+            .doc(user.user.uid)
+            .set({
+              id: user.user.uid,
               fullName,
               email,
               timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
@@ -93,6 +101,7 @@ const Register = () => {
                 value={password1}
                 className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
+              {lengthError ? <p>Se requiere como minimo seis caracteres</p> : null}
               <input
                 type="password"
                 placeholder="Confirm Password"
@@ -138,7 +147,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-      ;
     </div>
   );
 };

@@ -1,29 +1,44 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { useFirebaseApp } from "reactfire";
+import { db } from "../../firebase/firebase";
+import { setCurrentUser } from "../../store/currentUser";
 
 import juniority from "../assets/juniority.svg";
 
 const Login = () => {
   const firebase = useFirebaseApp();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.currentUser);
   const [formData, setFormData] = useState({ email: "", password1: "" });
-  const { fullName, email, password1, password2 } = formData;
+  const {  email, password1 } = formData;
   const history = useHistory();
+
   const handleChange = (text) => (e) => {
     //console.log(e.target.value);
     setFormData({ ...formData, [text]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password1)
-      .then((userCredentials) => {
-        history.push("/");
+      .then((user) => {
+        db.collection('user').where("id", "==", user.user.uid).get()
+            .then(doc => doc.forEach(data => {
+                dispatch(setCurrentUser(data.data()));
+                sessionStorage.setItem('currentUser', JSON.stringify(data.data()));
+                history.push('/');
+            }))
       });
   };
+
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+    <>
+    { currentUser ? history.push('/') : (
+      <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
       <div className="max-w-6xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w1/2 xl:w5/12 p-6 sm:p-12">
           <div className="mt-12 flex flex-col items-center">
@@ -90,6 +105,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+    )}
+    </>
   );
 };
 
