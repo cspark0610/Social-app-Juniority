@@ -1,18 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import useStyles from "./styles";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, Typography, Grid } from "@material-ui/core";
+import { auth } from "../../firebase/firebase";
+import Alert from "@material-ui/lab/Alert";
 
 const PasswordRecovery = () => {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState(false);
+
+  const handleSearch = () => {
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setMessage("success");
+      })
+      .catch((error) => {
+        setMessage("fail");
+      });
+  };
   return (
     <div className={classes.bg}>
       <Grid container justify="center">
-        <Grid item className={classes.card}>
+        <Grid item className={classes.card} xs={10} md={8} lg={5}>
           <Typography variant="h6">Recuperar tu cuenta</Typography>
           <hr style={{ margin: 10 }} />
+          {message &&
+            (message === "success" ? (
+              <Alert severity="success">
+                Correo enviado exitosamente por favor revise su inbox
+              </Alert>
+            ) : (
+              <Alert severity="error">
+                No podemos o encontrar su correo en nuestra base de datos o esta
+                mal formateado por favor ingrese el correo nuevamente
+              </Alert>
+            ))}
           <Typography variant="body1">
             Ingrese su correo electronico para poder buscar su cuenta:
           </Typography>
@@ -23,10 +46,12 @@ const PasswordRecovery = () => {
             variant="outlined"
             placeholder="example@gmail.com"
             margin="dense"
+            onChange={(e) => setEmail(e.target.value)}
+            onClick={() => setMessage(false)}
           />
           <hr style={{ margin: 10 }} />
           <div style={{ textAlign: "end", marginTop: 20 }}>
-            <Button variant="outlined" color="primary">
+            <Button onClick={handleSearch} variant="outlined" color="primary">
               Buscar
             </Button>{" "}
             <Button variant="outlined" color="secondary">
