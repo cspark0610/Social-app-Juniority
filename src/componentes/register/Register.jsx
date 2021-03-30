@@ -6,26 +6,42 @@ import rocket from "../assets/rocket.svg";
 import { useFirebaseApp } from "reactfire";
 import { db } from "../../firebase/firebase";
 import firbaseTime from "firebase";
+import Alert from "@material-ui/lab/Alert";
+import Login from "../login/Login.jsx";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import useStyles from "./styles";
 
 const Register = () => {
+  const firebase = useFirebaseApp();
+  const history = useHistory();
+  const classes = useStyles();
+
+  const [passwordError, setPasswordError] = useState();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password1: "",
     password2: "",
   });
-  const [passwordError, setPasswordError] = useState();
   const { fullName, email, password1, password2 } = formData;
-  const firebase = useFirebaseApp();
-  const history = useHistory();
+  const [change, setChange] = useState(["primary", "secondary"]);
+
   const handleChange = (text) => (e) => {
-    //console.log(e.target.value);
     setFormData({ ...formData, [text]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password1 !== password2) {
-      setPasswordError(true);
+      setPasswordError("The passwords must be equals");
     } else {
       firebase
         .auth()
@@ -38,107 +54,181 @@ const Register = () => {
               email,
               timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
             })
-            .then(() => history.push("/login"));
+            .then(() => setChange(["primary", "secondary"]));
         })
-        .catch((error) => console.log(error.message));
+        .catch((error) => setPasswordError(error.message));
     }
   };
-
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-      <div className="max-w-6xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-        <div className="lg:w1/2 xl:w5/12 p-6 sm:p-12">
-          <div className="mt-12 flex flex-col items-center">
-            <h1 className="text-4xl xl:text-3xl font-black"> REGISTER</h1>
-          </div>
-          <div className="mt-12 flex flex-row justify-center items-center">
-            <button
-              type="submit"
-              className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-3/6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-            >
-              {" "}
-              User
-            </button>
-            <button
-              type="submit"
-              className="mt-5 ml-2 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-3/6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-            >
-              {" "}
-              Company{" "}
-            </button>
-          </div>
-          <form
-            onSubmit={handleSubmit}
-            className="w-full flex-1 mt-8 text-indigo-800"
+    <div className={classes.bg}>
+      <Grid
+        container
+        justify="center"
+        spacing={8}
+        className={classes.gridContainer}
+        alignItems="center"
+      >
+        <Grid
+          item
+          xs={12}
+          style={{
+            margin: 0,
+            padding: 0,
+            // border: "black solid 1px",
+            textAlign: "end",
+          }}
+        >
+          <Button
+            color={change[0]}
+            variant="contained"
+            onClick={() => {
+              setChange(["primary", "secondary"]);
+            }}
           >
-            <div className="mx-auto max-w-xs relative">
-              <input
+            Log in
+          </Button>
+          <Button
+            color={change[1]}
+            variant="contained"
+            onClick={() => {
+              setChange(["secondary", "primary"]);
+            }}
+          >
+            Register
+          </Button>
+        </Grid>
+        <Grid item lg={6} component={Box} display={{ xs: "none", lg: "block" }}>
+          <Typography variant="h4">Juniority</Typography>
+          <Typography
+            variant="h4"
+            color="primary"
+            style={{
+              fontWeight: 500,
+              marginTop: "5%",
+              marginBottom: "8%",
+              lineHeight: "120%",
+            }}
+          >
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          </Typography>
+          <Typography variant="body2">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
+            vero repellendus quaerat dolores, ipsum numquam molestias ad?
+            Quaerat repudiandae laboriosam deleniti sequi, velit deserunt,
+            itaque tempora eius provident reiciendis totam?
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          {change[0] === "primary" ? (
+            <Login />
+          ) : (
+            <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+              <TextField
+                className={classes.textField}
+                id="outlined-name"
+                label="Name"
                 type="text"
+                variant="outlined"
                 placeholder="Full Name"
+                size="small"
                 onChange={handleChange("fullName")}
                 value={fullName}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
               />
-              <input
+              <TextField
+                className={classes.textField}
+                id="outlined-search"
+                label="Email"
                 type="email"
-                placeholder="Email"
+                variant="outlined"
+                placeholder="example@gmail.com"
+                size="small"
                 onChange={handleChange("email")}
                 value={email}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
-              <input
+              <TextField
+                className={classes.textField}
+                id="outlined-password-input"
+                label="Password"
                 type="password"
+                variant="outlined"
                 placeholder="Password"
+                size="small"
                 onChange={handleChange("password1")}
                 value={password1}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
-              <input
+              <TextField
+                className={classes.textField}
+                id="outlined-password-input"
+                label="Confirm Password"
                 type="password"
+                variant="outlined"
+                size="small"
                 placeholder="Confirm Password"
                 onChange={handleChange("password2")}
                 value={password2}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
-
-              <button
-                type="submit"
-                className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+              <div
+                style={{
+                  marginTop: "1%",
+                }}
               >
-                {" "}
-                <i className="fas fa-user-plus fa 1x w-6  -ml-2" />{" "}
-                <span className="ml-3">REGISTER </span>{" "}
-              </button>
-              {passwordError ? <p>Las contraseña deben ser iguales</p> : null}
-            </div>
-            <div className="my-12 border-b text-center">
-              <div className=" flex-1 leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
-                Or Register with email <i className="fab fa-google w-10" />{" "}
-                <i className="fab fa-facebook w-10-ml-2" />
+                <Typography variant="caption" align="center">
+                  <div className=" border-b text-center">
+                    <div className=" flex-1 leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
+                      Or Register with email{" "}
+                      <i className="fab fa-google w-10" />{" "}
+                      <i className="fab fa-facebook w-10-ml-2" />
+                    </div>
+                  </div>
+                </Typography>
+                {passwordError && (
+                  <Alert severity="error" className="mt-5">
+                    {passwordError}
+                  </Alert>
+                )}
+                <FormControlLabel
+                  value="end"
+                  control={<Checkbox color="primary" required />}
+                  style={{ marginTop: "5%" }}
+                  label={
+                    <div>
+                      <span>Yes, I understand and agree the Juniority. </span>
+                      <Link to={"/terms"} style={{ color: "#3CB4E6" }}>
+                        Terms & Conditions
+                      </Link>
+                    </div>
+                  }
+                  labelPlacement="end"
+                  className={classes.checkbox}
+                />
+                <Typography
+                  style={{
+                    textAlign: "start",
+                    width: "93%",
+                    margin: "auto",
+                    marginTop: "10%",
+                  }}
+                >
+                  <Button type="submit" color="primary" variant="contained">
+                    <i className="fas fa-user-plus fa 1x w-6  -ml-2" />{" "}
+                    <span className="ml-3">Get started </span>{" "}
+                  </Button>
+                </Typography>
               </div>
-            </div>
-            <div className="flex flex-col items-center">
-              <Link
-                to="/login"
-                className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5"
-              >
-                <i className="fas fa-sign-in-alt fa 1x w-6-ml-2 text-indigo-500" />
-                <span className="ml-4">Login</span>
-              </Link>
-            </div>
-          </form>
+            </form>
+          )}
+        </Grid>
+      </Grid>
+      {/* // ----------------------- */}
+      {/* <div
+        className="flex-1 bg-indigo-100 text-center hidden lg:flex"
+        style={{ backgroundImage: `url(${rocket})`, objectFit: "contain" }}
+      >
+        <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
+          <h1 className="text-2xl xl:text-3xl font-black"> JUNIORITY</h1>
+          <Animation src={Learning} />
         </div>
-        <div
-          className="flex-1 bg-indigo-100 text-center hidden lg:flex"
-          style={{ backgroundImage: `url(${rocket})`, objectFit: "contain" }}
-        >
-          <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
-            <h1 className="text-2xl xl:text-3xl font-black"> JUNIORITY</h1>
-            <Animation src={Learning} />
-          </div>
-        </div>
-      </div>
-      ;
+      </div> */}
     </div>
   );
 };
