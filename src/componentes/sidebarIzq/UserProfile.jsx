@@ -5,9 +5,7 @@ const userProfile = () => {
     return (
         <div>
            <Card display='flex' width='100%'>
-               <h1>userr profilee</h1>
-               <h1>userr profilee</h1>
-               <h1>userr profilee</h1>
+         
                <h1>userr profilee</h1>
             </Card>
         </div>

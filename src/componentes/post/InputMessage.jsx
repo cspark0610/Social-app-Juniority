@@ -17,6 +17,7 @@ import InputOption from './InputOption';
 import Post from './Post';
 import { Avatar } from "@material-ui/core";
 import imagen from '../assets/ag.jpg';
+import Box from "@material-ui/core/Box";
 import { useSelector } from 'react-redux';
 
 const InputMessage = () => {
@@ -70,7 +71,10 @@ const InputMessage = () => {
     }
     
     return (
-        <div className='min-h-screen max-w-full my-3.5 shadow-xl'>
+
+        <div className='min-h-screen max-w-full shadow-xl'  style={{ background: "white",borderRadius:'10px' }} >
+                <Box m={2}>
+
                 <div className={classes.optionsIcons}>
                     <InputOption Icon={ShareOutlinedIcon} title='Share Update' color='#ADD8E6'/>
 
@@ -108,7 +112,10 @@ const InputMessage = () => {
                />
 
            ))}
+           </Box>
+
         </div>
+
     )
 }
 

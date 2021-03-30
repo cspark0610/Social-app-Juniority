@@ -13,11 +13,10 @@ const Login = () => {
   const firebase = useFirebaseApp();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.currentUser);
+  const currentUser = useSelector((state) => state.currentUser);
   const [formData, setFormData] = useState({ email: "", password1: "" });
-  const {  email, password1 } = formData;
+  const { email, password1 } = formData;
   const history = useHistory();
-
 
   const handleChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
@@ -29,17 +28,23 @@ const Login = () => {
       .auth()
       .signInWithEmailAndPassword(email, password1)
       .then((user) => {
-        db.collection('user').where("id", "==", user.user.uid).get()
-            .then(doc => doc.forEach(data => {
-                dispatch(setCurrentUser(data.data()));
-                sessionStorage.setItem('currentUser', JSON.stringify(data.data()));
-                history.push('/');
-            }))
+        db.collection("user")
+          .where("id", "==", user.user.uid)
+          .get()
+          .then((doc) =>
+            doc.forEach((data) => {
+              dispatch(setCurrentUser(data.data()));
+              sessionStorage.setItem(
+                "currentUser",
+                JSON.stringify(data.data())
+              );
+              history.push("/");
+            })
+          );
       });
   };
 
   return (
-    
     <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
     <Typography
       style={{
@@ -122,10 +127,7 @@ const Login = () => {
       </Link>
     </div>
   </form>
-    
-
   );
 };
-
 
 export default Login;
