@@ -39,7 +39,6 @@ const Login = () => {
   };
 
   return (
-
     <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
       <Typography
         style={{
@@ -48,9 +47,7 @@ const Login = () => {
           margin: "auto",
         }}
       >
-        <span
-    <>
-    { currentUser ? history.push('/') : (
+        <span>
       <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
       <div className="max-w-6xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w1/2 xl:w5/12 p-6 sm:p-12">
@@ -178,13 +175,7 @@ const Login = () => {
           <span className="ml-4">Are you new? Register</span>
         </Link>
       </div>
-
     </form>
-
-    </div>
-    )}
-    </>
-
   );
 };
 
