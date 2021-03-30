@@ -116,7 +116,7 @@ const Register = () => {
             </Grid>
             <Grid
               item
-              lg={6}
+              md={6}
               component={Box}
               display={{ xs: "none", lg: "block" }}
             >
@@ -144,7 +144,7 @@ const Register = () => {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} md={6}>
               {change[0] === "primary" ? (
                 <Login />
               ) : (

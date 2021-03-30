@@ -12,6 +12,8 @@ import { useHistory } from "react-router";
 import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
+import Box from "@material-ui/core/Box";
+import "./style.css";
 
 const Home = () => {
   const firebase = useFirebaseApp();
@@ -37,29 +39,46 @@ const Home = () => {
   return (
     <>
       {console.log("USER", currentUser)}
-      {!currentUser ? (
-        history.push("/register")
-      ) : (
-        <>
-          <Navbar />
+      {/* {!currentUser ? history.push('/register') : ( */}
+      <>
+        <Navbar />
 
-          <Grid container display="flex" align="center" spacing={3}>
-            <Grid item md={3}>
-              <UserProfile />
-              <Jobs />
-            </Grid>
+        <Grid
+          container
+          display="flex"
+          align="center"
+          style={{ position: "relative", top:70, background: "lightgrey" }}
+        >
+          <Grid item md={3}>
+            <Box p={1}>
+              <div>
+                <Box p={3}>
+                  <UserProfile />
+                </Box>
 
-            <Grid item md={6}>
-              <InputMessage />
-            </Grid>
-            <Grid item md={3}>
-              <Widget />
-            </Grid>
+                <Box p={3}>
+                  <Jobs />
+                </Box>
+              </div>
+            </Box>
           </Grid>
 
-          <button onClick={(e) => logOut(e)}>LOG OUT</button>
-        </>
-      )}
+          <Grid item md={6}>
+            <Box p={1}>
+              <InputMessage />
+            </Box>
+          </Grid>
+          <Grid item md={3}>
+            <Box p={1}>
+              <Widget />
+            </Box>
+          </Grid>
+        </Grid>
+
+        <button onClick={(e) => logOut(e)}>LOG OUT</button>
+      </>
+      )
+      {/* } */}
     </>
   );
 };
