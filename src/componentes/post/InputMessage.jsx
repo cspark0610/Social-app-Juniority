@@ -5,23 +5,29 @@ import { Card } from '@material-ui/core';
 import useStyles from './InputMessageStyle.js';
 import { inputStyle } from './InputMessageStyle.js';
 import { createIconStyle } from './InputMessageStyle.js';
-import { useAvatarStyles } from './InputMessageStyle.js';
+import { useAvatarStyles, useInputStyles } from './InputMessageStyle.js';
 import CreateIcon from "@material-ui/icons/Create";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
+import IconButton from '@material-ui/core/IconButton';
+//import { makeStyles } from '@material-ui/core/styles';
 import InputOption from './InputOption';
 import Post from './Post';
 import { Avatar } from "@material-ui/core";
 import imagen from '../assets/ag.jpg';
+import { useSelector } from 'react-redux';
 
 const InputMessage = () => {
 
+    const currentUser = useSelector(state => state.currentUser);
     const [input, setInput]= useState('');
     const [posts, setPosts]= useState([]);
+    const [imageUrl, setImageUrl] = useState()
 
     const classes = useStyles();
+    const inputClasses = useInputStyles();
     const avatarClasses = useAvatarStyles();
 
 
@@ -29,12 +35,13 @@ const InputMessage = () => {
         //https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
         e.preventDefault();
         db.collection('posts').add({
-            name:'alan',
+            name:currentUser.fullName,
             description :'description',
             message: input,
             photo: 'https://pbs.twimg.com/profile_images/1353676146844565505/QpmdpDvT_400x400.jpg',
+            postImage: imageUrl ? imageUrl : '' ,
             timestamp : firebase.firestore.FieldValue.serverTimestamp(),
-        }).then(()=>console.log('post succesfully created!!!'))
+        }).then(()=> setImageUrl(false))
         .catch(err=>console.log(err))
 
         setInput('');
@@ -51,12 +58,30 @@ const InputMessage = () => {
         })
     },[]);
     
+    const onFileChange = async (e) => {
+        const file = e.target.files[0];
+        console.log(file)
+        const storageRef = firebase.storage().ref("POST-IMAGENES");
+        if (file) {
+          const fileRef = storageRef.child(file.name);
+          await fileRef.put(file); 
+          setImageUrl( await fileRef.getDownloadURL() );
+        }
+    }
     
     return (
         <div className='min-h-screen max-w-full my-3.5 shadow-xl'>
                 <div className={classes.optionsIcons}>
                     <InputOption Icon={ShareOutlinedIcon} title='Share Update' color='#ADD8E6'/>
-                    <InputOption Icon={ImageOutlinedIcon} title='Upload a photo' color='#ADD8E6'/>
+
+                        <input onChange={e => onFileChange(e)} accept="image/*" id="icon-button-file" type="file" className={inputClasses.input} />
+                        <label htmlFor="icon-button-file">
+                            <IconButton color="primary" size="small" aria-label="upload picture" component="span">
+                                <InputOption Icon={ImageOutlinedIcon} title='Upload a photo' color='#ADD8E6'/>   
+                            </IconButton>
+                        </label>
+                    
+
                     <InputOption Icon={SaveOutlinedIcon} title='Write an article' color='#ADD8E6'/>
                 </div>
             <Card className={classes.container}>
@@ -72,12 +97,13 @@ const InputMessage = () => {
                 </div>
             </Card>
            {console.log(posts)}
-           {posts.map( ({id, data: {name, message, photo,timestamp} })=>(
+           {posts.map( ({id, data: {name, message, photo, postImage,timestamp} })=>(
                <Post 
                key={id}
                name={name}
                message={message}
                photo={photo}
+               postImage={postImage}
                timestamp={timestamp}
                />
 

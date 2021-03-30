@@ -31,11 +31,20 @@ const Register = () => {
     password1: "",
     password2: "",
   });
+  
+  const [lengthError, setLengthError] = useState(false);
   const { fullName, email, password1, password2 } = formData;
   const [change, setChange] = useState(["primary", "secondary"]);
 
   const handleChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
+    if(text === 'password1') {
+        if(password1.length < 6) {
+            setLengthError(true);
+        } else {
+            setLengthError(false);
+        };
+    };
   };
 
   const handleSubmit = (e) => {
@@ -48,8 +57,9 @@ const Register = () => {
         .createUserWithEmailAndPassword(email, password1)
         .then((user) => {
           db.collection("user")
-            .add({
-              uid: user.user.uid,
+            .doc(user.user.uid)
+            .set({
+              id: user.user.uid,
               fullName,
               email,
               timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
@@ -160,6 +170,8 @@ const Register = () => {
                 className={classes.textField}
                 id="outlined-password-input"
                 label="Confirm Password"
+              <input
+
                 type="password"
                 variant="outlined"
                 size="small"
@@ -228,7 +240,9 @@ const Register = () => {
           <h1 className="text-2xl xl:text-3xl font-black"> JUNIORITY</h1>
           <Animation src={Learning} />
         </div>
+
       </div> */}
+
     </div>
   );
 };
