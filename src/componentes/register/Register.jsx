@@ -170,8 +170,6 @@ const Register = () => {
                 className={classes.textField}
                 id="outlined-password-input"
                 label="Confirm Password"
-              <input
-
                 type="password"
                 variant="outlined"
                 size="small"
