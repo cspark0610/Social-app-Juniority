@@ -5,16 +5,20 @@ import { Card } from '@material-ui/core';
 import useStyles from './InputMessageStyle.js';
 import { inputStyle } from './InputMessageStyle.js';
 import { createIconStyle } from './InputMessageStyle.js';
-import { useAvatarStyles } from './InputMessageStyle.js';
+import { useAvatarStyles, useInputStyles } from './InputMessageStyle.js';
 import CreateIcon from "@material-ui/icons/Create";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
+import IconButton from '@material-ui/core/IconButton';
+//import { makeStyles } from '@material-ui/core/styles';
 import InputOption from './InputOption';
 import Post from './Post';
 import { Avatar } from "@material-ui/core";
 import imagen from '../assets/ag.jpg';
+import Box from "@material-ui/core/Box";
+
 
 const InputMessage = () => {
 
@@ -22,6 +26,7 @@ const InputMessage = () => {
     const [posts, setPosts]= useState([]);
 
     const classes = useStyles();
+    const inputClasses = useInputStyles();
     const avatarClasses = useAvatarStyles();
 
 
@@ -33,6 +38,7 @@ const InputMessage = () => {
             description :'description',
             message: input,
             photo: 'https://pbs.twimg.com/profile_images/1353676146844565505/QpmdpDvT_400x400.jpg',
+            postImage:'',
             timestamp : firebase.firestore.FieldValue.serverTimestamp(),
         }).then(()=>console.log('post succesfully created!!!'))
         .catch(err=>console.log(err))
@@ -53,10 +59,21 @@ const InputMessage = () => {
     
     
     return (
-        <div className='min-h-screen max-w-full my-3.5 shadow-xl'>
+
+        <div className='min-h-screen max-w-full shadow-xl'  style={{ background: "white",borderRadius:'10px' }} >
+                <Box m={2}>
+
                 <div className={classes.optionsIcons}>
                     <InputOption Icon={ShareOutlinedIcon} title='Share Update' color='#ADD8E6'/>
-                    <InputOption Icon={ImageOutlinedIcon} title='Upload a photo' color='#ADD8E6'/>
+
+                        <input accept="image/*" id="icon-button-file" type="file" className={inputClasses.input} />
+                        <label htmlFor="icon-button-file">
+                            <IconButton color="primary" size="small" aria-label="upload picture" component="span">
+                                <InputOption Icon={ImageOutlinedIcon} title='Upload a photo' color='#ADD8E6'/>   
+                            </IconButton>
+                        </label>
+                    
+
                     <InputOption Icon={SaveOutlinedIcon} title='Write an article' color='#ADD8E6'/>
                 </div>
             <Card className={classes.container}>
@@ -73,6 +90,7 @@ const InputMessage = () => {
             </Card>
            {console.log(posts)}
            {posts.map( ({id, data: {name, message, photo,timestamp} })=>(
+ 
                <Post 
                key={id}
                name={name}
@@ -82,7 +100,10 @@ const InputMessage = () => {
                />
 
            ))}
+           </Box>
+
         </div>
+
     )
 }
 
