@@ -2,14 +2,13 @@
 /*     flex: 0.25; */
     /* top: 50px; */
     background: white;
-    position: sticky;
-    border-radius: 10px;
+     border-radius: 10px;
     border: 1px solid #ddd;
     height: fit-content;
     padding-bottom: 10px;
 }
 .avatar__profile{
-    margin-bottom: 15px;
+     margin-bottom: 15px;
     width: 90px !important;
     height: 90px !important;
     border-radius: 200%;
