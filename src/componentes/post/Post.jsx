@@ -8,6 +8,8 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import moment from 'moment'
+import Box from "@material-ui/core/Box";
+
 
 
 const Post = ({name, message, photo, postImage, timestamp }) => {
@@ -18,6 +20,8 @@ const Post = ({name, message, photo, postImage, timestamp }) => {
     
     return (
         <div className={classes.post}>
+             <Box p={1}>
+
             <div className={classes.header}>
                 <Avatar src={imagen} className={avatarStyle}/>
                 <div className={classes.info}>
@@ -45,6 +49,8 @@ const Post = ({name, message, photo, postImage, timestamp }) => {
                 <InputOption Icon={ShareOutlinedIcon} title='Share'/>
             </div>
             <hr/>
+            </Box>
+
         </div>
     )
 }
