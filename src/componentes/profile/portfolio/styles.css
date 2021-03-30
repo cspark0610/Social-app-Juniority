@@ -1,0 +1,24 @@
+.line__profile__widget{
+    border-color: gray;
+    margin: 0px;
+}
+.portfolio_title {
+  text-align: left;
+  margin: 20px;
+}
+.portfolio {
+  background: white;
+  position: sticky;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  height: fit-content;
+  padding-bottom: 10px;
+  margin-top: 20px;
+}
+.porfolio__img{
+  width: 70px;
+  height: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 35px;
+}

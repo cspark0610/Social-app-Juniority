@@ -12,7 +12,7 @@ import Box from "@material-ui/core/Box";
 
 
 
-const Post = ({name, message, photo, timestamp }) => {
+const Post = ({name, message, photo, postImage, timestamp }) => {
     
     const classes = useStyles();
     const date = new Date(timestamp?.toDate()).toUTCString()
@@ -25,7 +25,7 @@ const Post = ({name, message, photo, timestamp }) => {
             <div className={classes.header}>
                 <Avatar src={imagen} className={avatarStyle}/>
                 <div className={classes.info}>
-                    <h1 className='font-bold text-transform: uppercase'>alan gosiker</h1>
+                    <h1 className='font-bold text-transform: uppercase'>{name}</h1>
                     <h4 className='text-gray-400'>Fullstack Developer</h4>
                 </div>
                 <p>{moment(date).fromNow()}</p>
@@ -35,6 +35,14 @@ const Post = ({name, message, photo, timestamp }) => {
                 <p> {message} </p>
             </div>
             <hr/>
+            { postImage !== '' ? (
+                <>
+                <div className={classes.body}>
+                <img src={postImage} width='85%' height='85%'/>
+            </div>
+            <hr/>
+            </>
+            ) : null }
             <div className={classes.buttons}>
                 <InputOption Icon={FavoriteBorderOutlinedIcon} title='Like' color='#E60026'/>
                 <InputOption Icon={ChatBubbleOutlineOutlinedIcon} title='Comment' color='#ADD8E6'/>

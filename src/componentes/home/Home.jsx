@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import InputMessage from "../post/InputMessage";
 import Navbar from "../navbar/Navbar";
@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <>
       {console.log("USER", currentUser)}
-      {!currentUser ? history.push('/login') : (
+      {/* {!currentUser ? history.push('/register') : ( */}
       <>
         <Navbar />
 
@@ -77,7 +77,8 @@ const Home = () => {
 
         <button onClick={(e) => logOut(e)}>LOG OUT</button>
       </>
-      )}
+      )
+      {/* } */}
     </>
   );
 };
