@@ -29,6 +29,7 @@ function App() {
 
   return (
     <>
+
       <Switch>
         <Route exact path="/">
           <Home />
@@ -37,6 +38,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/password-recovery" component={PasswordRecovery} />
       </Switch>
+      
     </>
   );
 }

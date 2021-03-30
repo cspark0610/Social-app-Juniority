@@ -15,7 +15,7 @@ const HomeProfile = () => {
     <div >
       <Navbar/>
       
-      <Grid container display="flex" align="center">
+      <Grid container display="flex" align="center" >
         <Grid item md={12}>
         <Banner/>
         </Grid>

@@ -1,3 +1,5 @@
-.gridPosition{
-    position: absolute;
+.navFixed {
+    position: "relative";
+    top: 70;
+    background: "lightgrey";
 }
