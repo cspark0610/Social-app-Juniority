@@ -17,8 +17,7 @@ import InputOption from './InputOption';
 import Post from './Post';
 import { Avatar } from "@material-ui/core";
 import imagen from '../assets/ag.jpg';
-import Box from "@material-ui/core/Box";
-import { useSelector } from 'react-redux';
+ import { useSelector } from 'react-redux';
 
 const InputMessage = () => {
 
@@ -71,10 +70,9 @@ const InputMessage = () => {
     }
     
     return (
-
-        <div className='min-h-screen max-w-full shadow-xl'  style={{ background: "white",borderRadius:'10px' }} >
-                <Box m={2}>
-
+<>
+        <div className='max-w-full shadow-xl my-3.5 '  style={{ background: "white",borderRadius:'10px' }} >
+ 
                 <div className={classes.optionsIcons}>
                     <InputOption Icon={ShareOutlinedIcon} title='Share Update' color='#ADD8E6'/>
 
@@ -100,9 +98,13 @@ const InputMessage = () => {
                     </form>
                 </div>
             </Card>
+        </div>
+
            {console.log(posts)}
            {posts.map( ({id, data: {name, message, photo, postImage,timestamp} })=>(
-               <Post 
+            <div className='max-w-full shadow-xl my-3.5 '  style={{ background: "white",borderRadius:'10px' }} >
+
+             <Post 
                key={id}
                name={name}
                message={message}
@@ -110,12 +112,10 @@ const InputMessage = () => {
                postImage={postImage}
                timestamp={timestamp}
                />
+         </div>
 
            ))}
-           </Box>
-
-        </div>
-
+           </>
     )
 }
 

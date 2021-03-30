@@ -50,8 +50,7 @@ export default makeStyles({
         paddingBottom:'20px',
         paddingRadius:'10px',
         marginBottom:'20px',
-       
-    },
+     },
     container_input:{
         border:'1px solid lightgray',
         borderRadius:'20px',
@@ -61,6 +60,7 @@ export default makeStyles({
         width:'100%',
         minHeight:'50px',
         paddingLeft:'15px',
+        
        
     },
     optionsIcons:{
