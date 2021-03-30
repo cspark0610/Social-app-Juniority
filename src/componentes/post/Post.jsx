@@ -36,9 +36,9 @@ const Post = ({name, message, photo, postImage, timestamp }) => {
             </div>
             <hr/>
             { postImage !== '' ? (
-                <>
-                <div className={classes.body}>
-                <img src={postImage} width='85%' height='85%'/>
+            <>
+            <div className={classes.body}>
+                <img src={postImage} width='85%' height='85%' alt=''/>
             </div>
             <hr/>
             </>

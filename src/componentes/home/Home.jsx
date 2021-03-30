@@ -27,19 +27,19 @@ const Home = () => {
     dispatch(setCurrentUser(false));
   };
 
-  /* useEffect(() => {
+  useEffect(() => {
         if(currentUser) {
             db.collection('user').where("id", "==", currentUser.id).get()
             .then(doc => doc.forEach(data => {
                 sessionStorage.setItem('currentUser', JSON.stringify(data.data()))
             }))
         }
-    }, []) */
+    }, []) 
 
   return (
     <>
       {console.log("USER", currentUser)}
-      {/* {!currentUser ? history.push('/register') : ( */}
+      {!currentUser ? history.push('/register') : (
       <>
         <Navbar />
 
@@ -78,7 +78,7 @@ const Home = () => {
         <button onClick={(e) => logOut(e)}>LOG OUT</button>
       </>
       )
-      {/* } */}
+      }
     </>
   );
 };

@@ -22,7 +22,7 @@ export default makeStyles({
              
     },
     body:{
-        overfloWrap: 'anywhere'
+        overflowWrap: 'anywhere'
     },
     buttons:{
         display: 'flex',
