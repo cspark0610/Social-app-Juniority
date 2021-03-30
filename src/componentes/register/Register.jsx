@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Animation from "../animation/Animation";
 import Learning from "../assets/53882-distance-education.json";
 import rocket from "../assets/rocket.svg";
+import logo from "../assets/juniorityText.svg";
 import { useFirebaseApp } from "reactfire";
 import { db } from "../../firebase/firebase";
 import firbaseTime from "firebase";
@@ -119,25 +120,29 @@ const Register = () => {
               component={Box}
               display={{ xs: "none", lg: "block" }}
             >
-              <Typography variant="h4">Juniority</Typography>
-              <Typography
-                variant="h4"
-                color="primary"
+              <div
+                className="flex-1 bg-indigo-100 text-center hidden lg:flex"
                 style={{
-                  fontWeight: 500,
-                  marginTop: "5%",
-                  marginBottom: "8%",
-                  lineHeight: "120%",
+                  backgroundImage: `url(${rocket})`,
+                  objectFit: "contain",
                 }}
               >
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              </Typography>
-              <Typography variant="body2">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
-                vero repellendus quaerat dolores, ipsum numquam molestias ad?
-                Quaerat repudiandae laboriosam deleniti sequi, velit deserunt,
-                itaque tempora eius provident reiciendis totam?
-              </Typography>
+                <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
+                  <h1 className="text-2xl xl:text-3xl font-black">
+                    {" "}
+                    JUNIORITY
+                  </h1>
+                  <Animation src={Learning} />
+                  <Typography
+                    variant="body2"
+                    style={{ backgroundColor: "white" }}
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Soluta vero repellendus quaerat dolores, ipsum numquam
+                    molestias ad?
+                  </Typography>
+                </div>
+              </div>
             </Grid>
             <Grid item xs={12} lg={6}>
               {change[0] === "primary" ? (
@@ -242,17 +247,6 @@ const Register = () => {
               )}
             </Grid>
           </Grid>
-          {/* // ----------------------- */}
-          {/* <div
-        className="flex-1 bg-indigo-100 text-center hidden lg:flex"
-        style={{ backgroundImage: `url(${rocket})`, objectFit: "contain" }}
-      >
-        <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
-          <h1 className="text-2xl xl:text-3xl font-black"> JUNIORITY</h1>
-          <Animation src={Learning} />
-        </div>
-
-      </div> */}
         </div>
       )}
     </>
