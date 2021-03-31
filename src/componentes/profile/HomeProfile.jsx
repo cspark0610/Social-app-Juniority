@@ -38,7 +38,7 @@ const HomeProfile = (props) => {
  
 
   return (
-    <div >
+    <>
       <Navbar/>
       
       <Grid container display="flex" align="center" >
@@ -64,7 +64,7 @@ const HomeProfile = (props) => {
       </Grid>
     </div>
 
-    </div>
+    </>
   );
 };
 
