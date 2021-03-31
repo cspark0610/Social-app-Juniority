@@ -17,8 +17,13 @@ import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import { Avatar } from "@material-ui/core";
 import imagen from "../assets/ag.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../../store/currentUser";
+
 const Navbar = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
+  const currentUser = useSelector(state => state.currentUser);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -43,6 +48,12 @@ const Navbar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const logOut = (e) => {
+    e.preventDefault();
+    sessionStorage.removeItem("currentUser");
+    dispatch(setCurrentUser(false));
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -54,13 +65,13 @@ const Navbar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Link to="/profile">
+      <Link to={`/profile/${currentUser.id}`}>
         {" "}
         <MenuItem onClick={handleMenuClose} className="backgroundAcc">
           Profile
         </MenuItem>
       </Link>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={e => logOut(e)}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -100,7 +111,7 @@ const Navbar = () => {
         >
           <AccountCircle className="iconColor" />
         </IconButton>
-        <Link to="/profile">
+        <Link to={`/profile/${currentUser.id}`}>
           <p>Profile</p>
         </Link>
       </MenuItem>
@@ -163,7 +174,7 @@ const Navbar = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar src={imagen} />
+              <Avatar src={currentUser.avatar} />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

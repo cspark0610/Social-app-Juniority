@@ -3,14 +3,18 @@ import { Avatar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import "./style.css";
 import { Link } from "react-router-dom";
-import imagen from "../../assets/ag.jpg";
+import { useSelector } from 'react-redux';
+
 export const Profile = () => {
+  const selectedUser = useSelector(state => state.selectedUser);
+
   return (
     <div className="back">
       <div className="userProfile__top">
         {/*               <img src="https://www.colorhexa.com/3cb4e5.png" alt="" /> */}
-        <Avatar className="avatar__profile__post" src={imagen} />
-
+        <Avatar className="avatar__profile__post">
+          <img src={selectedUser.avatar} alt="avatar"/>
+        </Avatar>
         <br />
         {/* <h3>John Doe</h3>
               <h4>Full Stack Developer</h4> */}
