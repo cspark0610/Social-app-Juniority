@@ -8,14 +8,20 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import {InputIcon} from "./InputIcon";
 import "./style.css";
+import { useSelector } from "react-redux";
 
 
 export const PostProfile = () => {
+  const selectedUser = useSelector(state => state.selectedUser)
+
   return (
+    <>
+    {selectedUser && (
+
     <div className="feed__containerInput">
       <Grid container >
         <Grid item md={6} className="text__aling__left text__aling">
-        <h3>John Doe</h3>
+        <h3>{selectedUser.fullName}</h3>
         <p>Full Stack Developer</p>
         <p>
           <LocationOnIcon />
@@ -34,5 +40,7 @@ export const PostProfile = () => {
         </Grid>
       </Grid>
     </div>
+    )}
+    </>
   );
 };

@@ -33,7 +33,7 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/profile" component={HomeProfile} />
+        <Route path="/profile/:id" render={({ match }) => <HomeProfile match={match}/>} />
         <Route path="/register" component={Register} />
         <Route path="/password-recovery" component={PasswordRecovery} />
       </Switch>
