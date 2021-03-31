@@ -37,7 +37,7 @@ const InputMessage = () => {
             description :'description',
             message: input,
             userId: currentUser.id,
-            photo: 'https://pbs.twimg.com/profile_images/1353676146844565505/QpmdpDvT_400x400.jpg',
+            photo: currentUser.avatar,
             postImage: imageUrl ? imageUrl : '' ,
             timestamp : firebase.firestore.FieldValue.serverTimestamp(),
         }).then(()=> setImageUrl(false))
@@ -110,7 +110,7 @@ const InputMessage = () => {
         </div>
         <Card className={classes.container}>
           <div className={classes.container_input}>
-            <Avatar className={avatarClasses.large} src={imagen} />
+            <Avatar className={avatarClasses.large} src={currentUser.avatar} />
 
             <form
               onSubmit={handleSubmit}
@@ -134,7 +134,7 @@ const InputMessage = () => {
 
       {console.log(posts)}
       {posts.map(
-        ({ id, data: { name, message, photo, postImage, timestamp } }) => (
+        ({ id, data: { name, message, userId, photo, postImage, timestamp } }) => (
           <div
           className="max-w-full shadow-xl my-3.5 "
           style={{ background: "white", borderRadius: "10px" }}
@@ -144,6 +144,7 @@ const InputMessage = () => {
               key={id}
               name={name}
               message={message}
+              userId={userId}
               photo={photo}
               postImage={postImage}
               timestamp={timestamp}

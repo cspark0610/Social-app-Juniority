@@ -1,25 +1,27 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { Avatar } from "@material-ui/core";
 import useStyles from "./PostStyle.js";
 import { avatarStyle } from "./PostStyle.js";
-import imagen from "../assets/ag.jpg";
 import InputOption from "./InputOption";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import moment from "moment";
 
-const Post = ({ name, message, photo, postImage, timestamp }) => {
+const Post = ({ name, message, userId, photo, postImage, timestamp }) => {
   const classes = useStyles();
   const date = new Date(timestamp?.toDate()).toUTCString();
 
   return (
     <div className={classes.post}>
       <div className={classes.header}>
-        <Avatar src={imagen} />
+        <Avatar src={photo} />
         <div className={classes.info}>
+      <Link to={`/profile/${userId}`}>
           <h1 className="font-bold text-transform: uppercase">{name}</h1>
           <h4 className="text-gray-400">Fullstack Developer</h4>
+        </Link>
         </div>
         <p>{moment(date).fromNow()}</p>
       </div>
