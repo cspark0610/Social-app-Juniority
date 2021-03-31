@@ -9,7 +9,7 @@ import { db } from "../../firebase/firebase";
 import firbaseTime from "firebase";
 import Alert from "@material-ui/lab/Alert";
 import Login from "../login/Login.jsx";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -20,11 +20,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import useStyles from "./styles";
+import { setCurrentUser } from "../../store/currentUser";
 
 const Register = () => {
   const firebase = useFirebaseApp();
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [passwordError, setPasswordError] = useState();
   const [formData, setFormData] = useState({
@@ -34,24 +36,17 @@ const Register = () => {
     password2: "",
   });
 
-  const [lengthError, setLengthError] = useState(false);
   const { fullName, email, password1, password2 } = formData;
   const [change, setChange] = useState(["primary", "secondary"]);
   const currentUser = useSelector((state) => state.currentUser);
 
   const handleChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
-    if (text === "password1") {
-      if (password1.length < 6) {
-        setLengthError(true);
-      } else {
-        setLengthError(false);
-      }
-    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let data;
     if (password1 !== password2) {
       setPasswordError("The passwords must be equals");
     } else {
@@ -59,19 +54,25 @@ const Register = () => {
         .auth()
         .createUserWithEmailAndPassword(email, password1)
         .then((user) => {
+          data = {
+            id: user.user.uid,
+            fullName,
+            email,
+            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+          };
           db.collection("user")
             .doc(user.user.uid)
-            .set({
-              id: user.user.uid,
-              fullName,
-              email,
-              timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
-            })
-            .then(() => setChange(["primary", "secondary"]));
+            .set(data)
+            .then(() => {
+              dispatch(setCurrentUser(data));
+              sessionStorage.setItem("currentUser", JSON.stringify(data));
+              history.push("/");
+            });
         })
         .catch((error) => setPasswordError(error.message));
     }
   };
+
   return (
     <>
       {currentUser ? (
@@ -184,7 +185,6 @@ const Register = () => {
                   />
                   <TextField
                     className={classes.textField}
-                    id="outlined-password-input"
                     label="Confirm Password"
                     type="password"
                     variant="outlined"
@@ -198,15 +198,6 @@ const Register = () => {
                       marginTop: "1%",
                     }}
                   >
-                    <Typography variant="caption" align="center">
-                      <div className=" border-b text-center">
-                        <div className=" flex-1 leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
-                          Or Register with email{" "}
-                          <i className="fab fa-google w-10" />{" "}
-                          <i className="fab fa-facebook w-10-ml-2" />
-                        </div>
-                      </div>
-                    </Typography>
                     {passwordError && (
                       <Alert severity="error" className="mt-5">
                         {passwordError}
