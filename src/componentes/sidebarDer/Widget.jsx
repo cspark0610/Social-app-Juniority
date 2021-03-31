@@ -20,7 +20,7 @@ const Widget = () => {
         <hr />
         <div className={classes.people}>
           <div className={classes.people_left}>
-            <Avatar src={imagen} />
+            <Avatar />
           </div>
           <div className={classes.people_right}>
             <Typography>John Doe</Typography>
@@ -36,7 +36,7 @@ const Widget = () => {
         <hr />
         <div className={classes.people}>
           <div className={classes.people_left}>
-            <Avatar src={imagen} />
+            <Avatar />
           </div>
           <div className={classes.people_right}>
             <Typography>John Doe</Typography>
@@ -52,7 +52,7 @@ const Widget = () => {
         <hr />
         <div className={classes.people}>
           <div className={classes.people_left}>
-            <Avatar src={imagen} />
+            <Avatar />
           </div>
           <div className={classes.people_right}>
             <Typography>John Doe</Typography>

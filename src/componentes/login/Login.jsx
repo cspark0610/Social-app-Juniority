@@ -185,13 +185,13 @@ const Login = () => {
           />
         </Typography>
         {messageError && <Alert severity="error">{messageError}</Alert>}
-        <Link
+        {/* <Link
           to="/register"
           className="w-full max-w-xs shadow-sm rounded-sm py-1 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-10"
         >
           <i className="fas fa-user-plus fa 1x w-6-ml-2 text-indigo-500" />
           <span className="ml-4">Are you new? Register</span>
-        </Link>
+        </Link> */}
       </div>
     </form>
   );

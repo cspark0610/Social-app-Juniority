@@ -38,7 +38,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setSelectedUser({}));
+    dispatch(setSelectedUser(currentUser));
     dispatch(removeSelectedUserPosts());
   }, [])
 
