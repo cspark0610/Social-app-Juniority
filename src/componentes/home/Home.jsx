@@ -20,11 +20,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
 
-  const logOut = (e) => {
-    e.preventDefault();
-    sessionStorage.removeItem("currentUser");
-    dispatch(setCurrentUser(false));
-  };
 
   useEffect(() => {
         if(currentUser) {
@@ -68,7 +63,6 @@ const Home = () => {
             <Grid item md={3}>
               <Widget />
             </Grid>
-            <Button onClick={(e) => logOut(e)}>LOG OUT</Button>
           </Grid>
         </>
       )}

@@ -1,16 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from '@material-ui/core'
 import { Profile } from "./perfil/Profile";
-import { Portfolio } from "./portfolio/Portfolio"
+import { Portfolio } from "./portfolio/Portfolio";
 import { PostProfile } from "./post/PostProfile";
 import { Widget } from "./widget/Widget";
 import { Banner } from "./banner/Banner";
 import Navbar from "../navbar/Navbar";
-import "./style.css"
+import "./style.css";
 import { Publication } from "./post/Publication";
+import { db } from "../../firebase/firebase";
+import { useDispatch } from "react-redux";
+import { setSelectedUser } from "../../store/selectedUser";
+import { setSelectedUserPosts } from "../../store/selectedUserPosts";
 
 
-const HomeProfile = () => {
+const HomeProfile = (props) => {
+  const userId = props.match.params.id;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    db.collection('posts').where('userId', '==', userId).get()
+    .then(doc => {
+      doc.forEach((data) => {
+        dispatch(setSelectedUserPosts(data.data()));
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    db.collection('user').where('id', '==', userId).get()
+    .then(doc => {
+      doc.forEach(data => {
+        dispatch(setSelectedUser(data.data()))
+      })
+    })
+  }, []);
+ 
+
   return (
     <div >
       <Navbar/>
