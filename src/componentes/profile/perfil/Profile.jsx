@@ -28,11 +28,17 @@ export const Profile = () => {
         <br />
 
         <div>
-          <Link className="link__profile">www.johndoe.com</Link>
+          <Link to="/" className="link__profile">
+            www.johndoe.com
+          </Link>
           <br />
-          <Link className="link__profile">www.rf.com/johndoe</Link>
+          <Link to="/" className="link__profile">
+            www.rf.com/johndoe
+          </Link>
           <br />
-          <Link className="link__profile">www.twitter.com/johndoe</Link>
+          <Link to="/" className="link__profile">
+            www.twitter.com/johndoe
+          </Link>
           <br />
         </div>
       </div>

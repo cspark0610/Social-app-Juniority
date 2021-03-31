@@ -6,7 +6,7 @@ import Widget from "../sidebarDer/Widget";
 import { Profile } from "../profile/perfil/Profile";
 import Jobs from "../sidebarIzq/Jobs";
 //import Box  from '@material-ui/core/Box';
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { useFirebaseApp } from "reactfire";
 import { useHistory } from "react-router";
 import { db } from "../../firebase/firebase";
@@ -41,36 +41,41 @@ const Home = () => {
 
   return (
     <>
-      {console.log("USER", currentUser)}
-      {!currentUser ? history.push('/register') : (
-      <>
-        <Navbar />
+      {/* {console.log("USER", currentUser)} */}
+      {!currentUser ? (
+        history.push("/register")
+      ) : (
+        <>
+          <Navbar />
 
-        <Grid
-          container
-          display="flex"
-          align="center"
-          style={{ position: "absolute", top: 70, background: "lightgrey",paddingLeft:70,paddingRight:70}}
-          spacing={3}
-        >
-          <Grid item md={3} style={{ paddingTop:26}}
->
-            <Profile />
-            <Jobs />
-          </Grid>
+          <Grid
+            container
+            display="flex"
+            align="center"
+            style={{
+              position: "absolute",
+              top: 70,
+              background: "lightgrey",
+              paddingLeft: 70,
+              paddingRight: 70,
+            }}
+            spacing={3}
+          >
+            <Grid item md={3} style={{ paddingTop: 26 }}>
+              <Profile />
+              <Jobs />
+            </Grid>
 
-          <Grid item md={6}>
-            <InputMessage />
+            <Grid item md={6}>
+              <InputMessage />
+            </Grid>
+            <Grid item md={3}>
+              <Widget />
+            </Grid>
+            <Button onClick={(e) => logOut(e)}>LOG OUT</Button>
           </Grid>
-          <Grid item md={3}>
-            <Widget />
-          </Grid>
-        </Grid>
-
-        <button onClick={(e) => logOut(e)}>LOG OUT</button>
-      </>
-      )
-      }
+        </>
+      )}
     </>
   );
 };

@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     backgroundPosition: "center",
     backgroundRepeat: `no-repeat`,
     backgroundSize: "cover",
-    paddingTop: "5%",
+    paddingTop: "7%",
   },
   gridContainer: {
     width: "65%",
