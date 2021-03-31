@@ -3,16 +3,15 @@ import React, { useEffect } from "react";
 import InputMessage from "../post/InputMessage";
 import Navbar from "../navbar/Navbar";
 import Widget from "../sidebarDer/Widget";
-import UserProfile from "../sidebarIzq/UserProfile";
+import { Profile } from "../profile/perfil/Profile";
 import Jobs from "../sidebarIzq/Jobs";
 //import Box  from '@material-ui/core/Box';
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { useFirebaseApp } from "reactfire";
 import { useHistory } from "react-router";
 import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
-import Box from "@material-ui/core/Box";
 import "./style.css";
 
 const Home = () => {
@@ -28,55 +27,55 @@ const Home = () => {
   };
 
   useEffect(() => {
-        if(currentUser) {
-            db.collection('user').where("id", "==", currentUser.id).get()
-            .then(doc => doc.forEach(data => {
-                sessionStorage.setItem('currentUser', JSON.stringify(data.data()))
-            }))
-        }
-    }, [])
+    if (currentUser) {
+      db.collection("user")
+        .where("id", "==", currentUser.id)
+        .get()
+        .then((doc) =>
+          doc.forEach((data) => {
+            sessionStorage.setItem("currentUser", JSON.stringify(data.data()));
+          })
+        );
+    }
+  }, []);
 
   return (
     <>
-      {!currentUser ? history.push('/register') : (
-      <>
-        <Navbar />
-        <Grid
-          container
-          display="flex"
-          align="center"
-          style={{ position: "relative", top:70, background: "lightgrey" }}
-        >
-          <Grid item md={3}>
-            <Box p={1}>
-              <div>
-                <Box p={3}>
-                  <UserProfile />
-                </Box>
+      {/* {console.log("USER", currentUser)} */}
+      {!currentUser ? (
+        history.push("/register")
+      ) : (
+        <>
+          <Navbar />
 
-                <Box p={3}>
-                  <Jobs />
-                </Box>
-              </div>
-            </Box>
-          </Grid>
+          <Grid
+            container
+            display="flex"
+            align="center"
+            style={{
+              position: "absolute",
+              top: 70,
+              background: "lightgrey",
+              paddingLeft: 70,
+              paddingRight: 70,
+            }}
+            spacing={3}
+          >
+            <Grid item md={3} style={{ paddingTop: 26 }}>
+              <Profile />
+              <Jobs />
+            </Grid>
 
-          <Grid item md={6}>
-            <Box p={1}>
+            <Grid item md={6}>
               <InputMessage />
-            </Box>
-          </Grid>
-          <Grid item md={3}>
-            <Box p={1}>
+            </Grid>
+            <Grid item md={3}>
               <Widget />
-            </Box>
+            </Grid>
+            <Button onClick={(e) => logOut(e)}>LOG OUT</Button>
           </Grid>
-        </Grid>
-
-        <button onClick={(e) => logOut(e)}>LOG OUT</button>
-      </>
-      )
-     } 
+        </>
+      )}
     </>
   );
 };

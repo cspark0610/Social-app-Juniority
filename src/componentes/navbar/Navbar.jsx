@@ -13,7 +13,10 @@ import MailIcon from "@material-ui/icons/ChatBubbleOutline";
 import NotificationsIcon from "@material-ui/icons/NotificationsNone";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./navBarStyle";
-
+import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
+import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
+import { Avatar } from "@material-ui/core";
+import imagen from "../assets/ag.jpg";
 const Navbar = () => {
   const classes = useStyles();
 
@@ -51,9 +54,12 @@ const Navbar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} className="backgroundAcc">
-        Profile
-      </MenuItem>
+      <Link to="/profile">
+        {" "}
+        <MenuItem onClick={handleMenuClose} className="backgroundAcc">
+          Profile
+        </MenuItem>
+      </Link>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -94,7 +100,9 @@ const Navbar = () => {
         >
           <AccountCircle className="iconColor" />
         </IconButton>
-        <p>Profile</p>
+        <Link to="/profile">
+          <p>Profile</p>
+        </Link>
       </MenuItem>
     </Menu>
   );
@@ -128,6 +136,15 @@ const Navbar = () => {
 
         <div className="containerbuttonsNavbar ">
           <div className={classes.sectionDesktop}>
+            <IconButton>
+              <WorkOutlineIcon className="ibutton" />
+              <div className="letrabutton">Jobs</div>
+            </IconButton>
+            <IconButton>
+              <PeopleOutlineIcon className="ibutton" />{" "}
+              <div className="letrabutton">Connection</div>
+            </IconButton>
+
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="primary">
                 <MailIcon className="iconColor" />
@@ -146,7 +163,7 @@ const Navbar = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle className="iconColor" />
+              <Avatar src={imagen} />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
