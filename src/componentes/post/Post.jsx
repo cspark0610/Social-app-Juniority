@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { Avatar } from "@material-ui/core";
 import useStyles from "./PostStyle.js";
-import { avatarStyle } from "./PostStyle.js";
+
 import InputOption from "./InputOption";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
@@ -26,14 +26,14 @@ const Post = ({ name, message, userId, photo, postImage, timestamp }) => {
         <p>{moment(date).fromNow()}</p>
       </div>
       <hr />
-      <div className={classes.body}>
+      <div className={classes.message}>
         <p> {message} </p>
       </div>
       <hr />
       {postImage !== "" ? (
         <>
           <div className={classes.body}>
-            <img src={postImage} width="85%" height="85%" />
+            <img src={postImage} width="85%" height="85%" alt=''/>
           </div>
           <hr />
         </>
