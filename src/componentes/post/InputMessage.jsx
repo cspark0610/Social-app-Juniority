@@ -17,6 +17,9 @@ import InputOption from "./InputOption";
 import Post from "./Post";
 import { Avatar } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InputMessage = () => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -39,8 +42,11 @@ const InputMessage = () => {
             photo: currentUser.avatar,
             postImage: imageUrl ? imageUrl : '' ,
             timestamp : firebase.firestore.FieldValue.serverTimestamp(),
-        }).then(()=> setImageUrl(false))
-        .catch(err=>console.log(err))
+        }).then(()=> {
+          setImageUrl(false)
+          toast.success('Post created successfully',{autoClose:2000})
+        })
+        .catch(err=>console.error(err))
 
         setInput('');
     };
@@ -68,6 +74,7 @@ const InputMessage = () => {
     
     return (
       <>
+      <ToastContainer/>
       <div  className="max-w-full shadow-xl my-3.5 "style={{ background: "white", borderRadius: "10px" }}>
         <div className={classes.optionsIcons}>
           <InputOption  Icon={ShareOutlinedIcon}  title="Share Update"  color="#ADD8E6"/>

@@ -5,7 +5,7 @@ import Navbar from "../navbar/Navbar";
 import Widget from "../sidebarDer/Widget";
 import { Profile } from "../profile/perfil/Profile";
 import Jobs from "../sidebarIzq/Jobs";
-//import Box  from '@material-ui/core/Box';
+
 import { Button, Grid } from "@material-ui/core";
 import { useFirebaseApp } from "reactfire";
 import { useHistory } from "react-router";

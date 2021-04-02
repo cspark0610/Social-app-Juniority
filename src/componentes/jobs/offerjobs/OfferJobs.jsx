@@ -43,7 +43,8 @@ const OfferJobs = () => {
           setJobsOffers(shot.docs.map(doc =>({
                 id: doc.id,
                 data: doc.data(),
-          })))
+          })
+          ))
         })
       },[]);
       
@@ -61,7 +62,7 @@ const OfferJobs = () => {
              <Grid item md={6} className="text__job__left text__job" >
                  <h2>{jobsOffer.data.position}</h2>
                  <p>Juniority</p>
-                 <p><LocationOnIcon/>{jobsOffer.data.location}</p>
+                 <p><LocationOnIcon className="date__icon"/>{jobsOffer.data.location}</p>
              </Grid>
              <Grid item md={4} className="text__job__right">
                <p><AccessTimeIcon className="date__icon"/>{moment(new Date(jobsOffer.data.timestamp?.toDate().toUTCString())).fromNow()}</p>

@@ -3,7 +3,9 @@ import useStyles from './formJobsStyle.js';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { db } from "../../../firebase/firebase.js";
 import firebase from "firebase";
-
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const FormJobs = () => {
@@ -26,8 +28,8 @@ const FormJobs = () => {
                 description:job.description,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             });
-            clear();  
-            alert('posteado exitosamente');
+            clear();
+            toast.success('Job offer created successfully!',{autoClose:2000})  
              
         } catch (error) {
             console.error(error);
@@ -40,7 +42,9 @@ const FormJobs = () => {
     return (
         <>
         <Paper className={classes.paper}>
-            <form autoComplete="off" className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+            
+            <form autoComplete="off" className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} >
+            <ToastContainer />
                 <Typography variant='h6'><b>Post your job offer</b></Typography> 
                           
                 <TextField name='position' variant='outlined' label='Position' placeholder='Position'fullWidth value={job.position} onChange={(e)=>setJob({...job, position: e.target.value})} />
@@ -50,7 +54,7 @@ const FormJobs = () => {
                 <TextField name='location' variant='outlined' label='Location' placeholder='Location'fullWidth value={job.location} onChange={(e)=>setJob({...job, location: e.target.value})}/>
                 <TextField name='description' variant='outlined' label='Description' placeholder='Description' multiline fullWidth value={job.description} onChange={(e)=>setJob({...job, description: e.target.value})}/>
             
-                <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth>Submit</Button>    
+                <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth >Submit</Button>    
                 <Button className={classes.buttonClear} variant='contained' color='secondary' size='small'fullWidth onClick={clear}>Clear</Button>   
             </form>    
         </Paper>
