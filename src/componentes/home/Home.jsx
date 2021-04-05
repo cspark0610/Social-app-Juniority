@@ -13,6 +13,9 @@ import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
 import "./style.css";
+import { removeSelectedUserPosts } from "../../store/selectedUserPosts";
+import { setSelectedUser } from "../../store/selectedUser";
+
 
 const Home = () => {
   const firebase = useFirebaseApp();
@@ -32,6 +35,11 @@ const Home = () => {
         );
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(setSelectedUser(currentUser));
+    dispatch(removeSelectedUserPosts());
+  }, [])
 
   return (
     <>
