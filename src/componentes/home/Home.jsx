@@ -20,25 +20,26 @@ const Home = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
 
-
   useEffect(() => {
-        if(currentUser) {
-            db.collection('user').where("id", "==", currentUser.id).get()
-            .then(doc => doc.forEach(data => {
-                sessionStorage.setItem('currentUser', JSON.stringify(data.data()))
-            }))
-        }
-    }, []) 
+    if (currentUser) {
+      db.collection("user")
+        .where("id", "==", currentUser.id)
+        .get()
+        .then((doc) =>
+          doc.forEach((data) => {
+            sessionStorage.setItem("currentUser", JSON.stringify(data.data()));
+          })
+        );
+    }
+  }, []);
 
   return (
     <>
-      {/* {console.log("USER", currentUser)} */}
       {!currentUser ? (
         history.push("/register")
       ) : (
         <>
           <Navbar />
-
           <Grid
             container
             display="flex"
@@ -53,7 +54,7 @@ const Home = () => {
             spacing={3}
           >
             <Grid item md={3} style={{ paddingTop: 26 }}>
-              <Profile />
+              <Profile user={currentUser} />
               <Jobs />
             </Grid>
 
