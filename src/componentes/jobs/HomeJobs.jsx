@@ -14,7 +14,7 @@ const HomeJobs = () => {
       <>
       <Navbar/>
       
-      <div className="home__border">
+      <div className="home__borderJob">
         <Grid container display="flex" align="center"spacing={3} >
           <Grid item md={12}>
             <Search/>

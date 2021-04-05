@@ -9,13 +9,13 @@ import Button from "@material-ui/core/Button";
 import "./style.css";
 import { useSelector } from "react-redux";
 
-export const Publication = () => {
+export const Publication = ({ user }) => {
   const selectedUserPosts = useSelector((state) => state.selectedUserPosts);
-  const selectedUser = useSelector((state) => state.selectedUser);
+  const selectedUser = useSelector(state => state.selectedUser)
 
   return (
     <>
-      {selectedUserPosts.length &&
+      {selectedUserPosts.length ?
         selectedUserPosts.map((post) => {
           return (
             <div className="post__publication">
@@ -23,9 +23,9 @@ export const Publication = () => {
                 <Grid item md={12} className="text__aling__left text__aling">
                   <h3>
                     <Avatar>
-                      <img src={selectedUser.avatar} alt="avatar" />
+                      <img src={user.avatar} alt="avatar" />
                     </Avatar>
-                    {selectedUser.fullName}
+                    {user.fullName}
                   </h3>
                   <p>Full Stack Developer</p>
                   <hr className="line__profile__widget" />
@@ -38,7 +38,7 @@ export const Publication = () => {
                   <p>{post.message}</p>
                   {post.postImage !== "" ? (
                     <>
-                    <hr className="line__profile__widget" />
+                      <hr className="line__profile__widget" />
                       <div>
                         <img src={post.postImage} width="85%" height="85%" />
                       </div>
@@ -74,7 +74,7 @@ export const Publication = () => {
               </Grid>
             </div>
           );
-        })}
+        }) : <p>{`${selectedUser.fullName} no a relizado ningun post`}</p> }
     </>
   );
 };

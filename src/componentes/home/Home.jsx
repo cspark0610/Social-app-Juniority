@@ -13,6 +13,9 @@ import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
 import "./style.css";
+import { removeSelectedUserPosts } from "../../store/selectedUserPosts";
+import { setSelectedUser } from "../../store/selectedUser";
+
 
 const Home = () => {
   const firebase = useFirebaseApp();
@@ -20,25 +23,31 @@ const Home = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
 
+  useEffect(() => {
+    if (currentUser) {
+      db.collection("user")
+        .where("id", "==", currentUser.id)
+        .get()
+        .then((doc) =>
+          doc.forEach((data) => {
+            localStorage.setItem("currentUser", JSON.stringify(data.data()));
+          })
+        );
+    }
+  }, []);
 
   useEffect(() => {
-        if(currentUser) {
-            db.collection('user').where("id", "==", currentUser.id).get()
-            .then(doc => doc.forEach(data => {
-                sessionStorage.setItem('currentUser', JSON.stringify(data.data()))
-            }))
-        }
-    }, []) 
+    dispatch(setSelectedUser(currentUser));
+    dispatch(removeSelectedUserPosts());
+  }, [])
 
   return (
     <>
-      {/* {console.log("USER", currentUser)} */}
       {!currentUser ? (
         history.push("/register")
       ) : (
         <>
           <Navbar />
-
           <Grid
             container
             display="flex"
@@ -53,12 +62,14 @@ const Home = () => {
             spacing={3}
           >
             <Grid item md={3} style={{ paddingTop: 26 }}>
-              <Profile />
+              <Profile user={currentUser} />
               <Jobs />
             </Grid>
 
             <Grid item md={6}>
+
               <InputMessage />
+
             </Grid>
             <Grid item md={3}>
               <Widget />
