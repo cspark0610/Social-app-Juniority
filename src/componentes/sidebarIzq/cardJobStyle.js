@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   body: {
-    height: "100%",
+    /*height: "200px",*/
     display: "flex",
     flexDirection: "column",
     width: "85%",
