@@ -3,7 +3,6 @@ import { currentUserReducer } from "./currentUser";
 import { selectedUserReducer } from "./selectedUser";
 import { selectedUserPostsReducer } from "./selectedUserPosts";
 
-
 export default configureStore({
     reducer:{
         currentUser: currentUserReducer,
