@@ -149,7 +149,7 @@ const Navbar = () => {
           <div className={classes.sectionDesktop}>
             <IconButton>
               <WorkOutlineIcon className="ibutton" />
-              <div className="letrabutton">Jobs</div>
+              <div className="letrabutton"><Link to='/jobs'>Jobs</Link></div>
             </IconButton>
             <IconButton>
               <PeopleOutlineIcon className="ibutton" />{" "}
