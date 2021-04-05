@@ -1,0 +1,25 @@
+.back {
+  background: white;
+  border-radius: 1px;
+  height: fit-content;
+}
+.button__jobs {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 8px;
+  font-size: 10px !important;
+  color: #65baaf !important;
+}
+.h3__filter {
+  color: #3cb4e5 !important;
+}
+.h3__skill {
+  color: black !important;
+}
+.check__jobs{
+    color: #65baaf !important;
+}
+.text__h4{
+    text-align: start;
+    padding: 12px 8px;
+}
