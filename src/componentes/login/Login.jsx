@@ -10,6 +10,7 @@ import {
   db,
   providerFacebook,
   providerGoogle,
+  providerGithub,
 } from "../../firebase/firebase";
 import { setCurrentUser } from "../../store/currentUser";
 import Alert from "@material-ui/lab/Alert";
@@ -27,14 +28,28 @@ const Login = () => {
 
   const socialLogIn = (method) => {
     let data;
-    if (method === "google") {
-      auth.signInWithPopup(providerGoogle).then((result) => {
-        data = {
-          id: result.user.uid,
-          fullName: result.additionalUserInfo.profile.name,
-          email: result.additionalUserInfo.profile.email,
-          timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
-        };
+    auth
+      .signInWithPopup(method)
+      .then((result) => {
+        if (result.additionalUserInfo.providerId === "github.com") {
+          data = {
+            id: result.user.uid,
+            fullName: result.additionalUserInfo.username,
+            email: result.additionalUserInfo.profile.email,
+            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            avatar: result.additionalUserInfo.profile.avatar_url,
+          };
+        } else {
+          data = {
+            id: result.user.uid,
+            fullName: result.additionalUserInfo.profile.name,
+            email: result.additionalUserInfo.profile.email,
+            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            avatar: result.additionalUserInfo.profile.picture,
+          };
+        }
+        console.log("------------result------------", result);
+        console.log("------------data----------", data);
         if (result.additionalUserInfo.isNewUser) {
           db.collection("user")
             .doc(result.user.uid)
@@ -49,31 +64,8 @@ const Login = () => {
           sessionStorage.setItem("currentUser", JSON.stringify(data));
           history.push("/");
         }
-      });
-    } else {
-      auth.signInWithPopup(providerFacebook).then((result) => {
-        data = {
-          id: result.user.uid,
-          fullName: result.additionalUserInfo.profile.name,
-          email: result.additionalUserInfo.profile.email,
-          timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
-        };
-        if (result.additionalUserInfo.isNewUser) {
-          db.collection("user")
-            .doc(result.user.uid)
-            .set(data)
-            .then(() => {
-              dispatch(setCurrentUser(data));
-              sessionStorage.setItem("currentUser", JSON.stringify(data));
-              history.push("/");
-            });
-        } else {
-          dispatch(setCurrentUser(data));
-          sessionStorage.setItem("currentUser", JSON.stringify(data));
-          history.push("/");
-        }
-      });
-    }
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (text) => (e) => {
@@ -176,22 +168,26 @@ const Login = () => {
         <Typography variant="caption" align="center">
           Or login with a social media
           <i
-            onClick={() => socialLogIn("google")}
+            onClick={() => socialLogIn(providerGoogle)}
             className="fab fa-google w-10"
           />
           <i
-            onClick={() => socialLogIn("facebook")}
-            className="fab fa-facebook w-10-ml-2"
+            onClick={() => socialLogIn(providerFacebook)}
+            className="fab fa-facebook w-10-my-2"
+          />
+          <i
+            onClick={() => socialLogIn(providerGithub)}
+            className="fab fa-github w-10"
           />
         </Typography>
         {messageError && <Alert severity="error">{messageError}</Alert>}
-        <Link
+        {/* <Link
           to="/register"
           className="w-full max-w-xs shadow-sm rounded-sm py-1 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-10"
         >
           <i className="fas fa-user-plus fa 1x w-6-ml-2 text-indigo-500" />
           <span className="ml-4">Are you new? Register</span>
-        </Link>
+        </Link> */}
       </div>
     </form>
   );

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles((theme) => ({
+export default makeStyles({
   body: {
     height: "100%",
     display: "flex",
@@ -20,4 +20,4 @@ export const useStyles = makeStyles((theme) => ({
   cardJob: {
     with: "80%",
   },
-}));
+});

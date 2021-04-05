@@ -1,12 +1,10 @@
 import React from "react";
- import { useStyles } from "./jobsStyle";
+import useStyles from "./jobsStyle";
 import { Paper } from "@material-ui/core";
  import CardJob from "./CardJob";
 
 export default function Jobs() {
   const classes = useStyles();
- 
- 
 
   return (
     <div className={classes.body}>
@@ -18,9 +16,7 @@ export default function Jobs() {
         </div>
         <hr />
         <div>
-          <CardJob/>
-          <CardJob/>
-    
+          <CardJob />
         </div>
       </Paper>
     </div>
