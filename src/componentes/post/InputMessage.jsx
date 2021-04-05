@@ -18,6 +18,7 @@ import Post from "./Post";
 import { Avatar } from "@material-ui/core";
 import imagen from "../assets/ag.jpg";
 import { useSelector } from "react-redux";
+import CarroselJobs from "../carrouselJobs/CarroselJobs";
 
 const InputMessage = () => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -131,6 +132,8 @@ const InputMessage = () => {
           </div>
         </Card>
       </div>
+      <CarroselJobs/>
+
 
       {console.log(posts)}
       {posts.map(

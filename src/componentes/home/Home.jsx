@@ -62,7 +62,9 @@ const Home = () => {
             </Grid>
 
             <Grid item md={6}>
+
               <InputMessage />
+
             </Grid>
             <Grid item md={3}>
               <Widget />
