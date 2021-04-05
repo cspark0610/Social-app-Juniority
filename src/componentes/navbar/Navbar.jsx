@@ -50,7 +50,7 @@ const Navbar = () => {
 
   const logOut = (e) => {
     e.preventDefault();
-    sessionStorage.removeItem("currentUser");
+    localStorage.removeItem("currentUser");
     dispatch(setCurrentUser(false));
   };
 
