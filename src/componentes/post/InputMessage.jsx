@@ -27,6 +27,8 @@ const InputMessage = () => {
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
   const [imageUrl, setImageUrl] = useState();
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const classes = useStyles();
   const inputClasses = useInputStyles();
@@ -48,6 +50,7 @@ const InputMessage = () => {
       .then(() => {
         setImageUrl(false);
         toast.success("Post created successfully", { autoClose: 2000 });
+        setIsUploaded(false);
       })
       .catch((err) => console.error(err));
 
@@ -74,6 +77,7 @@ const InputMessage = () => {
       const fileRef = storageRef.child(file.name);
       await fileRef.put(file);
       setImageUrl(await fileRef.getDownloadURL());
+      await setIsUploaded(true);
     }
   };
 
@@ -135,7 +139,7 @@ const InputMessage = () => {
                 onChange={(e) => setInput(e.target.value)}
                 style={inputStyle}
               />
-              <button type="submit" onClick={handleSubmit}>
+              <button disabled={ input && isUploaded ? false : true } type="submit" onClick={handleSubmit}>
                 <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
               </button>
             </form>
