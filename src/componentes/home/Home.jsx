@@ -30,7 +30,7 @@ const Home = () => {
         .get()
         .then((doc) =>
           doc.forEach((data) => {
-            sessionStorage.setItem("currentUser", JSON.stringify(data.data()));
+            localStorage.setItem("currentUser", JSON.stringify(data.data()));
           })
         );
     }
