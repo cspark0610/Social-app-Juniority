@@ -65,7 +65,7 @@ const Register = () => {
             .set(data)
             .then(() => {
               dispatch(setCurrentUser(data));
-              sessionStorage.setItem("currentUser", JSON.stringify(data));
+              localStorage.setItem("currentUser", JSON.stringify(data));
               history.push("/");
             });
         })

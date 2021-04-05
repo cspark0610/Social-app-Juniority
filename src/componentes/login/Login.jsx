@@ -56,12 +56,12 @@ const Login = () => {
             .set(data)
             .then(() => {
               dispatch(setCurrentUser(data));
-              sessionStorage.setItem("currentUser", JSON.stringify(data));
+              localStorage.setItem("currentUser", JSON.stringify(data));
               history.push("/");
             });
         } else {
           dispatch(setCurrentUser(data));
-          sessionStorage.setItem("currentUser", JSON.stringify(data));
+          localStorage.setItem("currentUser", JSON.stringify(data));
           history.push("/");
         }
       })
@@ -84,7 +84,7 @@ const Login = () => {
           .then((doc) => {
             doc.forEach((data) => {
               dispatch(setCurrentUser(data.data()));
-              sessionStorage.setItem(
+              localStorage.setItem(
                 "currentUser",
                 JSON.stringify(data.data())
               );
