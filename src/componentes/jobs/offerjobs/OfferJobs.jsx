@@ -1,0 +1,103 @@
+import React, {useState,useEffect} from 'react';
+import { Grid } from "@material-ui/core";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import { InputIcon } from "../../profile/post/InputIcon.js";
+import Button from "@material-ui/core/Button";
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import { emphasize, withStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
+import logo from '../../assets/juniority.svg';
+import "./offerJobsStyle.css";
+import moment from 'moment';
+import { db } from "../../../firebase/firebase.js";
+
+
+
+
+const OfferJobs = () => {
+    
+    const StyledBreadcrumb = withStyles((theme) => ({
+        root: {
+          backgroundColor: theme.palette.grey[100],
+          height: theme.spacing(3),
+          color: theme.palette.grey[800],
+          fontWeight: theme.typography.fontWeightRegular,
+          '&:hover, &:focus': {
+            backgroundColor: theme.palette.grey[300],
+          },
+          '&:active': {
+            boxShadow: theme.shadows[1],
+            backgroundColor: emphasize(theme.palette.grey[300], 0.12),
+          },
+        },
+      }))(Chip);
+      const [jobsOffers, setJobsOffers] = useState([]);
+     
+      useEffect(()=>{
+        db.collection('jobs').orderBy('timestamp', 'desc')
+        .onSnapshot(shot =>{
+          setJobsOffers(shot.docs.map(doc =>({
+                id: doc.id,
+                data: doc.data(),
+          })
+          ))
+        })
+      },[]);
+      
+    return (
+     
+    <>
+     {console.log(jobsOffers)}
+      {jobsOffers && jobsOffers.map(jobsOffer =>(
+
+           <div className="job__container" style={{backgroundColor:'white'}} key={jobsOffer.id}>
+           <Grid container>
+             <Grid item md={2}>
+                 <img src={logo} className="logo" alt="Logo Juniority" width='60%' height='60%'/>
+             </Grid>
+             <Grid item md={6} className="text__job__left text__job" >
+                 <h2>{jobsOffer.data.position}</h2>
+                 <p>Juniority</p>
+                 <p><LocationOnIcon className="date__icon"/>{jobsOffer.data.location}</p>
+             </Grid>
+             <Grid item md={4} className="text__job__right">
+               <p><AccessTimeIcon className="date__icon"/>{moment(new Date(jobsOffer.data.timestamp?.toDate().toUTCString())).fromNow()}</p>
+             </Grid>
+            
+           </Grid>
+           <hr className="line__profile__widget" />
+             <div className='salary_availability'>
+                 <p> {jobsOffer.data.salary} </p>
+                 <p> {jobsOffer.data.availability}</p>
+             </div>
+             <div className='description'>
+                 <p>{jobsOffer.data.description}</p>
+             </div> 
+             <div className='skills'>
+               <Breadcrumbs aria-label='breadcrumb'>
+                  {jobsOffer.data.skills.split(' ') && jobsOffer.data.skills.split(' ').map(skill=>(
+                    <StyledBreadcrumb label={skill}/>
+                  ))}               
+                </Breadcrumbs>
+             </div> 
+           <hr className="line__profile__widget" />
+             <div className='job__buttom'>
+                 <InputIcon Icon={FavoriteBorderIcon} title="16" color="red" />
+                 <InputIcon Icon={ChatBubbleOutlineOutlinedIcon} title="8" color="black"/>
+                 <InputIcon Icon={ShareOutlinedIcon} title="2" color="black" />
+             </div>
+           <hr className="line__profile__widget" />
+             <Button size='large' variant='contained' color='primary' className='button__apply'>Apply</Button>
+         </div>
+
+
+      ))}
+    </>
+    )
+}
+
+export default OfferJobs
