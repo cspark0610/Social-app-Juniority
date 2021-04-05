@@ -21,8 +21,12 @@ export default makeStyles({
         marginLeft: '50px',
              
     },
+    message:{
+        textAlign: 'justify',
+        textJustify: 'inter-word',
+    },
     body:{
-        overfloWrap: 'anywhere'
+        overflowWrap:'anywhere',
     },
     buttons:{
         display: 'flex',
