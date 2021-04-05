@@ -34,7 +34,7 @@ const CarroselJobs = () => {
   return (
     <div className={classes.body}>
       
-      {jobsOffers.length>0 ? 
+      {jobsOffers.length > 5 ? 
           <Slider {...settings}>
           <div className={classes.backgr}>
             <div className={classes.image}>

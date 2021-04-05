@@ -12,7 +12,7 @@ const CardJob = ({id, position, location, timestamp }) => {
 
   return (
     <> 
-    {console.log('holaaaa',id, position, location ,timestamp)}
+    
            <div className={classes.body}>
            <Paper className={classes.top}>
              <div className={classes.section1}>
