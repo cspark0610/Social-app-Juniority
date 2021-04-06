@@ -33,7 +33,8 @@ const OfferJobs = () => {
   }  
   const [input, setInput] = useState("");
   const [cvUrl , setCvUrl] = useState("")
-  
+
+
     const StyledBreadcrumb = withStyles((theme) => ({
         root: {
           backgroundColor: theme.palette.grey[100],
@@ -142,7 +143,7 @@ const OfferJobs = () => {
                   <DialogActions>
                     <Button onClick={handleClose} color="primary"> Cancel </Button>
 
-                    <input onChange={(e) => onFileChange(e)} accept="file/*" id="icon-button-file" type="file" className="modalInput"/>
+                    <input onChange={(e) => onFileChange(e)} accept="file/*" id="icon-button-file" type="file"/>
                       <label htmlFor="icon-button-file" > 
                         <Button onClick={handleSubmit} color="primary" type='submit'> Load your CV </Button>
                       </label>

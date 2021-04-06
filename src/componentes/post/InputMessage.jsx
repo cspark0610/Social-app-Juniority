@@ -101,39 +101,16 @@ const InputMessage = () => {
         style={{ background: "white", borderRadius: "10px" }}
       >
         <div className={classes.optionsIcons}>
-          <InputOption
-            Icon={ShareOutlinedIcon}
-            title="Share Update"
-            color="#ADD8E6"
-          />
+          <InputOption Icon={ShareOutlinedIcon}title="Share Update" color="#ADD8E6"/>
 
-          <input
-            onChange={(e) => onFileChange(e)}
-            accept="image/*"
-            id="icon-button-file"
-            type="file"
-            className={inputClasses.input}
-          />
+          <input onChange={(e) => onFileChange(e)} accept="image/*"id="icon-button-file" type="file" className={inputClasses.input}/>
           <label htmlFor="icon-button-file">
-            <IconButton
-              color="primary"
-              size="small"
-              aria-label="upload picture"
-              component="span"
-            >
-              <InputOption
-                Icon={ImageOutlinedIcon}
-                title="Upload a photo"
-                color="#ADD8E6"
-              />
+            <IconButton color="primary" size="small" aria-label="upload picture" component="span">
+              <InputOption Icon={ImageOutlinedIcon} title="Upload a photo" color="#ADD8E6"/>
             </IconButton>
           </label>
 
-          <InputOption
-            Icon={SaveOutlinedIcon}
-            title="Write an article"
-            color="#ADD8E6"
-          />
+          <InputOption Icon={SaveOutlinedIcon} title="Write an article" color="#ADD8E6"/>
         </div>
         <Card className={classes.container}>
           <div className={classes.container_input}>
