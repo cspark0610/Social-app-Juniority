@@ -23,6 +23,7 @@ const Home = () => {
   const selectedUser = useSelector((state) => state.selectedUser);
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState()
 
   const handleClose = () => {
     setOpen(false);
@@ -74,6 +75,7 @@ const Home = () => {
                 user={currentUser}
                 setUsers={setUsers}
                 handleOpen={handleOpen}
+                setTitle={setTitle}
               />
               <Jobs />
             </Grid>
@@ -84,6 +86,7 @@ const Home = () => {
                 title="Follow"
                 handleClose={handleClose}
                 users={users}
+                title={title}
               />
               <InputMessage />
             </Grid>
