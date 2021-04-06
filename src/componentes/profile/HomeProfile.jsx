@@ -11,11 +11,21 @@ import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
 import { useDispatch } from "react-redux";
 import { setSelectedUserPosts } from "../../store/selectedUserPosts";
+import TransitionsModal from '../home/TransitionModal';
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState();
+  const [open, setOpen] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     db.collection("posts")
@@ -29,13 +39,19 @@ const HomeProfile = (props) => {
   }, []);
 
   useEffect(() => {
-    db.collection("user")
+    /* db.collection("user")
       .where("id", "==", userId)
       .get()
       .then((doc) => {
         doc.forEach((data) => {
           setSelectedUser(data.data());
         });
+      }); */
+
+    db.collection("user")
+      .where("id", "==", userId)
+      .onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => setSelectedUser(doc.data()));
       });
   }, []);
   return (
@@ -52,12 +68,17 @@ const HomeProfile = (props) => {
           <div className="home__border">
             <Grid container display="flex" align="center" spacing={3}>
               <Grid item md={3}>
-                <Profile user={selectedUser} />
+                <Profile user={selectedUser} setUsers={setUsers} handleOpen={handleOpen}/>
                 <Portfolio />
               </Grid>
-
+              <TransitionsModal
+                open={open}
+                setOpen={setOpen}
+                handleClose={handleClose}
+                users={users}
+              />
               <Grid item md={6}>
-                <PostProfile />
+                <PostProfile user={selectedUser} />
                 <Publication user={selectedUser} />
               </Grid>
 

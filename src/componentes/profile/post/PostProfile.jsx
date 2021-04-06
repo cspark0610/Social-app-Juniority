@@ -11,17 +11,17 @@ import "./style.css";
 import { useSelector } from "react-redux";
 
 
-export const PostProfile = () => {
-  const selectedUser = useSelector(state => state.selectedUser)
+export const PostProfile = ({user}) => {
+  const currentUser = useSelector(state => state.currentUser);
 
   return (
     <>
-    {selectedUser && (
+    {user && (
 
     <div className="feed__containerInput">
       <Grid container >
         <Grid item md={6} className="text__aling__left text__aling">
-        <h3>{selectedUser.fullName}</h3>
+        <h3>{user.fullName}</h3>
         <p>Full Stack Developer</p>
         <p>
           <LocationOnIcon />
@@ -34,9 +34,11 @@ export const PostProfile = () => {
             </div>
         </Grid>
         <Grid item md={6} className="text__aling__right">
+        {user.id === currentUser.id ? null : (
         <Button className="button__profile__follow">
         <MailOutlineIcon className="message__post"/> Message
         </Button>
+        )}
         </Grid>
       </Grid>
     </div>

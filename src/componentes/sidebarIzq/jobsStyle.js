@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles({
   body: {
-    height: "100%",
     display: "flex",
     flexDirection: "column",
     marginTop: "15px",
