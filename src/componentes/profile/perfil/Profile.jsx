@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
 import { addFollow, unFollow } from "../../utils/followSystem";
 
-export const Profile = ({ user, setUsers, handleOpen }) => {
+export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
   const [isFollowing, setIsFollowing] = useState();
@@ -70,8 +70,9 @@ export const Profile = ({ user, setUsers, handleOpen }) => {
   };
 
 
-  const openFollowModal = (e, users) => {
+  const openFollowModal = (e, users, modalTitle) => {
     e.preventDefault();
+    setTitle(modalTitle);
     const follows = []
     users.map(user => follows.push({
       photo: user.avatar,
@@ -113,13 +114,13 @@ export const Profile = ({ user, setUsers, handleOpen }) => {
         {user.id === currentUser.id ? null : <Button className="button__profile__hire">Hire</Button>}
         <br />
         <hr className="line__profile" />
-        <button onClick={e => openFollowModal(e, user.follow)}>
+        <button onClick={e => openFollowModal(e, user.follow, 'Follow')}>
         <h3>Follow</h3>
         </button>
         <h4>{user.follow.length}</h4>
 
         <hr className="line__profile" />
-        <button onClick={e => openFollowModal(e, user.followers)}>
+        <button onClick={e => openFollowModal(e, user.followers, 'Followers')}>
         <h3>Followers</h3>
         </button>
         <h4>{user.followers.length}</h4>

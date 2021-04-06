@@ -19,6 +19,7 @@ const HomeProfile = (props) => {
   const [selectedUser, setSelectedUser] = useState();
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState([]);
+  const [title, setTitle] = useState()
 
   const handleClose = () => {
     setOpen(false);
@@ -68,7 +69,7 @@ const HomeProfile = (props) => {
           <div className="home__border">
             <Grid container display="flex" align="center" spacing={3}>
               <Grid item md={3}>
-                <Profile user={selectedUser} setUsers={setUsers} handleOpen={handleOpen}/>
+                <Profile user={selectedUser} setUsers={setUsers} handleOpen={handleOpen} setTitle={setTitle}/>
                 <Portfolio />
               </Grid>
               <TransitionsModal
@@ -76,6 +77,7 @@ const HomeProfile = (props) => {
                 setOpen={setOpen}
                 handleClose={handleClose}
                 users={users}
+                title={title}
               />
               <Grid item md={6}>
                 <PostProfile user={selectedUser} />
