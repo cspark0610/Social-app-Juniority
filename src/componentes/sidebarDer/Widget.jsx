@@ -8,6 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import IconButton from "@material-ui/core/IconButton";
 import { useSelector } from "react-redux";
 import { addFollow } from "../utils/followSystem.js";
+import {Link} from "react-router-dom";
 
 const Widget = () => {
   const [ users, setUsers ]= useState([]);
@@ -53,7 +54,7 @@ const Widget = () => {
             <Avatar>{usersFiltered[randomIdx1]?.data?.fullName.charAt(0).toUpperCase()}</Avatar> 
           </div>
           <div className={classes.people_right}>
-            <Typography>{usersFiltered[randomIdx1]?.data?.fullName}</Typography>
+            <Typography><Link to={ `/profile/${usersFiltered[randomIdx1]?.id}` }>{usersFiltered[randomIdx1]?.data?.fullName} </Link></Typography>
             <p style={{ color: "gray", fontSize: "12px" }}>
               {usersFiltered[randomIdx1]?.data?.email}
             </p>
@@ -71,7 +72,8 @@ const Widget = () => {
             <Avatar>{usersFiltered[randomIdx2]?.data?.fullName.charAt(0).toUpperCase()} </Avatar>
           </div>
           <div className={classes.people_right}>
-            <Typography>{usersFiltered[randomIdx2]?.data?.fullName}</Typography>
+            <Typography><Link to={ `/profile/${usersFiltered[randomIdx2]?.id}` }>{usersFiltered[randomIdx2]?.data?.fullName}</Link>
+              </Typography>
             <p style={{ color: "gray", fontSize: "12px" }}>
               {usersFiltered[randomIdx2]?.data?.email}
             </p>
@@ -89,7 +91,10 @@ const Widget = () => {
             <Avatar>{usersFiltered[randomIdx3]?.data?.fullName.charAt(0).toUpperCase()} </Avatar>
           </div>
           <div className={classes.people_right}>
-            <Typography>{usersFiltered[randomIdx3]?.data?.fullName}</Typography>
+            <Typography>
+            <Link to={ `/profile/${usersFiltered[randomIdx2]?.id}` }>
+              {usersFiltered[randomIdx3]?.data?.fullName}
+              </Link></Typography>
             <p style={{ color: "gray", fontSize: "12px" }}>
               {usersFiltered[randomIdx3]?.data?.email}
             </p>

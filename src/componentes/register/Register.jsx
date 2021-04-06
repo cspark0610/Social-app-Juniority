@@ -140,9 +140,8 @@ const Register = () => {
                     variant="body2"
                     style={{ backgroundColor: "white" }}
                   >
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Soluta vero repellendus quaerat dolores, ipsum numquam
-                    molestias ad?
+      Un lugar donde la gente pueda postear dudas. Un lugar donde juniors, puedan conseguir empleo. Un lugar donde las empresas, puedan conseguir juniors
+
                   </Typography>
                 </div>
               </div>
