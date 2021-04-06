@@ -58,6 +58,8 @@ const Register = () => {
             id: user.user.uid,
             fullName,
             email,
+            follow: [],
+            followers: [],
             timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
           };
           db.collection("user")
