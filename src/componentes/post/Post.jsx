@@ -96,47 +96,21 @@ const Post = ({ id, name, message, userId, photo, postImage, timestamp }) => {
         </>
       ) : null}
       <div className={classes.buttons}>
-        <InputOption
-          Icon={FavoriteBorderOutlinedIcon}
-          title="Like"
-          color="#E60026"
-        />
+        <InputOption Icon={FavoriteBorderOutlinedIcon} title="Like" color="#E60026"/>
         <span onClick={() => handleComment()}>
-          <InputOption
-            Icon={ChatBubbleOutlineOutlinedIcon}
-            title="Comment"
-            color="#ADD8E6"
-          />
+          <InputOption Icon={ChatBubbleOutlineOutlinedIcon} title="Comment" color="#ADD8E6"/>
         </span>
         <InputOption Icon={ShareOutlinedIcon} title="Share" />
       </div>
       <hr />
       {comment && (
-        <div
-          className="max-w-full shadow-xl my-3.5 "
-          style={{ background: "white", borderRadius: "10px" }}
-        >
+        <div className="max-w-full shadow-xl my-3.5 " style={{ background: "white", borderRadius: "10px" }}>
           <Card className={inputClasses.container}>
             <div className={inputClasses.container_input}>
               <Avatar src={currentUser.avatar} />
-              <form
-                onSubmit={handleSubmit}
-                style={{ display: "flex", width: "100%" }}
-              >
-                <input
-                  placeholder="Write a comment"
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  style={{
-                    border: "none",
-                    flex: "1",
-                    marginLeft: "10px",
-                    outlineWidth: "0",
-                    fontWeight: "600",
-                    fontSize: "74%",
-                  }}
-                />
+              <form onSubmit={handleSubmit} style={{ display: "flex", width: "100%" }}>
+                <input placeholder="Write a comment" type="text"value={input} onChange={(e) => setInput(e.target.value)}
+                  style={{border: "none",flex: "1",marginLeft: "10px",outlineWidth: "0",fontWeight: "600",fontSize: "74%"}}/>
                 <button type="submit">
                   <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
                 </button>
