@@ -29,14 +29,21 @@ const HomeProfile = (props) => {
   }, []);
 
   useEffect(() => {
-    db.collection("user")
+    /* db.collection("user")
       .where("id", "==", userId)
       .get()
       .then((doc) => {
         doc.forEach((data) => {
           setSelectedUser(data.data());
         });
-      });
+      }); */
+
+      db.collection("user")
+      .where("id", "==", userId)
+      .onSnapshot(snapshot => {
+        snapshot.docs.map(doc => setSelectedUser((doc.data())))
+      })
+
   }, []);
   return (
     <>

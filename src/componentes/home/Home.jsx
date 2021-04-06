@@ -22,6 +22,7 @@ const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
+  const selectedUser = useSelector(state => state.selectedUser)
 
   useEffect(() => {
     if (currentUser) {
