@@ -64,7 +64,7 @@ const HomeProfile = (props) => {
               </Grid>
 
               <Grid item md={6}>
-                <PostProfile />
+                <PostProfile user={selectedUser}/>
                 <Publication user={selectedUser} />
               </Grid>
 

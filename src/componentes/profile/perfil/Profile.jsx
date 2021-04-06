@@ -5,56 +5,74 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
-import { setFollowersSelectedUser, setSelectedUser } from "../../../store/selectedUser";
+import {
+  setFollowersSelectedUser,
+  setSelectedUser,
+} from "../../../store/selectedUser";
 import { setCurrentUser } from "../../../store/currentUser";
 
-export const Profile = ({user}) => {
+export const Profile = ({ user }) => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.currentUser);
+  const currentUser = useSelector((state) => state.currentUser);
   const [isFollowing, setIsFollowing] = useState();
 
   useEffect(() => {
-    const validator = user.followers.filter(user => user.id == currentUser.id);
-    console.log(validator)
+    const validator = user.followers.filter(
+      (user) => user.id == currentUser.id
+    );
+    console.log(validator);
     validator.length ? setIsFollowing(true) : setIsFollowing(false);
   }, []);
 
+  useEffect(() => {
+    
+  }, [isFollowing])
+
   const addFollow = async (targetUser) => {
-    const thisUser = currentUser;
+    const thisUser = {...currentUser};
     const { fullName, avatar, id } = thisUser;
 
-    /* targetUserCopy.followers.push({ fullName, avatar, id}); */
     targetUser.followers = [...targetUser.followers, { fullName, avatar, id }];
-    thisUser.follow = [...thisUser.follow, {
-      fullName: targetUser.fullName,
-      avatar: targetUser.avatar,
-      id: targetUser.id
-    }]
-    /* thisUser.follow.push({ 
-      fullName: targetUser.fullName,
-      avatar: targetUser.avatar,
-      id: targetUser.id
-    }); */
-    
-    console.log(targetUser, thisUser)
-    await db.collection('user').doc(targetUser.id).set(targetUser);
-    await db.collection('user').doc(currentUser.id).set(thisUser);
-    
-    /* dispatch(setFollowersSelectedUser({ fullName, avatar, id })); */
-    /* dispatch(setCurrentUser({
-      fullName: targetUser.fullName,
-      avatar: targetUser.avatar,
-      id: targetUser.id
-    })); */
+    thisUser.follow = [
+      ...thisUser.follow,
+      {
+        fullName: targetUser.fullName,
+        avatar: targetUser.avatar,
+        id: targetUser.id,
+      },
+    ];
+
+    await db.collection("user").doc(targetUser.id).set(targetUser);
+    await db.collection("user").doc(currentUser.id).set(thisUser);
+
+    setIsFollowing(true);
   };
 
-  const unFollow = (e) => {
+  const unFollow = async (targetUser) => {
+    const thisUser = { ...currentUser };
 
+    targetUser.followers = targetUser.followers.filter(
+      (user) => user.id !== thisUser.id
+    );
+    thisUser.follow = thisUser.follow.filter(
+      (user) => user.id !== targetUser.id
+    );
+
+    console.log(targetUser, thisUser);
+
+    await db.collection("user").doc(targetUser.id).set(targetUser);
+    await db.collection("user").doc(currentUser.id).set(thisUser);
+
+    setIsFollowing(false);
   };
 
-  const followHandler = (e, string) => {
+  const followHandler = (e) => {
     e.preventDefault();
-    isFollowing ? unFollow() : addFollow(user);
+    if (isFollowing) {
+      unFollow(user);
+    } else {
+      addFollow(user);
+    }
   };
 
   return (
@@ -67,12 +85,23 @@ export const Profile = ({user}) => {
         <br />
         {/* <h3>John Doe</h3>
               <h4>Full Stack Developer</h4> */}
-        { !isFollowing ? (
-        <Button onClick={e => followHandler(e)} className="button__profile__follow">Follow</Button>
-         ) : (
-          <Button>Unfollow</Button>
-        )}
-        <Button className="button__profile__hire">Hire</Button>
+        { user.id === currentUser.id ? (
+          <p>{currentUser.fullName.toUpperCase()}</p>
+        ) : 
+        !isFollowing ? (
+          <Button
+            onClick={(e) => followHandler(e)}
+            className="button__profile__follow"
+          >
+            Follow
+          </Button>
+        ) : (
+          <Button 
+          className="button__profile__follow"
+          onClick={e => followHandler(e)}>Unfollow</Button>
+        )
+        }
+        {user.id === currentUser.id ? null : <Button className="button__profile__hire">Hire</Button>}
         <br />
         <hr className="line__profile" />
         <h3>Follow</h3>

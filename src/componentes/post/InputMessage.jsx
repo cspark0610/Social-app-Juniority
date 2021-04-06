@@ -139,7 +139,7 @@ const InputMessage = () => {
                 onChange={(e) => setInput(e.target.value)}
                 style={inputStyle}
               />
-              <button disabled={ input && isUploaded ? false : true } type="submit" onClick={handleSubmit}>
+              <button disabled={ input ? false : true } type="submit" onClick={handleSubmit}>
                 <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
               </button>
             </form>
