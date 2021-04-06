@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal({ handleClose, open, userLikes }) {
+export default function TransitionsModal({ handleClose, open, users, title }) {
   const classes = useStyles();
 
   return (
@@ -43,10 +43,10 @@ export default function TransitionsModal({ handleClose, open, userLikes }) {
               id="transition-modal-title"
               style={{ textAlign: "center", fontWeight: "600" }}
             >
-              Likes
+              {title}
             </h2>
             <p id="transition-modal-description">
-              {userLikes.map((user) => (
+              {users.map((user) => (
                 <div style={{ display: "flex" }}>
                   <Avatar src={user.photo} />
                   <Link to={`/profile/${user.userId}`}>{user.userName}</Link>

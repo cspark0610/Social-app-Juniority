@@ -167,7 +167,7 @@ const InputMessage = () => {
         open={open}
         setOpen={setOpen}
         handleClose={handleClose}
-        userLikes={userLikes}
+        users={userLikes}
       />
       <CarroselJobs />
       {posts.map(
