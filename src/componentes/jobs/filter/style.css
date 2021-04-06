@@ -2,6 +2,7 @@
   background: white;
   border-radius: 1px;
   height: fit-content;
+  padding: 25px 0;
 }
 .button__jobs {
   display: flex;
@@ -15,11 +16,32 @@
 }
 .h3__skill {
   color: black !important;
+  text-align: initial !important;
+  padding-left:25px !important;
+  font-size: 15px !important;
 }
 .check__jobs{
     color: #65baaf !important;
 }
 .text__h4{
     text-align: start;
-    padding: 12px 8px;
+    
+    color: #65baaf !important;
+}
+.TextField__filter{
+  background: #65baaf !important;
+  opacity: 0.4;
+
+}
+.aling__filter{
+  align-content: flex-start !important;
+}
+.text__h4__center{
+  color: #65baaf !important;
+  text-align: center !important;
+  padding: 0 !important;
+}
+.select__multiple{
+  width: 80% !important;
+  border: 1px solid #65BAAF !important;
 }

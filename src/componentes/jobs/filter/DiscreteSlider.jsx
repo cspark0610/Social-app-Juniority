@@ -2,34 +2,13 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import "./style.css";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     width: "80%",
   },
-  margin: {
-    height: theme.spacing(3),
-  },
-}));
-
-const marks = [
-  {
-    value: 0,
-    label: '500$',
-  },
-  {
-    value: 500,
-    label: '500$',
-  },
-  {
-    value: 1000,
-    label: '1000$',
-  },
-  {
-    value: 1500,
-    label: '+1500$',
-  },
-];
+});
 
 function valuetext(value) {
   return `${value}$`;
@@ -40,14 +19,18 @@ export default function DiscreteSlider() {
 
   return (
     <div className={classes.root}>
-
+      <Typography id="discrete-slider" gutterBottom className="text__h4__center">
+      0$ - 500$
+      </Typography>
       <Slider
-        defaultValue={20}
+        defaultValue={30}
         getAriaValueText={valuetext}
-        aria-labelledby="discrete-slider-custom"
-        step={5}
+        aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
-        marks={marks}
+        step={10}
+        marks
+        min={500}
+        max={1500}
       />
     </div>
   );
