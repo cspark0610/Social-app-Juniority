@@ -13,9 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import logo from '../../assets/juniority.svg';
 import "./offerJobsStyle.css";
 import moment from 'moment';
-import { db } from "../../../firebase/firebase.js";
-
-
+import { db, auth } from "../../../firebase/firebase.js";
 
 
 const OfferJobs = () => {
@@ -34,7 +32,7 @@ const OfferJobs = () => {
             backgroundColor: emphasize(theme.palette.grey[300], 0.12),
           },
         },
-      }))(Chip);
+      }))(Chip);     
       const [jobsOffers, setJobsOffers] = useState([]);
      
       useEffect(()=>{
@@ -51,7 +49,7 @@ const OfferJobs = () => {
     return (
      
     <>
-     {console.log(jobsOffers)}
+
       {jobsOffers && jobsOffers.map(jobsOffer =>(
 
            <div className="job__container" style={{backgroundColor:'white'}} key={jobsOffer.id}>

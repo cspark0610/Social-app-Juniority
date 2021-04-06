@@ -17,6 +17,7 @@ import InputOption from "./InputOption";
 import Post from "./Post";
 import { Avatar } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import CarroselJobs from "../carrouselJobs/CarroselJobs";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -145,6 +146,8 @@ const InputMessage = () => {
           </div>
         </Card>
       </div>
+      <CarroselJobs/>
+
 
       {posts.map(
         ({
