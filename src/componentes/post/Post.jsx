@@ -8,24 +8,42 @@ import { Avatar, Card } from "@material-ui/core";
 import useStyles from "./PostStyle.js";
 import InputOption from "./InputOption";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
+
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-const Post = ({ id, name, message, userId, photo, postImage, timestamp }) => {
+const Post = ({
+  id,
+  name,
+  message,
+  userId,
+  photo,
+  postImage,
+  likes,
+  timestamp,
+  handleOpen,
+  setUserLikes,
+}) => {
   const classes = useStyles();
   const inputClasses = inputStyles();
   const date = new Date(timestamp?.toDate()).toUTCString();
+  const currentUser = useSelector((state) => state.currentUser);
   const [comment, setComment] = useState(false);
   const [data, setData] = useState([]);
   const [input, setInput] = useState("");
-  const currentUser = useSelector((state) => state.currentUser);
+  const [inUse, setInUse] = useState(FavoriteBorderOutlinedIcon);
+  // const notLiked = FavoriteBorderOutlinedIcon;
+  // const liked = FavoriteOutlinedIcon;
 
   let handleComment = () => {
     db.collection("comments")
+      .orderBy("timestamp", "desc")
       .where("postId", "==", id)
+      .limit(4)
       .get()
       .then((querySnapShot) => {
         setData(
@@ -35,7 +53,6 @@ const Post = ({ id, name, message, userId, photo, postImage, timestamp }) => {
           }))
         );
       })
-      .then(() => console.log(data))
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
@@ -55,11 +72,56 @@ const Post = ({ id, name, message, userId, photo, postImage, timestamp }) => {
       })
       .then(() => console.log("exitoso"));
   };
+
+  let handleLikes = (e) => {
+    if (!e.target.matches(".zse")) {
+      if (inUse === FavoriteBorderOutlinedIcon) {
+        db.collection("likes").doc(`${id}_${userId}`).set({
+          postId: id,
+          userId,
+          userName: name,
+          photo,
+        });
+        db.collection("posts")
+          .doc(id)
+          .set(
+            {
+              likes: likes + 1,
+            },
+            { merge: true }
+          );
+        setInUse(FavoriteOutlinedIcon);
+      } else {
+        db.collection("posts")
+          .doc(id)
+          .set(
+            {
+              likes: likes - 1,
+            },
+            { merge: true }
+          );
+        db.collection("likes").doc(`${id}_${userId}`).delete();
+        setInUse(FavoriteBorderOutlinedIcon);
+      }
+    }
+  };
+  let openLikes = () => {
+    db.collection("likes")
+      .where("postId", "==", id)
+      .get()
+      .then((querySnapShot) => {
+        setUserLikes(querySnapShot.docs.map((doc) => doc.data()));
+      });
+    // setUserLikes("hola");
+    handleOpen();
+  };
+
   useEffect(() => {
     //https://firebase.google.com/docs/firestore/query-data/listen
     db.collection("comments")
-      .where("postId", "==", id)
       .orderBy("timestamp", "desc")
+      .where("postId", "==", id)
+      .limit(4)
       .onSnapshot((snapshot) => {
         setData(
           snapshot.docs.map((doc) => ({
@@ -69,6 +131,17 @@ const Post = ({ id, name, message, userId, photo, postImage, timestamp }) => {
         );
       });
   }, [comment]);
+  useEffect(() => {
+    db.collection("likes")
+      .doc(`${id}_${userId}`)
+      .get()
+      .then((doc) => {
+        if (doc.data()) {
+          setInUse(FavoriteOutlinedIcon);
+        }
+        // querySnapShot.forEach((doc) => console.log("HOla", doc.data()));
+      });
+  }, []);
 
   return (
     <div className={classes.post}>
@@ -96,12 +169,21 @@ const Post = ({ id, name, message, userId, photo, postImage, timestamp }) => {
         </>
       ) : null}
       <div className={classes.buttons}>
-        <InputOption
-          Icon={FavoriteBorderOutlinedIcon}
-          title="Like"
-          color="#E60026"
-        />
-        <span onClick={() => handleComment()}>
+        <span onClick={(e) => handleLikes(e)}>
+          <InputOption
+            Icon={inUse}
+            title={
+              <div>
+                Likes{" "}
+                <span onClick={openLikes} className={`${classes.likes} zse`}>
+                  {likes || 0}
+                </span>
+              </div>
+            }
+            color="#E60026"
+          />
+        </span>
+        <span onClick={handleComment}>
           <InputOption
             Icon={ChatBubbleOutlineOutlinedIcon}
             title="Comment"
@@ -146,11 +228,18 @@ const Post = ({ id, name, message, userId, photo, postImage, timestamp }) => {
           {data.length > 0 ? (
             <>
               {data.map((comment) => (
-                <div key={comment.id}>
+                <div className={classes.containerComment} key={comment.id}>
                   <Avatar src={comment.data.photo} />
-                  {comment.data.userName}
-                  <br />
-                  {comment.data.text}
+                  <div className={classes.containerCommentText}>
+                    <a
+                      href={`/profile/${comment.data.userId}`}
+                      className={classes.titleComment}
+                    >
+                      {comment.data.userName}
+                    </a>
+                    <br />
+                    {comment.data.text}
+                  </div>
                 </div>
               ))}
             </>

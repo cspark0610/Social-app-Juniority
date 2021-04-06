@@ -20,12 +20,15 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TransitionsModal from "../home/TransitionModal.jsx";
 
 const InputMessage = () => {
   const currentUser = useSelector((state) => state.currentUser);
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
   const [imageUrl, setImageUrl] = useState();
+  const [open, setOpen] = React.useState(false);
+  const [userLikes, setUserLikes] = useState([]);
 
   const classes = useStyles();
   const inputClasses = useInputStyles();
@@ -42,6 +45,7 @@ const InputMessage = () => {
         userId: currentUser.id,
         photo: currentUser.avatar,
         postImage: imageUrl ? imageUrl : "",
+        likes: 0,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
@@ -52,6 +56,14 @@ const InputMessage = () => {
 
     setInput("");
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   useEffect(() => {
     //https://firebase.google.com/docs/firestore/query-data/listen
     db.collection("posts")
@@ -141,11 +153,16 @@ const InputMessage = () => {
           </div>
         </Card>
       </div>
-
+      <TransitionsModal
+        open={open}
+        setOpen={setOpen}
+        handleClose={handleClose}
+        userLikes={userLikes}
+      />
       {posts.map(
         ({
           id,
-          data: { name, message, userId, photo, postImage, timestamp },
+          data: { name, message, userId, photo, postImage, timestamp, likes },
         }) => (
           <div
             className="max-w-full shadow-xl my-3.5 "
@@ -153,6 +170,7 @@ const InputMessage = () => {
             key={id}
           >
             <Post
+              handleOpen={handleOpen}
               id={id}
               name={name}
               message={message}
@@ -160,6 +178,8 @@ const InputMessage = () => {
               photo={photo}
               postImage={postImage}
               timestamp={timestamp}
+              likes={likes}
+              setUserLikes={setUserLikes}
             />
           </div>
         )
