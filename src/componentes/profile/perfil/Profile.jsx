@@ -87,9 +87,11 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
     <div className="back">
       <div className="userProfile__top">
         {/*               <img src="https://www.colorhexa.com/3cb4e5.png" alt="" /> */}
+        <div className="avatar__circle">
         <Avatar className="avatar__profile__post">
           <img src={user.avatar} alt="avatar" />
         </Avatar>
+        </div>
         <br />
         {/* <h3>John Doe</h3>
               <h4>Full Stack Developer</h4> */}

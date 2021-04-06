@@ -72,13 +72,7 @@
     margin-bottom: 0px !important;
     padding: 8px 16px !important;
 }
-.avatar__profile__post{
-    margin-bottom: 15px;
-    width: 90px !important;
-    height: 90px !important;
-    border-radius: 200%;
-    border: 2px solid white;
-}
+
 .line__profile__widget{
     border-color: gray;
     /* margin: 0px; */

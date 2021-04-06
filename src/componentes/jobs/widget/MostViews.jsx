@@ -1,11 +1,16 @@
-import React from 'react'
+import React from "react";
+import Jobs from "../../sidebarIzq/Jobs";
+import "./style.css";
+
+
 
 const MostViews = () => {
-    return (
-        <div>
-            <h1>SOY MOST VIEWS</h1>
-        </div>
-    )
-}
+  
+  return (
+    <div >
+    <Jobs/>
+    </div> 
+  );
+};
 
-export default MostViews
+export default MostViews;

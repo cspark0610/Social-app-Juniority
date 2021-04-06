@@ -14,7 +14,7 @@ const HomeJobs = () => {
       <>
       <Navbar/>
       
-      <div className="home__borderJob">
+      <div className="home__borderJob home__border" >
         <Grid container display="flex" align="center"spacing={3} >
           <Grid item md={12}>
             <Search/>
@@ -31,7 +31,7 @@ const HomeJobs = () => {
             <OfferJobs/>
           </Grid>
 
-          <Grid item md={3}>
+          <Grid item md={3} className="padding">
             <MostViews/>
           </Grid>
         </Grid>
