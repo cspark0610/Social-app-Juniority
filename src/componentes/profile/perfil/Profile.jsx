@@ -5,6 +5,7 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
+import { addFollow, unFollow } from "../../utils/followSystem";
 
 export const Profile = ({ user, setUsers, handleOpen }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export const Profile = ({ user, setUsers, handleOpen }) => {
     
   }, [isFollowing])
 
-  const addFollow = async (targetUser) => {
+  /* const addFollow = async (targetUser) => {
     const thisUser = {...currentUser};
     const { fullName, avatar, id } = thisUser;
 
@@ -40,9 +41,9 @@ export const Profile = ({ user, setUsers, handleOpen }) => {
     await db.collection("user").doc(currentUser.id).set(thisUser);
 
     setIsFollowing(true);
-  };
+  }; */
 
-  const unFollow = async (targetUser) => {
+  /* const unFollow = async (targetUser) => {
     const thisUser = { ...currentUser };
 
     targetUser.followers = targetUser.followers.filter(
@@ -57,14 +58,14 @@ export const Profile = ({ user, setUsers, handleOpen }) => {
     await db.collection("user").doc(currentUser.id).set(thisUser);
 
     setIsFollowing(false);
-  };
+  }; */
 
   const followHandler = (e) => {
     e.preventDefault();
     if (isFollowing) {
-      unFollow(user);
+      unFollow(user, currentUser, setIsFollowing);
     } else {
-      addFollow(user);
+      addFollow(user, currentUser, setIsFollowing);
     }
   };
 

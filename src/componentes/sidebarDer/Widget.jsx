@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Paper, Typography } from "@material-ui/core";
+import { Icon, Paper, Typography } from "@material-ui/core";
 import useStyles from "./widgetStyle.js";
 import { Avatar } from "@material-ui/core";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import { db, auth } from '../../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-
+import IconButton from "@material-ui/core/IconButton";
+import { useSelector } from "react-redux";
+import { addFollow } from "../utils/followSystem.js";
 
 const Widget = () => {
   const [ users, setUsers ]= useState([]);
   const [ userLogueado ] = useAuthState(auth);
+  const currentUser = useSelector(state => state.currentUser);
   
   useEffect(()=>{
     db.collection('user').orderBy('timeStamp')
@@ -29,6 +32,14 @@ const Widget = () => {
   const randomIdx3 = Math.floor(Math.random()*usersFiltered.length)
 
   const classes = useStyles();
+
+  const handleClick = (e, user) => {
+    e.preventDefault();
+    db.collection('user').doc(user).get()
+    .then(user => {
+      addFollow(user.data(), currentUser)
+    })
+  }
   
   return (
     <div className={classes.body}>
@@ -48,7 +59,9 @@ const Widget = () => {
             </p>
           </div>
           <div className={classes.icon}>
+          <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx1]?.id)}>
             <PersonAddOutlinedIcon />
+            </IconButton>
           </div>
         </div>
         {/*repetido*/}
@@ -64,7 +77,9 @@ const Widget = () => {
             </p>
           </div>
           <div className={classes.icon}>
+            <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx2]?.id)}>
             <PersonAddOutlinedIcon />
+            </IconButton>
           </div>
         </div>
         {/*repetido*/}
@@ -80,7 +95,9 @@ const Widget = () => {
             </p>
           </div>
           <div className={classes.icon}>
+          <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx3]?.id)}>
             <PersonAddOutlinedIcon />
+            </IconButton>
           </div>
         </div>
        
