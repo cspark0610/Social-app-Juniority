@@ -89,7 +89,7 @@ const InputMessage = () => {
       const fileRef = storageRef.child(file.name);
       await fileRef.put(file);
       setImageUrl(await fileRef.getDownloadURL());
-      await setIsUploaded(true);
+      setIsUploaded(true);
     }
   };
 
@@ -167,7 +167,7 @@ const InputMessage = () => {
         open={open}
         setOpen={setOpen}
         handleClose={handleClose}
-        userLikes={userLikes}
+        users={userLikes}
       />
       <CarroselJobs />
       {posts.map(
