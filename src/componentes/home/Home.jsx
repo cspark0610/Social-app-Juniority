@@ -16,7 +16,6 @@ import "./style.css";
 import { removeSelectedUserPosts } from "../../store/selectedUserPosts";
 import { setSelectedUser } from "../../store/selectedUser";
 
-
 const Home = () => {
   const firebase = useFirebaseApp();
   const history = useHistory();
@@ -40,7 +39,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(setSelectedUser(currentUser));
     dispatch(removeSelectedUserPosts());
-  }, [])
+  }, []);
 
   return (
     <>

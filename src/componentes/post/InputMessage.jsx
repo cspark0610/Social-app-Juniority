@@ -21,12 +21,15 @@ import CarroselJobs from "../carrouselJobs/CarroselJobs";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TransitionsModal from "../home/TransitionModal.jsx";
 
 const InputMessage = () => {
   const currentUser = useSelector((state) => state.currentUser);
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
   const [imageUrl, setImageUrl] = useState();
+  const [open, setOpen] = React.useState(false);
+  const [userLikes, setUserLikes] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -45,6 +48,7 @@ const InputMessage = () => {
         userId: currentUser.id,
         photo: currentUser.avatar,
         postImage: imageUrl ? imageUrl : "",
+        likes: 0,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
@@ -56,6 +60,14 @@ const InputMessage = () => {
 
     setInput("");
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   useEffect(() => {
     //https://firebase.google.com/docs/firestore/query-data/listen
     db.collection("posts")
@@ -84,41 +96,92 @@ const InputMessage = () => {
   return (
     <>
       <ToastContainer />
-      <div className="max-w-full shadow-xl my-3.5 "style={{ background: "white", borderRadius: "10px" }}>
+      <div
+        className="max-w-full shadow-xl my-3.5 "
+        style={{ background: "white", borderRadius: "10px" }}
+      >
         <div className={classes.optionsIcons}>
-          <InputOption Icon={ShareOutlinedIcon} title="Share Update" color="#ADD8E6" />
+          <InputOption
+            Icon={ShareOutlinedIcon}
+            title="Share Update"
+            color="#ADD8E6"
+          />
 
-          <input onChange={(e) => onFileChange(e)} accept="image/*" id="icon-button-file" type="file" className={inputClasses.input}/>
+          <input
+            onChange={(e) => onFileChange(e)}
+            accept="image/*"
+            id="icon-button-file"
+            type="file"
+            className={inputClasses.input}
+          />
           <label htmlFor="icon-button-file">
-            <IconButton color="primary" size="small"aria-label="upload picture" component="span">
-              <InputOption Icon={ImageOutlinedIcon} title="Upload a photo" color="#ADD8E6"/>
+            <IconButton
+              color="primary"
+              size="small"
+              aria-label="upload picture"
+              component="span"
+            >
+              <InputOption
+                Icon={ImageOutlinedIcon}
+                title="Upload a photo"
+                color="#ADD8E6"
+              />
             </IconButton>
           </label>
 
-          <InputOption Icon={SaveOutlinedIcon} title="Write an article"color="#ADD8E6"/>
-      </div>
+          <InputOption
+            Icon={SaveOutlinedIcon}
+            title="Write an article"
+            color="#ADD8E6"
+          />
+        </div>
         <Card className={classes.container}>
           <div className={classes.container_input}>
             <Avatar className={avatarClasses.large} src={currentUser.avatar} />
 
-            <form onSubmit={handleSubmit} style={{ display: "flex", width: "100%" }}>
+            <form
+              onSubmit={handleSubmit}
+              style={{ display: "flex", width: "100%" }}
+            >
               <CreateIcon style={createIconStyle} />
 
-              <input placeholder="Write your thoughts..." type="text" value={input} onChange={(e) => setInput(e.target.value)}
-                style={inputStyle} />
-              <button disabled={ input ? false : true } type="submit" onClick={handleSubmit}>
-
+              <input
+                placeholder="Write your thoughts..."
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                style={inputStyle}
+              />
+              <button
+                disabled={input ? false : true}
+                type="submit"
+                onClick={handleSubmit}
+              >
                 <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
               </button>
             </form>
           </div>
         </Card>
       </div>
-      <CarroselJobs/>
-
-      {posts.map( ({id, data: { name, message, userId, photo, postImage, timestamp }}) => (
-          <div className="max-w-full shadow-xl my-3.5 "style={{ background: "white", borderRadius: "10px" }} key={id}>
+      <TransitionsModal
+        open={open}
+        setOpen={setOpen}
+        handleClose={handleClose}
+        userLikes={userLikes}
+      />
+      <CarroselJobs />
+      {posts.map(
+        ({
+          id,
+          data: { likes, name, message, userId, photo, postImage, timestamp },
+        }) => (
+          <div
+            className="max-w-full shadow-xl my-3.5 "
+            style={{ background: "white", borderRadius: "10px" }}
+            key={id}
+          >
             <Post
+              handleOpen={handleOpen}
               id={id}
               name={name}
               message={message}
@@ -126,6 +189,8 @@ const InputMessage = () => {
               photo={photo}
               postImage={postImage}
               timestamp={timestamp}
+              likes={likes}
+              setUserLikes={setUserLikes}
             />
           </div>
         )

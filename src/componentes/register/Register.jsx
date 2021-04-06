@@ -86,7 +86,7 @@ const Register = () => {
             justify="center"
             spacing={8}
             className={classes.gridContainer}
-            alignItems="center"
+            alignItems="stretch"
           >
             <Grid
               item
@@ -94,7 +94,6 @@ const Register = () => {
               style={{
                 margin: 0,
                 padding: 0,
-                // border: "black solid 1px",
                 textAlign: "end",
               }}
             >
@@ -121,7 +120,7 @@ const Register = () => {
               item
               md={6}
               component={Box}
-              display={{ xs: "none", lg: "block" }}
+              display={{ xs: "none", md: "block" }}
             >
               <div
                 className="flex-1 bg-indigo-100 text-center hidden lg:flex"
@@ -130,7 +129,7 @@ const Register = () => {
                   objectFit: "contain",
                 }}
               >
-                <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
+                <div className="m-10 xl:m-12 pt-0 mt-4 w-full bg-contain bg-center bg-no-repeat">
                   <h1 className="text-2xl xl:text-3xl font-black">
                     {" "}
                     JUNIORITY
@@ -147,7 +146,12 @@ const Register = () => {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              style={{ padding: "auto", paddingTop: "3rem" }}
+            >
               {change[0] === "primary" ? (
                 <Login />
               ) : (
