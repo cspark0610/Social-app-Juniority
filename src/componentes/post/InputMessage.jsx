@@ -77,7 +77,7 @@ const InputMessage = () => {
       const fileRef = storageRef.child(file.name);
       await fileRef.put(file);
       setImageUrl(await fileRef.getDownloadURL());
-      await setIsUploaded(true);
+      setIsUploaded(true);
     }
   };
 
