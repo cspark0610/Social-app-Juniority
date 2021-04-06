@@ -53,8 +53,9 @@ export default makeStyles({
   },
   likes: {
     "&:hover": {
-      borderBottom: "solid black 1px",
-      color: "blue",
+      borderBottom: "solid #3cb4e5 1px",
+      color: "#3cb4e5",
     },
+    cursor: "pointer",
   },
 });

@@ -81,7 +81,7 @@ const Home = () => {
             <Grid item md={6}>
               <TransitionsModal
                 open={open}
-                setOpen={setOpen}
+                title="Follow"
                 handleClose={handleClose}
                 users={users}
               />

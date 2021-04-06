@@ -165,9 +165,9 @@ const InputMessage = () => {
       </div>
       <TransitionsModal
         open={open}
-        setOpen={setOpen}
         handleClose={handleClose}
         users={userLikes}
+        title="Likes"
       />
       <CarroselJobs />
       {posts.map(

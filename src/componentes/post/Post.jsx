@@ -4,7 +4,7 @@ import { db } from "../../firebase/firebase.js";
 import firebase from "firebase";
 
 import inputStyles from "./InputMessageStyle.js";
-import { Avatar, Card } from "@material-ui/core";
+import { Avatar, Card, Typography } from "@material-ui/core";
 import useStyles from "./PostStyle.js";
 import InputOption from "./InputOption";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -36,21 +36,26 @@ const Post = ({
   const [data, setData] = useState([]);
   const [input, setInput] = useState("");
   const [inUse, setInUse] = useState(FavoriteBorderOutlinedIcon);
+  const [lastKey, setLastKey] = useState("En un comienzo");
+  const [viewMore, setViewMore] = useState(true);
   // const notLiked = FavoriteBorderOutlinedIcon;
   // const liked = FavoriteOutlinedIcon;
 
-  let handleComment = () => {
+  const handleComment = () => {
     db.collection("comments")
       .orderBy("timestamp", "desc")
       .where("postId", "==", id)
       .limit(4)
       .get()
       .then((querySnapShot) => {
+        setLastKey(querySnapShot.docs[querySnapShot.docs.length - 1]);
         setData(
-          querySnapShot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
+          querySnapShot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              data: doc.data(),
+            };
+          })
         );
       })
       .catch((error) => {
@@ -58,7 +63,7 @@ const Post = ({
       });
     setComment(true);
   };
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setInput("");
     db.collection("comments")
@@ -76,12 +81,14 @@ const Post = ({
   let handleLikes = (e) => {
     if (!e.target.matches(".zse")) {
       if (inUse === FavoriteBorderOutlinedIcon) {
-        db.collection("likes").doc(`${id}_${userId}`).set({
-          postId: id,
-          userId,
-          userName: name,
-          photo,
-        });
+        db.collection("likes")
+          .doc(`${id}_${currentUser.id}`)
+          .set({
+            postId: id,
+            userId: currentUser.id,
+            userName: currentUser.fullName,
+            photo: currentUser.avatar || "",
+          });
         db.collection("posts")
           .doc(id)
           .set(
@@ -110,10 +117,38 @@ const Post = ({
       .where("postId", "==", id)
       .get()
       .then((querySnapShot) => {
-        setUserLikes(querySnapShot.docs.map((doc) => doc.data()));
+        setUserLikes(
+          querySnapShot.docs.map((doc) => {
+            return doc.data();
+          })
+        );
       });
-    // setUserLikes("hola");
     handleOpen();
+  };
+
+  let seeMore = () => {
+    if (lastKey) {
+      db.collection("comments")
+        .orderBy("timestamp", "desc")
+        .where("postId", "==", id)
+        .startAfter(lastKey)
+        .get()
+        .then((querySnapShot) => {
+          console.log(querySnapShot.docs[querySnapShot.docs.length - 1]);
+          setLastKey(querySnapShot.docs[querySnapShot.docs.length - 1]);
+          setData((prev) => {
+            let newData = querySnapShot.docs.map((doc) => {
+              return {
+                id: doc.id,
+                data: doc.data(),
+              };
+            });
+            return [...prev, ...newData];
+          });
+        });
+    } else {
+      setViewMore(false);
+    }
   };
 
   useEffect(() => {
@@ -133,13 +168,12 @@ const Post = ({
   }, [comment]);
   useEffect(() => {
     db.collection("likes")
-      .doc(`${id}_${userId}`)
+      .doc(`${id}_${currentUser.id}`)
       .get()
       .then((doc) => {
         if (doc.data()) {
           setInUse(FavoriteOutlinedIcon);
         }
-        // querySnapShot.forEach((doc) => console.log("HOla", doc.data()));
       });
   }, []);
 
@@ -242,6 +276,16 @@ const Post = ({
                   </div>
                 </div>
               ))}
+              {viewMore && (
+                <Typography
+                  color="primary"
+                  variant="caption"
+                  className={classes.likes}
+                  onClick={seeMore}
+                >
+                  ver mas ...
+                </Typography>
+              )}
             </>
           ) : null}
         </div>
