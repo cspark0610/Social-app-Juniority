@@ -21,6 +21,7 @@ const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
+  const selectedUser = useSelector(state => state.selectedUser)
 
   useEffect(() => {
     if (currentUser) {
@@ -29,7 +30,7 @@ const Home = () => {
         .get()
         .then((doc) =>
           doc.forEach((data) => {
-            sessionStorage.setItem("currentUser", JSON.stringify(data.data()));
+            localStorage.setItem("currentUser", JSON.stringify(data.data()));
           })
         );
     }
@@ -66,7 +67,9 @@ const Home = () => {
             </Grid>
 
             <Grid item md={6}>
+
               <InputMessage />
+
             </Grid>
             <Grid item md={3}>
               <Widget />

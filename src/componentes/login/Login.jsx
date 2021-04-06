@@ -38,6 +38,8 @@ const Login = () => {
             email: result.additionalUserInfo.profile.email,
             timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
             avatar: result.additionalUserInfo.profile.avatar_url,
+            follow: [],
+            followers: [],
           };
         } else {
           data = {
@@ -46,22 +48,22 @@ const Login = () => {
             email: result.additionalUserInfo.profile.email,
             timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
             avatar: result.additionalUserInfo.profile.picture,
+            follow: [],
+            followers: [],
           };
         }
-        console.log("------------result------------", result);
-        console.log("------------data----------", data);
         if (result.additionalUserInfo.isNewUser) {
           db.collection("user")
             .doc(result.user.uid)
             .set(data)
             .then(() => {
               dispatch(setCurrentUser(data));
-              sessionStorage.setItem("currentUser", JSON.stringify(data));
+              localStorage.setItem("currentUser", JSON.stringify(data));
               history.push("/");
             });
         } else {
           dispatch(setCurrentUser(data));
-          sessionStorage.setItem("currentUser", JSON.stringify(data));
+          localStorage.setItem("currentUser", JSON.stringify(data));
           history.push("/");
         }
       })
@@ -84,10 +86,7 @@ const Login = () => {
           .then((doc) => {
             doc.forEach((data) => {
               dispatch(setCurrentUser(data.data()));
-              sessionStorage.setItem(
-                "currentUser",
-                JSON.stringify(data.data())
-              );
+              localStorage.setItem("currentUser", JSON.stringify(data.data()));
               history.push("/");
             });
           });

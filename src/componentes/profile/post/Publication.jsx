@@ -11,10 +11,11 @@ import { useSelector } from "react-redux";
 
 export const Publication = ({ user }) => {
   const selectedUserPosts = useSelector((state) => state.selectedUserPosts);
+  const selectedUser = useSelector(state => state.selectedUser)
 
   return (
     <>
-      {selectedUserPosts.length &&
+      {selectedUserPosts.length ?
         selectedUserPosts.map((post) => {
           return (
             <div className="post__publication">
@@ -73,7 +74,7 @@ export const Publication = ({ user }) => {
               </Grid>
             </div>
           );
-        })}
+        }) : <p>{`${selectedUser.fullName} no a relizado ningun post`}</p> }
     </>
   );
 };

@@ -4,6 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Avatar } from "@material-ui/core";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -48,7 +49,7 @@ export default function TransitionsModal({ handleClose, open, userLikes }) {
               {userLikes.map((user) => (
                 <div style={{ display: "flex" }}>
                   <Avatar src={user.photo} />
-                  {user.userName}
+                  <Link to={`/profile/${user.userId}`}>{user.userName}</Link>
                 </div>
               ))}
             </p>

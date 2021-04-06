@@ -18,12 +18,12 @@ function App() {
   const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
 
-  const currentUserSessionStorage = JSON.parse(
-    sessionStorage.getItem("currentUser")
+  const currentUserlocalStorage = JSON.parse(
+    localStorage.getItem("currentUser")
   );
 
   useEffect(() => {
-    dispatch(setCurrentUser(currentUserSessionStorage));
+    dispatch(setCurrentUser(currentUserlocalStorage));
   }, []);
 
   useEffect(() => {}, [currentUser]);

@@ -14,12 +14,26 @@ import logo from '../../assets/juniority.svg';
 import "./offerJobsStyle.css";
 import moment from 'moment';
 import { db } from "../../../firebase/firebase.js";
-
-
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import firebase from 'firebase';
 
 
 const OfferJobs = () => {
-    
+  const [open, setOpen] = useState(false);
+  
+  const handleClickOpen = () => setOpen(true);
+
+  const handleClose = () => {
+    setOpen(false);
+  }  
+  const [input, setInput] = useState("");
+  const [cvUrl , setCvUrl] = useState("")
+  
     const StyledBreadcrumb = withStyles((theme) => ({
         root: {
           backgroundColor: theme.palette.grey[100],
@@ -34,10 +48,10 @@ const OfferJobs = () => {
             backgroundColor: emphasize(theme.palette.grey[300], 0.12),
           },
         },
-      }))(Chip);
-      const [jobsOffers, setJobsOffers] = useState([]);
+      }))(Chip);     
+    const [jobsOffers, setJobsOffers] = useState([]);
      
-      useEffect(()=>{
+    useEffect(()=>{
         db.collection('jobs').orderBy('timestamp', 'desc')
         .onSnapshot(shot =>{
           setJobsOffers(shot.docs.map(doc =>({
@@ -46,12 +60,37 @@ const OfferJobs = () => {
           })
           ))
         })
-      },[]);
-      
+    },[]);
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        db.collection("job-applicants")
+        .add({
+          aplicantCv : cvUrl,
+          aplicantEmail: input,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+      } catch (error) {
+        console.error(error) 
+      }  
+      setInput("");
+      setCvUrl("");
+      handleClose();
+    };
+    const onFileChange = async (e) => {
+        const file = e.target.files[0];
+        const storageRef = firebase.storage().ref("POST-CVS");
+        if (file) {
+          const fileRef = storageRef.child(file.name);
+          await fileRef.put(file);
+          setCvUrl(await fileRef.getDownloadURL());
+        }
+    };
+ 
     return (
      
     <>
-     {console.log(jobsOffers)}
       {jobsOffers && jobsOffers.map(jobsOffer =>(
 
            <div className="job__container" style={{backgroundColor:'white'}} key={jobsOffer.id}>
@@ -91,10 +130,27 @@ const OfferJobs = () => {
                  <InputIcon Icon={ShareOutlinedIcon} title="2" color="black" />
              </div>
            <hr className="line__profile__widget" />
-             <Button size='large' variant='contained' color='primary' className='button__apply'>Apply</Button>
+             <Button size='large' variant='contained' color='primary' className='button__apply' onClick={ handleClickOpen }>Apply</Button>
+             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Apply</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      To apply to this job, please enter your email address here and load your CV. 
+                    </DialogContentText>
+                    <TextField autoFocus margin="dense" id="name" label="Email Address" type="email"fullWidth value={input} onChange={(e) => setInput(e.target.value)}/>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} color="primary"> Cancel </Button>
+
+                    <input onChange={(e) => onFileChange(e)} accept="file/*" id="icon-button-file" type="file" className="modalInput"/>
+                      <label htmlFor="icon-button-file" > 
+                        <Button onClick={handleSubmit} color="primary" type='submit'> Load your CV </Button>
+                      </label>
+                   
+                  </DialogActions>
+              </Dialog>
+                
          </div>
-
-
       ))}
     </>
     )

@@ -7,4 +7,3 @@ export const selectedUserPostsReducer = createReducer( [] , {
     [setSelectedUserPosts]: (state, action) => [...state, action.payload],
     [removeSelectedUserPosts]: (state, action) => []
 });
-

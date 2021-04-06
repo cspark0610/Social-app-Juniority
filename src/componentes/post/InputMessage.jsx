@@ -17,6 +17,7 @@ import InputOption from "./InputOption";
 import Post from "./Post";
 import { Avatar } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import CarroselJobs from "../carrouselJobs/CarroselJobs";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,6 +30,8 @@ const InputMessage = () => {
   const [imageUrl, setImageUrl] = useState();
   const [open, setOpen] = React.useState(false);
   const [userLikes, setUserLikes] = useState([]);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const classes = useStyles();
   const inputClasses = useInputStyles();
@@ -51,6 +54,7 @@ const InputMessage = () => {
       .then(() => {
         setImageUrl(false);
         toast.success("Post created successfully", { autoClose: 2000 });
+        setIsUploaded(false);
       })
       .catch((err) => console.error(err));
 
@@ -85,6 +89,7 @@ const InputMessage = () => {
       const fileRef = storageRef.child(file.name);
       await fileRef.put(file);
       setImageUrl(await fileRef.getDownloadURL());
+      await setIsUploaded(true);
     }
   };
 
@@ -139,6 +144,7 @@ const InputMessage = () => {
               style={{ display: "flex", width: "100%" }}
             >
               <CreateIcon style={createIconStyle} />
+
               <input
                 placeholder="Write your thoughts..."
                 type="text"
@@ -146,7 +152,11 @@ const InputMessage = () => {
                 onChange={(e) => setInput(e.target.value)}
                 style={inputStyle}
               />
-              <button type="submit" onClick={handleSubmit}>
+              <button
+                disabled={input ? false : true}
+                type="submit"
+                onClick={handleSubmit}
+              >
                 <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
               </button>
             </form>
@@ -159,10 +169,11 @@ const InputMessage = () => {
         handleClose={handleClose}
         userLikes={userLikes}
       />
+      <CarroselJobs />
       {posts.map(
         ({
           id,
-          data: { name, message, userId, photo, postImage, timestamp, likes },
+          data: { likes, name, message, userId, photo, postImage, timestamp },
         }) => (
           <div
             className="max-w-full shadow-xl my-3.5 "

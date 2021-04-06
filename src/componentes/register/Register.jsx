@@ -58,6 +58,8 @@ const Register = () => {
             id: user.user.uid,
             fullName,
             email,
+            follow: [],
+            followers: [],
             timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
           };
           db.collection("user")
@@ -65,7 +67,7 @@ const Register = () => {
             .set(data)
             .then(() => {
               dispatch(setCurrentUser(data));
-              sessionStorage.setItem("currentUser", JSON.stringify(data));
+              localStorage.setItem("currentUser", JSON.stringify(data));
               history.push("/");
             });
         })
