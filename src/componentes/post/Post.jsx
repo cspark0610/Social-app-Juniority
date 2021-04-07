@@ -26,7 +26,8 @@ const Post = ({
   likes,
   timestamp,
   handleOpen,
-  setUserLikes,
+  setUsers,
+  setTitle,
 }) => {
   const classes = useStyles();
   const inputClasses = inputStyles();
@@ -107,7 +108,7 @@ const Post = ({
             },
             { merge: true }
           );
-        db.collection("likes").doc(`${id}_${userId}`).delete();
+        db.collection("likes").doc(`${id}_${currentUser.id}`).delete();
         setInUse(FavoriteBorderOutlinedIcon);
       }
     }
@@ -117,12 +118,13 @@ const Post = ({
       .where("postId", "==", id)
       .get()
       .then((querySnapShot) => {
-        setUserLikes(
+        setUsers(
           querySnapShot.docs.map((doc) => {
             return doc.data();
           })
         );
       });
+    setTitle('Likes')
     handleOpen();
   };
 

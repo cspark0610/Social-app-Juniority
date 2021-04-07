@@ -34,21 +34,12 @@ const HomeProfile = (props) => {
       .get()
       .then((doc) => {
         doc.forEach((data) => {
-          dispatch(setSelectedUserPosts(data.data()));
+          dispatch(setSelectedUserPosts({...data.data(),id: data.id}));
         });
       });
   }, []);
 
   useEffect(() => {
-    /* db.collection("user")
-      .where("id", "==", userId)
-      .get()
-      .then((doc) => {
-        doc.forEach((data) => {
-          setSelectedUser(data.data());
-        });
-      }); */
-
     db.collection("user")
       .where("id", "==", userId)
       .onSnapshot((snapshot) => {
@@ -81,9 +72,8 @@ const HomeProfile = (props) => {
               />
               <Grid item md={6}>
                 <PostProfile user={selectedUser} />
-                <Publication user={selectedUser} />
+                <Publication handleOpen={handleOpen} setTitle={setTitle} setUsers={setUsers}/>
               </Grid>
-
               <Grid item md={3}>
                 <Widget />
               </Grid>
