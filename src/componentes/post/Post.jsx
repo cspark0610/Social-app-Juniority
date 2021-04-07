@@ -134,9 +134,9 @@ const Post = ({
         .orderBy("timestamp", "desc")
         .where("postId", "==", id)
         .startAfter(lastKey)
+        .limit(4)
         .get()
         .then((querySnapShot) => {
-          console.log(querySnapShot.docs[querySnapShot.docs.length - 1]);
           setLastKey(querySnapShot.docs[querySnapShot.docs.length - 1]);
           setData((prev) => {
             let newData = querySnapShot.docs.map((doc) => {

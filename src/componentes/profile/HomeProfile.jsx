@@ -49,25 +49,6 @@ const HomeProfile = (props) => {
         snapshot.docs.map((doc) => setSelectedUser(doc.data()));
       });
   }, [locationUrl]);
-
-  useEffect(() => {
-    db.collection("posts")
-      .where("userId", "==", userId)
-      .get()
-      .then((doc) => {
-        doc.forEach((data) => {
-          dispatch(setSelectedUserPosts(data.data()));
-        });
-      });
-  }, []);
-
-  useEffect(() => {
-    db.collection("user")
-      .where("id", "==", userId)
-      .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => setSelectedUser(doc.data()));
-      });
-  }, []);
   return (
     <>
       {selectedUser && (
