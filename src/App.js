@@ -17,10 +17,13 @@ import HomeJobs from "./componentes/jobs/HomeJobs";
 function App() {
   const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
-
+  const locationUrl = useSelector(state => state.locationUrl)
   const currentUserlocalStorage = JSON.parse(
     localStorage.getItem("currentUser")
   );
+
+  useEffect(() => {
+  }, [locationUrl])
 
   useEffect(() => {
     dispatch(setCurrentUser(currentUserlocalStorage));
