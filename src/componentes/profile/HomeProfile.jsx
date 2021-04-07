@@ -9,9 +9,10 @@ import Navbar from "../navbar/Navbar";
 import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedUserPosts } from "../../store/selectedUserPosts";
 import TransitionsModal from '../home/TransitionModal';
+import { useHistory } from 'react-router-dom';
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
@@ -20,6 +21,8 @@ const HomeProfile = (props) => {
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState()
+  const history = useHistory();
+  const locationUrl = useSelector(state => state.locationUrl);
 
   const handleClose = () => {
     setOpen(false);
@@ -35,6 +38,25 @@ const HomeProfile = (props) => {
       .then((doc) => {
         doc.forEach((data) => {
           dispatch(setSelectedUserPosts({...data.data(),id: data.id}));
+        });
+      });
+  }, [locationUrl]);
+
+  useEffect(() => {
+    db.collection("user")
+      .where("id", "==", userId)
+      .onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => setSelectedUser(doc.data()));
+      });
+  }, [locationUrl]);
+
+  useEffect(() => {
+    db.collection("posts")
+      .where("userId", "==", userId)
+      .get()
+      .then((doc) => {
+        doc.forEach((data) => {
+          dispatch(setSelectedUserPosts(data.data()));
         });
       });
   }, []);
