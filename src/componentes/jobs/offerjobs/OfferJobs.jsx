@@ -50,6 +50,7 @@ const OfferJobs = () => {
           },
         },
       }))(Chip);     
+      
     const [jobsOffers, setJobsOffers] = useState([]);
      
     useEffect(()=>{
@@ -149,8 +150,7 @@ const OfferJobs = () => {
                       </label>
                    
                   </DialogActions>
-              </Dialog>
-                
+              </Dialog>               
          </div>
       ))}
     </>
