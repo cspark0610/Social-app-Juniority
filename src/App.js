@@ -13,6 +13,7 @@ import PasswordRecovery from "./componentes/passwordRecovery/PaswordRecovery";
 import { setCurrentUser } from "./store/currentUser";
 import HomeProfile from "./componentes/profile/HomeProfile";
 import HomeJobs from "./componentes/jobs/HomeJobs";
+import { Configuration } from "./componentes/profile/configuration/Configuration";
 
 function App() {
   const currentUser = useSelector((state) => state.currentUser);
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
+        <Route path='/profile/configuration' component={Configuration}/>
         <Route path="/profile/:id" render={({ match }) => <HomeProfile match={match}/>} />
         <Route path="/register" component={Register} />
         <Route path="/password-recovery" component={PasswordRecovery} />

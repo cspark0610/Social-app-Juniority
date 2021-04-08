@@ -9,6 +9,7 @@ import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import {InputIcon} from "./InputIcon";
 import "./style.css";
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 
 export const PostProfile = ({user}) => {
@@ -22,10 +23,10 @@ export const PostProfile = ({user}) => {
       <Grid container >
         <Grid item md={6} className="text__aling__left text__aling">
         <h3>{user.fullName}</h3>
-        <p>Full Stack Developer</p>
+        <p>{user.position}</p>
         <p>
           <LocationOnIcon />
-          Buenos Aires, Argentina
+          {user.location}
         </p>
         <div className="post__buttom">
                 <InputIcon Icon={ArtTrackIcon} title="Feed" color="#3cb4e5" />
@@ -34,7 +35,13 @@ export const PostProfile = ({user}) => {
             </div>
         </Grid>
         <Grid item md={6} className="text__aling__right">
-        {user.id === currentUser.id ? null : (
+        {user.id === currentUser.id ? (
+          <Link to='/profile/configuration'>
+          <Button className="button__profile__follow">
+            Profile Configuration
+          </Button>
+          </Link>
+        ) : (
         <Button className="button__profile__follow">
         <MailOutlineIcon className="message__post"/> Message
         </Button>

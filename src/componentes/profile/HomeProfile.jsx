@@ -10,7 +10,7 @@ import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedUserPosts } from "../../store/selectedUserPosts";
+import { removeSelectedUserPosts, setSelectedUserPosts } from "../../store/selectedUserPosts";
 import TransitionsModal from '../home/TransitionModal';
 import { useHistory } from 'react-router-dom';
 
@@ -32,6 +32,7 @@ const HomeProfile = (props) => {
   };
 
   useEffect(() => {
+    dispatch(removeSelectedUserPosts());
     db.collection("posts")
       .where("userId", "==", userId)
       .get()
