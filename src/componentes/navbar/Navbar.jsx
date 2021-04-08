@@ -19,12 +19,15 @@ import { Avatar } from "@material-ui/core";
 import imagen from "../assets/ag.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
+import { setLocationUrl } from "../../store/locationUrl";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const currentUser = useSelector(state => state.currentUser);
-
+  const locationUrl = useSelector(state => state.locationUrl);
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -41,6 +44,7 @@ const Navbar = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    dispatch(setLocationUrl(!locationUrl))
     handleMobileMenuClose();
   };
 

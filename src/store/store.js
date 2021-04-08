@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { currentUserReducer } from "./currentUser";
+import { locationUrlReducer } from "./locationUrl";
 import { selectedUserReducer } from "./selectedUser";
 import { selectedUserPostsReducer } from "./selectedUserPosts";
 import { keywordReducer } from "./keyword";
@@ -9,6 +10,7 @@ export default configureStore({
         currentUser: currentUserReducer,
         selectedUser: selectedUserReducer,
         selectedUserPosts: selectedUserPostsReducer,
-        keyword: keywordReducer
+        keyword: keywordReducer,
+        locationUrl: locationUrlReducer
     }
 });
