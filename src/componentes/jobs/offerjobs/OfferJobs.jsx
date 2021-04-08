@@ -21,19 +21,17 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from 'firebase';
-
+import { useSelector } from "react-redux";
 
 const OfferJobs = () => {
   const [open, setOpen] = useState(false);
-  
   const handleClickOpen = () => setOpen(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  }  
+  const handleClose = () => setOpen(false);
+    
   const [input, setInput] = useState("");
   const [cvUrl , setCvUrl] = useState("")
-
+  const [jobsOffers, setJobsOffers] = useState([]);
+  const keyword = useSelector(state => state.keyword)
 
     const StyledBreadcrumb = withStyles((theme) => ({
         root: {
@@ -50,19 +48,37 @@ const OfferJobs = () => {
           },
         },
       }))(Chip);     
-      
-    const [jobsOffers, setJobsOffers] = useState([]);
+    console.log(keyword);
      
     useEffect(()=>{
         db.collection('jobs').orderBy('timestamp', 'desc')
         .onSnapshot(shot =>{
-          setJobsOffers(shot.docs.map(doc =>({
-                id: doc.id,
-                data: doc.data(),
+          const docs=[];
+          shot.forEach((doc)=>{
+            docs.push({...doc.data(),id: doc.id})
           })
-          ))
+          setJobsOffers(docs)
         })
     },[]);
+
+  useEffect(()=>{
+    db.collection('jobs').orderBy('timestamp', 'desc')
+      .onSnapshot(shot =>{
+        const docs=[];
+        shot.forEach((doc)=>{
+          docs.push({...doc.data(),id: doc.id})
+        })
+    const filtered = docs.filter(doc=> (doc.position).toLowerCase().indexOf(keyword.toLowerCase())>-1 ||
+    (doc.description).toLowerCase().indexOf(keyword.toLowerCase())>-1 ||
+    (doc.availability).toLowerCase().indexOf(keyword.toLowerCase())>-1 ||
+    (doc.location).toLowerCase().indexOf(keyword.toLowerCase())>-1 ||
+    (doc.salary).toLowerCase().indexOf(keyword.toLowerCase())>-1 ||
+    (doc.skills).toLowerCase().indexOf(keyword.toLowerCase())>-1 
+    );
+    setJobsOffers(filtered) 
+   
+    })
+  },[keyword]);
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -101,26 +117,26 @@ const OfferJobs = () => {
                  <img src={logo} className="logo" alt="Logo Juniority" width='60%' height='60%'/>
              </Grid>
              <Grid item md={6} className="text__job__left text__job" >
-                 <h2>{jobsOffer.data.position}</h2>
+                 <h2>{jobsOffer.position}</h2>
                  <p>Juniority</p>
-                 <p><LocationOnIcon className="date__icon"/>{jobsOffer.data.location}</p>
+                 <p><LocationOnIcon className="date__icon"/>{jobsOffer.location}</p>
              </Grid>
              <Grid item md={4} className="text__job__right">
-               <p><AccessTimeIcon className="date__icon"/>{moment(new Date(jobsOffer.data.timestamp?.toDate().toUTCString())).fromNow()}</p>
+               <p><AccessTimeIcon className="date__icon"/>{moment(new Date(jobsOffer.timestamp?.toDate().toUTCString())).fromNow()}</p>
              </Grid>
             
            </Grid>
            <hr className="line__profile__widget" />
              <div className='salary_availability'>
-                 <p> {jobsOffer.data.salary} </p>
-                 <p> {jobsOffer.data.availability}</p>
+                 <p> {jobsOffer.salary} </p>
+                 <p> {jobsOffer.availability}</p>
              </div>
              <div className='description'>
-                 <p>{jobsOffer.data.description}</p>
+                 <p>{jobsOffer.description}</p>
              </div> 
              <div className='skills'>
                <Breadcrumbs aria-label='breadcrumb'>
-                  {jobsOffer.data.skills.split(' ') && jobsOffer.data.skills.split(' ').map(skill=>(
+                  {jobsOffer.skills.split(' ') && jobsOffer.skills.split(' ').map(skill=>(
                     <StyledBreadcrumb label={skill}/>
                   ))}               
                 </Breadcrumbs>
@@ -158,3 +174,5 @@ const OfferJobs = () => {
 }
 
 export default OfferJobs
+
+

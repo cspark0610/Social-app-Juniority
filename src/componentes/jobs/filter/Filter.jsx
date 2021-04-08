@@ -2,10 +2,12 @@ import React from "react";
 import "./style.css";
 import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+
 import DiscreteSlider from "./DiscreteSlider";
 import { Checkbox } from "pretty-checkbox-react";
 import DemoSelectMultiple from "./DemoSelectMultiple";
+
+
 
 const Filter = () => {
 
@@ -35,15 +37,7 @@ const Filter = () => {
           </Grid>
         </Grid>
         <DemoSelectMultiple className="select__multiple" />
-        {/* <form>
-          <TextField
-            name="Search skills.."
-            variant="outlined"
-            label="Search skills"
-            placeholder="Search skills"
-            className="TextField__filter"
-          />
-        </form> */}
+       
       </div>
 
       <div className="back">
@@ -86,16 +80,7 @@ const Filter = () => {
           </Grid>
         </Grid>
         <DemoSelectMultiple className="select__multiple" />
-        {/* <form>
-          <TextField
-            name="Select a job Type"
-            variant="outlined"
-            label="Select a job Type"
-            placeholder="Select a job Type"
-            className="TextField__filter"
-          />
-        </form> */}
-        <inpu />
+      
       </div>
 
       <div className="back">
@@ -121,16 +106,7 @@ const Filter = () => {
           </Grid>
         </Grid>
         <DemoSelectMultiple className="select__multiple" />
-        {/* <form>
-          <TextField
-            name="Select a experience Level"
-            variant="outlined"
-            label="Select a experience Level"
-            placeholder="Select a experience Level"
-            className="TextField__filter"
-          />
-        </form> */}
-        <inpu />
+      
       </div>
 
       <div className="back">
@@ -144,17 +120,8 @@ const Filter = () => {
           </Grid>
         </Grid>
         <DemoSelectMultiple className="select__multiple" />
-        {/* <form>
-          <TextField
-            name="Select a location"
-            variant="outlined"
-            label="Select a location"
-            placeholder="Select a location"
-            className="TextField__filter"
-            color="green"
-          />
-        </form> */}
-        <inpu />
+       
+        
       </div>
     </div>
   );

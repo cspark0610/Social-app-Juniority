@@ -3,12 +3,11 @@ import { Avatar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../../firebase/firebase";
+import { useSelector } from "react-redux";
 import { addFollow, unFollow } from "../../utils/followSystem";
 
 export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
-  const dispatch = useDispatch();
+  
   const currentUser = useSelector((state) => state.currentUser);
   const [isFollowing, setIsFollowing] = useState();
 
@@ -22,43 +21,6 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
   useEffect(() => {
     
   }, [isFollowing])
-
-  /* const addFollow = async (targetUser) => {
-    const thisUser = {...currentUser};
-    const { fullName, avatar, id } = thisUser;
-
-    targetUser.followers = [...targetUser.followers, { fullName, avatar, id }];
-    thisUser.follow = [
-      ...thisUser.follow,
-      {
-        fullName: targetUser.fullName,
-        avatar: targetUser.avatar,
-        id: targetUser.id,
-      },
-    ];
-
-    await db.collection("user").doc(targetUser.id).set(targetUser);
-    await db.collection("user").doc(currentUser.id).set(thisUser);
-
-    setIsFollowing(true);
-  }; */
-
-  /* const unFollow = async (targetUser) => {
-    const thisUser = { ...currentUser };
-
-    targetUser.followers = targetUser.followers.filter(
-      (user) => user.id !== thisUser.id
-    );
-    thisUser.follow = thisUser.follow.filter(
-      (user) => user.id !== targetUser.id
-    );
-
-
-    await db.collection("user").doc(targetUser.id).set(targetUser);
-    await db.collection("user").doc(currentUser.id).set(thisUser);
-
-    setIsFollowing(false);
-  }; */
 
   const followHandler = (e) => {
     e.preventDefault();
