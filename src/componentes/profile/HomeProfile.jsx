@@ -10,7 +10,7 @@ import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedUserPosts } from "../../store/selectedUserPosts";
+import { removeSelectedUserPosts, setSelectedUserPosts } from "../../store/selectedUserPosts";
 import TransitionsModal from '../home/TransitionModal';
 import { useHistory } from 'react-router-dom';
 
@@ -31,16 +31,17 @@ const HomeProfile = (props) => {
     setOpen(true);
   };
 
-  // useEffect(() => {
-  //   db.collection("posts")
-  //     .where("userId", "==", userId)
-  //     .get()
-  //     .then((doc) => {
-  //       doc.forEach((data) => {
-  //         dispatch(setSelectedUserPosts({...data.data(),id: data.id}));
-  //       });
-  //     });
-  // }, [locationUrl]);
+  useEffect(() => {
+    dispatch(removeSelectedUserPosts());
+    db.collection("posts")
+      .where("userId", "==", userId)
+      .get()
+      .then((doc) => {
+        doc.forEach((data) => {
+          dispatch(setSelectedUserPosts(data.data()));
+        });
+      });
+  }, [locationUrl]);
 
   useEffect(() => {
     db.collection("user")
