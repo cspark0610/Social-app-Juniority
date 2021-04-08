@@ -3,12 +3,11 @@ import { Avatar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../../firebase/firebase";
+import { useSelector } from "react-redux";
 import { addFollow, unFollow } from "../../utils/followSystem";
 
 export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
-  const dispatch = useDispatch();
+  
   const currentUser = useSelector((state) => state.currentUser);
   const [isFollowing, setIsFollowing] = useState();
 

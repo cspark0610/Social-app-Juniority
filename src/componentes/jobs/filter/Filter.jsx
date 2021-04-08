@@ -7,6 +7,8 @@ import DiscreteSlider from "./DiscreteSlider";
 import { Checkbox } from "pretty-checkbox-react";
 import DemoSelectMultiple from "./DemoSelectMultiple";
 
+
+
 const Filter = () => {
 
 
