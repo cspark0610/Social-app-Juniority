@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState, useEffect} from "react";
 import "./style.css";
 import logo from "../assets/juniority.svg";
 import { Link } from "react-router-dom";
@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
 import { setLocationUrl } from "../../store/locationUrl";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { setKeynavbar } from "../../store/keywordNavbar";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,16 @@ const Navbar = () => {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [queryNavbar, setQueryNavbar] = useState("");
+
+  useEffect(()=>{
+      dispatch(setKeynavbar(queryNavbar))
+  },[queryNavbar]);
+
+  const handleClickNavbar = (e) => {
+    e.preventDefault();
+    setQueryNavbar("");
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -121,6 +132,7 @@ const Navbar = () => {
       </MenuItem>
     </Menu>
   );
+  
 
   return (
     <div>
@@ -130,16 +142,16 @@ const Navbar = () => {
         </Link>
 
         <div className="containerinputNav">
-          {/* <input className="inputCuadro" type="text" />
-          <button className="button"></button> */}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <IconButton>
-                <SearchIcon className="searchIcon" />
+              <IconButton onClick={handleClickNavbar}>
+                <SearchIcon className="searchIcon" onClick={handleClickNavbar}/>
               </IconButton>
             </div>
             <InputBase
               placeholder="Search…"
+              value={queryNavbar}
+              onChange={e=> setQueryNavbar(e.target.value)}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,

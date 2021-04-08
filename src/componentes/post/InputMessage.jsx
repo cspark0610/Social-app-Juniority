@@ -23,6 +23,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TransitionsModal from "../home/TransitionModal.jsx";
 
+
 const InputMessage = () => {
   const currentUser = useSelector((state) => state.currentUser);
   const [input, setInput] = useState("");
@@ -32,14 +33,13 @@ const InputMessage = () => {
   const [userLikes, setUserLikes] = useState([]);
   const [title, setTitle] = useState('')
   const [isUploaded, setIsUploaded] = useState(false);
- 
+  const keynavbar = useSelector(state => state.keynavbar);
 
   const classes = useStyles();
   const inputClasses = useInputStyles();
   const avatarClasses = useAvatarStyles();
 
   const handleSubmit = (e) => {
-    //https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
     e.preventDefault();
     db.collection("posts")
       .add({
@@ -70,18 +70,31 @@ const InputMessage = () => {
   };
 
   useEffect(() => {
-    //https://firebase.google.com/docs/firestore/query-data/listen
-    db.collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
-      });
+    db.collection("posts").orderBy("timestamp", "desc")
+       .onSnapshot(shot =>{
+          const docs=[];
+          shot.forEach((doc)=>{
+            docs.push({...doc.data(),id: doc.id})
+          })
+          setPosts(docs)
+        })
   }, []);
+  useEffect(() => {
+    db.collection("posts").orderBy("timestamp", "desc")
+       .onSnapshot(shot =>{
+          const docs=[];
+          shot.forEach((doc)=>{
+            docs.push({...doc.data(),id: doc.id})
+          });
+          const filtered = docs.filter(doc=> 
+          (doc.description).toLowerCase().indexOf(keynavbar.toLowerCase())>-1 ||
+          (doc.message).toLowerCase().indexOf(keynavbar.toLowerCase())>-1 ||
+          (doc.name).toLowerCase().indexOf(keynavbar.toLowerCase())>-1 
+          );
+          setPosts(filtered);
+        })
+  }, [keynavbar]);
+
 
   const onFileChange = async (e) => {
     const file = e.target.files[0];
@@ -93,94 +106,44 @@ const InputMessage = () => {
       setIsUploaded(true);
     }
   };
+  
 
   return (
     <>
       <ToastContainer />
-      <div
-        className="max-w-full shadow-xl my-3.5 "
-        style={{ background: "white", borderRadius: "10px" }}
-      >
+      <div className="max-w-full shadow-xl my-3.5 "style={{ background: "white", borderRadius: "10px" }}>
         <div className={classes.optionsIcons}>
-          <InputOption
-            Icon={ShareOutlinedIcon}
-            title="Share Update"
-            color="#ADD8E6"
-          />
+          <InputOption Icon={ShareOutlinedIcon} title="Share Update"color="#ADD8E6"/>
 
-          <input
-            onChange={(e) => onFileChange(e)}
-            accept="image/*"
-            id="icon-button-file"
-            type="file"
-            className={inputClasses.input}
-          />
+          <input onChange={(e) => onFileChange(e)} accept="image/*"id="icon-button-file"type="file" className={inputClasses.input}/>
           <label htmlFor="icon-button-file">
-            <IconButton
-              color="primary"
-              size="small"
-              aria-label="upload picture"
-              component="span"
-            >
-              <InputOption
-                Icon={ImageOutlinedIcon}
-                title="Upload a photo"
-                color="#ADD8E6"
-              />
+            <IconButton color="primary"size="small"aria-label="upload picture"component="span">
+              <InputOption Icon={ImageOutlinedIcon}title="Upload a photo"color="#ADD8E6"/>
             </IconButton>
           </label>
 
-          <InputOption
-            Icon={SaveOutlinedIcon}
-            title="Write an article"
-            color="#ADD8E6"
-          />
+          <InputOption Icon={SaveOutlinedIcon}title="Write an article"color="#ADD8E6"/>
         </div>
         <Card className={classes.container}>
           <div className={classes.container_input}>
             <Avatar className={avatarClasses.large} src={currentUser.avatar} />
 
-            <form
-              onSubmit={handleSubmit}
-              style={{ display: "flex", width: "100%" }}
-            >
-              <CreateIcon style={createIconStyle} />
+            <form onSubmit={handleSubmit} style={{ display: "flex", width: "100%" }}>
+                <CreateIcon style={createIconStyle} />
 
-              <input
-                placeholder="Write your thoughts..."
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                style={inputStyle}
-              />
-              <button
-                disabled={input ? false : true}
-                type="submit"
-                onClick={handleSubmit}
-              >
-                <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
-              </button>
+                <input placeholder="Write your thoughts..." type="text"value={input} onChange={(e) => setInput(e.target.value)} style={inputStyle}/>
+                <button disabled={input ? false : true} type="submit"onClick={handleSubmit}>
+                  <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
+                </button>
             </form>
           </div>
         </Card>
       </div>
-      <TransitionsModal
-        open={open}
-        handleClose={handleClose}
-        users={userLikes}
-        title={title}
-      />
+      <TransitionsModal open={open} handleClose={handleClose} users={userLikes} title={title}/>
       <CarroselJobs />
       {posts.map(
-        ({
-          id,
-          data: { likes, name, message, userId, photo, postImage, timestamp },
-        }) => (
-          <div
-            className="max-w-full shadow-xl my-3.5 "
-            style={{ background: "white", borderRadius: "10px" }}
-            key={id}
-          >
+        ({id, likes, name, message, userId, photo, postImage, timestamp }) => (
+          <div className="max-w-full shadow-xl my-3.5 "style={{background:"white",borderRadius:"10px"}}key={id}>
             <Post
               handleOpen={handleOpen}
               id={id}
