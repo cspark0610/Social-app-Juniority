@@ -31,7 +31,7 @@ const InputMessage = () => {
   const [open, setOpen] = React.useState(false);
   const [userLikes, setUserLikes] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
+ 
 
   const classes = useStyles();
   const inputClasses = useInputStyles();
