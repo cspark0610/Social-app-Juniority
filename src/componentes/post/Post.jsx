@@ -39,8 +39,6 @@ const Post = ({
   const [inUse, setInUse] = useState(FavoriteBorderOutlinedIcon);
   const [lastKey, setLastKey] = useState("En un comienzo");
   const [viewMore, setViewMore] = useState(true);
-  // const notLiked = FavoriteBorderOutlinedIcon;
-  // const liked = FavoriteOutlinedIcon;
 
   const handleComment = () => {
     db.collection("comments")
@@ -168,6 +166,8 @@ const Post = ({
         );
       });
   }, [comment]);
+
+
   useEffect(() => {
     db.collection("likes")
       .doc(`${id}_${currentUser.id}`)
