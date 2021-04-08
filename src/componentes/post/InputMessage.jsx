@@ -32,7 +32,7 @@ const InputMessage = () => {
   const [userLikes, setUserLikes] = useState([]);
   const [title, setTitle] = useState('')
   const [isUploaded, setIsUploaded] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
+ 
 
   const classes = useStyles();
   const inputClasses = useInputStyles();
