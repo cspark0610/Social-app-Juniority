@@ -30,6 +30,7 @@ const InputMessage = () => {
   const [imageUrl, setImageUrl] = useState();
   const [open, setOpen] = React.useState(false);
   const [userLikes, setUserLikes] = useState([]);
+  const [title, setTitle] = useState('')
   const [isUploaded, setIsUploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -167,7 +168,7 @@ const InputMessage = () => {
         open={open}
         handleClose={handleClose}
         users={userLikes}
-        title="Likes"
+        title={title}
       />
       <CarroselJobs />
       {posts.map(
@@ -190,7 +191,8 @@ const InputMessage = () => {
               postImage={postImage}
               timestamp={timestamp}
               likes={likes}
-              setUserLikes={setUserLikes}
+              setUsers={setUserLikes}
+              setTitle={setTitle}
             />
           </div>
         )

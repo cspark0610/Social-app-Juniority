@@ -26,7 +26,8 @@ const Post = ({
   likes,
   timestamp,
   handleOpen,
-  setUserLikes,
+  setUsers,
+  setTitle,
 }) => {
   const classes = useStyles();
   const inputClasses = inputStyles();
@@ -38,8 +39,6 @@ const Post = ({
   const [inUse, setInUse] = useState(FavoriteBorderOutlinedIcon);
   const [lastKey, setLastKey] = useState("En un comienzo");
   const [viewMore, setViewMore] = useState(true);
-  // const notLiked = FavoriteBorderOutlinedIcon;
-  // const liked = FavoriteOutlinedIcon;
 
   const handleComment = () => {
     db.collection("comments")
@@ -107,7 +106,7 @@ const Post = ({
             },
             { merge: true }
           );
-        db.collection("likes").doc(`${id}_${userId}`).delete();
+        db.collection("likes").doc(`${id}_${currentUser.id}`).delete();
         setInUse(FavoriteBorderOutlinedIcon);
       }
     }
@@ -117,12 +116,13 @@ const Post = ({
       .where("postId", "==", id)
       .get()
       .then((querySnapShot) => {
-        setUserLikes(
+        setUsers(
           querySnapShot.docs.map((doc) => {
             return doc.data();
           })
         );
       });
+    setTitle('Likes')
     handleOpen();
   };
 
@@ -132,9 +132,9 @@ const Post = ({
         .orderBy("timestamp", "desc")
         .where("postId", "==", id)
         .startAfter(lastKey)
+        .limit(4)
         .get()
         .then((querySnapShot) => {
-          console.log(querySnapShot.docs[querySnapShot.docs.length - 1]);
           setLastKey(querySnapShot.docs[querySnapShot.docs.length - 1]);
           setData((prev) => {
             let newData = querySnapShot.docs.map((doc) => {
@@ -166,6 +166,8 @@ const Post = ({
         );
       });
   }, [comment]);
+
+
   useEffect(() => {
     db.collection("likes")
       .doc(`${id}_${currentUser.id}`)
