@@ -166,8 +166,7 @@ const OfferJobs = () => {
                       </label>
                    
                   </DialogActions>
-              </Dialog>
-                
+              </Dialog>               
          </div>
       ))}
     </>

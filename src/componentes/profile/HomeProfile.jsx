@@ -16,12 +16,10 @@ import { useHistory } from 'react-router-dom';
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
-  const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState();
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState()
-  const history = useHistory();
   const locationUrl = useSelector(state => state.locationUrl);
 
   const handleClose = () => {
@@ -32,18 +30,6 @@ const HomeProfile = (props) => {
   };
 
   useEffect(() => {
-    dispatch(removeSelectedUserPosts());
-    db.collection("posts")
-      .where("userId", "==", userId)
-      .get()
-      .then((doc) => {
-        doc.forEach((data) => {
-          dispatch(setSelectedUserPosts(data.data()));
-        });
-      });
-  }, [locationUrl]);
-
-  useEffect(() => {
     db.collection("user")
       .where("id", "==", userId)
       .onSnapshot((snapshot) => {
@@ -57,7 +43,6 @@ const HomeProfile = (props) => {
       .onSnapshot((snapshot) => {
         snapshot.docs.map((doc) => setSelectedUser(doc.data()));
       });
-    console.log(userId)
   }, []);
 
 
