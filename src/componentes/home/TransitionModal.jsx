@@ -14,9 +14,11 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "2px solid #3CB4E5",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    width: "40%",
+    borderRadius: '10px'
   },
 }));
 
@@ -41,14 +43,14 @@ export default function TransitionsModal({ handleClose, open, users, title }) {
           <div className={classes.paper}>
             <h2
               id="transition-modal-title"
-              style={{ textAlign: "center", fontWeight: "600" }}
+              style={{ textAlign: "center", fontWeight: "600", marginBottom: "0.8rem" }}
             >
               {title}
             </h2>
             <p id="transition-modal-description">
               {users.map((user) => (
-                <div style={{ display: "flex" }}>
-                  <Avatar src={user.photo} />
+                <div style={{ display: "flex", backgroundColor: '#E3EFF1', marginBottom: "0.5rem", borderRadius: "10px" }}>
+                  <Avatar style={{marginRight:'0.3rem'}} src={user.photo} />
                   <Link to={`/profile/${user.userId}`}>{user.userName}</Link>
                 </div>
               ))}

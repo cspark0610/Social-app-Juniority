@@ -34,7 +34,6 @@ function App() {
 
   return (
     <>
-
       <Switch>
         <Route exact path="/">
           <Home />

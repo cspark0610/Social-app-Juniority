@@ -1,19 +1,18 @@
 import React from "react";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import { Grid } from '@material-ui/core';
+import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import ArtTrackIcon from '@material-ui/icons/ArtTrack';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
-import {InputIcon} from "./InputIcon";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import ArtTrackIcon from "@material-ui/icons/ArtTrack";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
+import { InputIcon } from "./InputIcon";
 import "./style.css";
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
-
-export const PostProfile = ({user}) => {
-  const currentUser = useSelector(state => state.currentUser);
+export const PostProfile = ({ user }) => {
+  const currentUser = useSelector((state) => state.currentUser);
 
   return (
     <>
