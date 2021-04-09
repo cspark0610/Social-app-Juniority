@@ -10,8 +10,8 @@ import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
 import { useSelector } from "react-redux";
-
 import TransitionsModal from '../home/TransitionModal';
+import { useHistory } from "react-router-dom";
 
 
 const HomeProfile = (props) => {
@@ -21,6 +21,8 @@ const HomeProfile = (props) => {
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState()
   const locationUrl = useSelector(state => state.locationUrl);
+  const currentUser = useSelector(state => state.currentUser);
+  const history = useHistory()
 
   const handleClose = () => {
     setOpen(false);
@@ -48,6 +50,8 @@ const HomeProfile = (props) => {
 
   return (
     <>
+    {!currentUser ? history.push('/register') : (
+      <>
       {selectedUser && (
         <>
           <Navbar />
@@ -81,6 +85,8 @@ const HomeProfile = (props) => {
           </div>
         </>
       )}
+      </>
+    )}
     </>
   );
 };
