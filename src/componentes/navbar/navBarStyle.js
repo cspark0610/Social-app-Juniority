@@ -16,11 +16,11 @@ export default  makeStyles((theme) => ({
       borderWidth: "3px",
       borderColor: "#3CB4E5",
       borderRadius:"3px",
+      display:'flex',
     },
     searchIcon: {
       height: "100%",
-      position: "absolute",
-      pointerEvents: "none",
+      backgroundColor:'black',
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -29,6 +29,7 @@ export default  makeStyles((theme) => ({
      },
     inputRoot: {},
     inputInput: {
+     
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,

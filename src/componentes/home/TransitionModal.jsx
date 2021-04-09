@@ -5,6 +5,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { setLocationUrl } from "../../store/locationUrl";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -14,14 +17,26 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "2px solid #3CB4E5",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    width: "40%",
+    borderRadius: '10px'
   },
 }));
 
 export default function TransitionsModal({ handleClose, open, users, title }) {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const locationUrl = useSelector(state => state.locationUrl);
+
+  const clickHandler = (e, id) => {
+    e.preventDefault();
+    history.push(`/profile/${id}`);
+    dispatch(setLocationUrl(!locationUrl));
+    handleClose();
+  }
 
   return (
     <div>
@@ -41,15 +56,15 @@ export default function TransitionsModal({ handleClose, open, users, title }) {
           <div className={classes.paper}>
             <h2
               id="transition-modal-title"
-              style={{ textAlign: "center", fontWeight: "600" }}
+              style={{ textAlign: "center", fontWeight: "600", marginBottom: "0.8rem" }}
             >
               {title}
             </h2>
             <p id="transition-modal-description">
               {users.map((user) => (
-                <div style={{ display: "flex" }}>
-                  <Avatar src={user.photo} />
-                  <Link to={`/profile/${user.userId}`}>{user.userName}</Link>
+                <div style={{ display: "flex", backgroundColor: '#E3EFF1', marginBottom: "0.5rem", borderRadius: "10px" }}>
+                  <Avatar style={{marginRight:'0.3rem'}} src={user.photo} />
+                  <button onClick={e => clickHandler(e, user.userId)}>{user.userName}</button>
                 </div>
               ))}
             </p>

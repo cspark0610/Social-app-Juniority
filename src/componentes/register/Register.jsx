@@ -3,10 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import Animation from "../animation/Animation";
 import Learning from "../assets/53882-distance-education.json";
 import rocket from "../assets/rocket.svg";
-import logo from "../assets/juniorityText.svg";
 import { useFirebaseApp } from "reactfire";
 import { db } from "../../firebase/firebase";
-import firbaseTime from "firebase";
 import Alert from "@material-ui/lab/Alert";
 import Login from "../login/Login.jsx";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,8 +58,10 @@ const Register = () => {
             email,
             follow: [],
             followers: [],
+            location: 'No info',
+            position: 'No info',
             avatar:'https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg',
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            
           };
           db.collection("user")
             .doc(user.user.uid)

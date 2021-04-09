@@ -1,10 +1,10 @@
 import { Button, TextField, Typography } from "@material-ui/core";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useFirebaseApp } from "reactfire";
 import useStyles from "./styles";
-import firbaseTime from "firebase";
+
 import {
   auth,
   db,
@@ -15,7 +15,6 @@ import {
 import { setCurrentUser } from "../../store/currentUser";
 import Alert from "@material-ui/lab/Alert";
 
-import juniority from "../assets/juniority.svg";
 
 const Login = () => {
   const firebase = useFirebaseApp();
@@ -36,7 +35,7 @@ const Login = () => {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,
             email: result.additionalUserInfo.profile.email,
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+           
             avatar: result.additionalUserInfo.profile.avatar_url,
             follow: [],
             followers: [],
@@ -46,7 +45,7 @@ const Login = () => {
             id: result.user.uid,
             fullName: result.additionalUserInfo.profile.name,
             email: result.additionalUserInfo.profile.email,
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            
             avatar: result.additionalUserInfo.profile.picture,
             follow: [],
             followers: [],

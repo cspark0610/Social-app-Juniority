@@ -9,17 +9,20 @@ import Navbar from "../navbar/Navbar";
 import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
-import { useDispatch } from "react-redux";
-import { setSelectedUserPosts } from "../../store/selectedUserPosts";
+import { useSelector } from "react-redux";
 import TransitionsModal from '../home/TransitionModal';
+import { useHistory } from "react-router-dom";
+
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
-  const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState();
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState()
+  const locationUrl = useSelector(state => state.locationUrl);
+  const currentUser = useSelector(state => state.currentUser);
+  const history = useHistory()
 
   const handleClose = () => {
     setOpen(false);
@@ -29,34 +32,26 @@ const HomeProfile = (props) => {
   };
 
   useEffect(() => {
-    db.collection("posts")
-      .where("userId", "==", userId)
-      .get()
-      .then((doc) => {
-        doc.forEach((data) => {
-          dispatch(setSelectedUserPosts(data.data()));
-        });
+    db.collection("user")
+      .where("id", "==", userId)
+      .onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) => setSelectedUser(doc.data()));
       });
-  }, []);
+  }, [locationUrl]);
 
   useEffect(() => {
-    /* db.collection("user")
-      .where("id", "==", userId)
-      .get()
-      .then((doc) => {
-        doc.forEach((data) => {
-          setSelectedUser(data.data());
-        });
-      }); */
-
     db.collection("user")
       .where("id", "==", userId)
       .onSnapshot((snapshot) => {
         snapshot.docs.map((doc) => setSelectedUser(doc.data()));
       });
   }, []);
+
+
   return (
     <>
+    {!currentUser ? history.push('/register') : (
+      <>
       {selectedUser && (
         <>
           <Navbar />
@@ -81,9 +76,8 @@ const HomeProfile = (props) => {
               />
               <Grid item md={6}>
                 <PostProfile user={selectedUser} />
-                <Publication user={selectedUser} />
+                <Publication handleOpen={handleOpen} setTitle={setTitle} setUsers={setUsers} selectedUser={selectedUser}/>
               </Grid>
-
               <Grid item md={3}>
                 <Widget />
               </Grid>
@@ -91,6 +85,8 @@ const HomeProfile = (props) => {
           </div>
         </>
       )}
+      </>
+    )}
     </>
   );
 };
