@@ -32,11 +32,11 @@ export default function Jobs() {
               </h4>
             </div>
             <hr />
-            <div>
+            
               {jobsOffers && jobsOffers.map(({id, data:{position, location, timestamp}}) =>(
                 <CardJob id={id} position={position} location={location} timestamp={timestamp}/>
               ))}
-            </div>
+           
           </Paper>
     </div>
     

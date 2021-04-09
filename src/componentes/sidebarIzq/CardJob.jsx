@@ -13,7 +13,7 @@ const CardJob = ({id, position, location, timestamp }) => {
   return (
     <> 
     
-           <div className={classes.body}>
+           <div className={classes.body} key={id}>
            <Paper className={classes.top}>
              <div className={classes.section1}>
                <div>

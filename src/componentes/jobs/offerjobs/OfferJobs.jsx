@@ -48,7 +48,7 @@ const OfferJobs = () => {
           },
         },
       }))(Chip);     
-    console.log(keyword);
+   
      
     useEffect(()=>{
         db.collection('jobs').orderBy('timestamp', 'desc')

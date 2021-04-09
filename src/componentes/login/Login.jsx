@@ -36,7 +36,7 @@ const Login = () => {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,
             email: result.additionalUserInfo.profile.email,
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+           
             avatar: result.additionalUserInfo.profile.avatar_url,
             follow: [],
             followers: [],
@@ -46,7 +46,7 @@ const Login = () => {
             id: result.user.uid,
             fullName: result.additionalUserInfo.profile.name,
             email: result.additionalUserInfo.profile.email,
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            
             avatar: result.additionalUserInfo.profile.picture,
             follow: [],
             followers: [],

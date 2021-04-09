@@ -63,7 +63,7 @@ const Register = () => {
             location: 'No info',
             position: 'No info',
             avatar:'https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg',
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            
           };
           db.collection("user")
             .doc(user.user.uid)
