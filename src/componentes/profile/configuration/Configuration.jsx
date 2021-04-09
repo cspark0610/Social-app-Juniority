@@ -3,7 +3,6 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { ToastContainer } from "react-toastify";
 import Navbar from "../../navbar/Navbar";
 import useStyles from "./configurationStyles";
-import "./configurationCss.css";
 import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
@@ -17,6 +16,7 @@ export const Configuration = () => {
   const [fullNameInput, setFullNameInput] = useState();
   const [locationInput, setLocationInput] = useState();
   const [positionInput, setPositionInput] = useState();
+  const [portfolioInput, setPortfolioInput] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -34,6 +34,7 @@ export const Configuration = () => {
     setFullNameInput(currentUser.fullName);
     setLocationInput(currentUser.location);
     setPositionInput(currentUser.position);
+    setPortfolioInput(currentUser.portfolio);
     setImageUrl(currentUser.avatar);
   }, [currentUser]);
 
@@ -46,6 +47,7 @@ export const Configuration = () => {
     updatedUser.location = locationInput;
     updatedUser.position = positionInput;
     updatedUser.avatar = imageUrl;
+    updatedUser.portfolio = portfolioInput;
     console.log(updatedUser);
     await db.collection("user").doc(currentUser.id).set(updatedUser);
     dispatch(setCurrentUser(updatedUser));
@@ -95,6 +97,16 @@ export const Configuration = () => {
                 variant="outlined"
                 label="Location"
                 placeholder="Location"
+                fullWidth
+              />
+              <TextField
+                className={classes.textField}
+                value={portfolioInput}
+                onChange={(e) => setPortfolioInput(e.target.value)}
+                name="portfolio"
+                variant="outlined"
+                label="Portfolio"
+                placeholder="Portfolio"
                 fullWidth
               />
               <label htmlFor="avatar">Profile photo</label>

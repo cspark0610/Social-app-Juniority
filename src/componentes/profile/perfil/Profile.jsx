@@ -90,18 +90,9 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
         <br />
 
         <div>
-          <Link to="/" className="link__profile">
-            www.johndoe.com
-          </Link>
-          <br />
-          <Link to="/" className="link__profile">
-            www.rf.com/johndoe
-          </Link>
-          <br />
-          <Link to="/" className="link__profile">
-            www.twitter.com/johndoe
-          </Link>
-          <br />
+          <a href={user.portfolio} target='_blank' className="link__profile">
+            {user.portfolio}
+          </a>
         </div>
       </div>
     </div>
