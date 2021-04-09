@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import DiscreteSlider from "./DiscreteSlider";
 import { Checkbox } from "pretty-checkbox-react";
-import DemoSelectMultiple from "./DemoSelectMultiple";
+import JobType from "./JobType";
+/* import ExperienceLevel from "./ExperienceLevel"; */
+import Location from "./Location";
+import Skills from "./Skills";
+import { useSelector } from "react-redux";
 
 const Filter = () => {
 
+const filter = useSelector(state => state.filter);
+
+const handleClick  = (event) => {
+  console.log(filter)  
+};
 
   return (
     <div className="aling__filter">
@@ -34,8 +43,8 @@ const Filter = () => {
             <Button className="button__jobs">Clear</Button>
           </Grid>
         </Grid>
-        <DemoSelectMultiple className="select__multiple" />
-        {/* <form>
+      {/*   <DemoSelectMultiple className="select__multiple" /> */}
+        <form>
           <TextField
             name="Search skills.."
             variant="outlined"
@@ -43,7 +52,8 @@ const Filter = () => {
             placeholder="Search skills"
             className="TextField__filter"
           />
-        </form> */}
+        </form>
+        {/* <Skills/> */}
       </div>
 
       <div className="back">
@@ -85,7 +95,7 @@ const Filter = () => {
             <Button className="button__jobs">Clear</Button>
           </Grid>
         </Grid>
-        <DemoSelectMultiple className="select__multiple" />
+        <JobType className="select__multiple" />
         {/* <form>
           <TextField
             name="Select a job Type"
@@ -95,7 +105,7 @@ const Filter = () => {
             className="TextField__filter"
           />
         </form> */}
-        <inpu />
+<Button className="button__jobs" onClick={handleClick}>Search</Button>
       </div>
 
       <div className="back">
@@ -110,7 +120,7 @@ const Filter = () => {
         <DiscreteSlider />
       </div>
 
-      <div className="back">
+     {/*  <div className="back">
         <Grid container>
           <Grid item md={6}>
             <h3 className="h3__skill">Experience Level</h3>
@@ -120,8 +130,8 @@ const Filter = () => {
             <Button className="button__jobs">Clear</Button>
           </Grid>
         </Grid>
-        <DemoSelectMultiple className="select__multiple" />
-        {/* <form>
+        <ExperienceLevel className="select__multiple" />
+        <form>
           <TextField
             name="Select a experience Level"
             variant="outlined"
@@ -129,10 +139,10 @@ const Filter = () => {
             placeholder="Select a experience Level"
             className="TextField__filter"
           />
-        </form> */}
+        </form> 
         <inpu />
       </div>
-
+ */}
       <div className="back">
         <Grid container>
           <Grid item md={6}>
@@ -143,7 +153,8 @@ const Filter = () => {
             <Button className="button__jobs">Clear</Button>
           </Grid>
         </Grid>
-        <DemoSelectMultiple className="select__multiple" />
+        <Location className="select__multiple" />
+        <Button className="button__jobs" onClick={handleClick} >HOLA</Button>
         {/* <form>
           <TextField
             name="Select a location"
@@ -154,7 +165,6 @@ const Filter = () => {
             color="green"
           />
         </form> */}
-        <inpu />
       </div>
     </div>
   );

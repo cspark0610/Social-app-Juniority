@@ -29,8 +29,9 @@
     color: #65baaf !important;
 }
 .TextField__filter{
-  background: #65baaf !important;
-  opacity: 0.4;
+/*   background: #65baaf !important;
+  opacity: 0.4; */
+  padding:0 !important;
 
 }
 .aling__filter{

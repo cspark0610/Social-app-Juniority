@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { Profile } from "./perfil/Profile";
 import { Portfolio } from "./portfolio/Portfolio";
 import { PostProfile } from "./post/PostProfile";
-import { Widget } from "./widget/Widget";
+/* import { Widget } from "./widget/Widget"; */
 import { Banner } from "./banner/Banner";
 import Navbar from "../navbar/Navbar";
 import "./style.css";
@@ -12,6 +12,7 @@ import { db } from "../../firebase/firebase";
 import { useDispatch } from "react-redux";
 import { setSelectedUserPosts } from "../../store/selectedUserPosts";
 import TransitionsModal from '../home/TransitionModal';
+import Widget from "../sidebarDer/Widget";
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
@@ -19,6 +20,7 @@ const HomeProfile = (props) => {
   const [selectedUser, setSelectedUser] = useState();
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState([]);
+  const [title, setTitle] = useState()
 
   const handleClose = () => {
     setOpen(false);
@@ -68,7 +70,7 @@ const HomeProfile = (props) => {
           <div className="home__border">
             <Grid container display="flex" align="center" spacing={3}>
               <Grid item md={3}>
-                <Profile user={selectedUser} setUsers={setUsers} handleOpen={handleOpen}/>
+                <Profile user={selectedUser} setUsers={setUsers} handleOpen={handleOpen} setTitle={setTitle}/>
                 <Portfolio />
               </Grid>
               <TransitionsModal
@@ -76,6 +78,7 @@ const HomeProfile = (props) => {
                 setOpen={setOpen}
                 handleClose={handleClose}
                 users={users}
+                title={title}
               />
               <Grid item md={6}>
                 <PostProfile user={selectedUser} />
@@ -83,7 +86,11 @@ const HomeProfile = (props) => {
               </Grid>
 
               <Grid item md={3}>
-                <Widget />
+                <div className="userProfile__widget">
+              <Widget />
+              </div>
+{/*                 <Widget /> */}
+
               </Grid>
             </Grid>
           </div>
