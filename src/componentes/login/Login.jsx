@@ -35,7 +35,7 @@ const Login = () => {
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,
-            email: result.additionalUserInfo.profile.email,
+            email: result.user.email,
             timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
             avatar: result.additionalUserInfo.profile.avatar_url,
             follow: [],
