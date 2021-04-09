@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import SearchIcon from "@material-ui/icons/Search";
+
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/ChatBubbleOutline";
 import NotificationsIcon from "@material-ui/icons/NotificationsNone";
@@ -15,12 +15,11 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./navBarStyle";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
-import { Avatar } from "@material-ui/core";
-import imagen from "../assets/ag.jpg";
+import { Avatar, Button } from "@material-ui/core";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
 import { setLocationUrl } from "../../store/locationUrl";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { setKeynavbar } from "../../store/keywordNavbar";
 
 const Navbar = () => {
@@ -28,7 +27,7 @@ const Navbar = () => {
   const classes = useStyles();
   const currentUser = useSelector(state => state.currentUser);
   const locationUrl = useSelector(state => state.locationUrl);
-  const history = useHistory();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -144,9 +143,9 @@ const Navbar = () => {
         <div className="containerinputNav">
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <IconButton onClick={handleClickNavbar}>
-                <SearchIcon className="searchIcon" onClick={handleClickNavbar}/>
-              </IconButton>
+              <Button onClick={handleClickNavbar} >
+                <HighlightOffIcon className="searchIcon" onClick={handleClickNavbar}/>
+              </Button>
             </div>
             <InputBase
               placeholder="Search…"

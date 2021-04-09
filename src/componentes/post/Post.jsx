@@ -15,7 +15,7 @@ import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { FavoriteBorderOutlined } from "@material-ui/icons";
+
 
 const Post = ({
   id,

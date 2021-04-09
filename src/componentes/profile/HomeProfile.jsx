@@ -9,10 +9,10 @@ import Navbar from "../navbar/Navbar";
 import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
-import { useDispatch, useSelector } from "react-redux";
-import { removeSelectedUserPosts, setSelectedUserPosts } from "../../store/selectedUserPosts";
+import { useSelector } from "react-redux";
+
 import TransitionsModal from '../home/TransitionModal';
-import { useHistory } from 'react-router-dom';
+
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;

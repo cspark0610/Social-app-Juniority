@@ -9,19 +9,19 @@ export const Portfolio = () => {
             <hr className="line__profile__widget"/>
         <Grid container >
         <Grid item md={6} className="text__aling__left text__aling">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"/>
+        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"alt=''/>
         </Grid>
         <Grid item md={6} className="text__aling__right">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"/>
+        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"alt=''/>
         </Grid>
       </Grid>
       <div>
       <Grid container >
         <Grid item md={6} className="text__aling__left text__aling">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"/>
+        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"alt=''/>
         </Grid>
         <Grid item md={6} className="text__aling__right">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg" />
+        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg" alt=''/>
         </Grid>
       </Grid>
 

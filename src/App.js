@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 
-import UserProfile from "./componentes/sidebarIzq/UserProfile";
-import Login from "./componentes/login/Login";
 import Register from "./componentes/register/Register";
 import Home from "./componentes/home/Home";
 import { useSelector, useDispatch } from "react-redux";
