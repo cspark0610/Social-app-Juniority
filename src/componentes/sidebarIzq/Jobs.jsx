@@ -34,7 +34,7 @@ export default function Jobs() {
             <hr />
             
               {jobsOffers && jobsOffers.map(({id, data:{position, location, timestamp}}) =>(
-                <CardJob id={id} position={position} location={location} timestamp={timestamp}/>
+                <CardJob key={id} position={position} location={location} timestamp={timestamp}/>
               ))}
            
           </Paper>

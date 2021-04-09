@@ -16,6 +16,7 @@ import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
+
 const Post = ({
   id,
   name,
@@ -45,8 +46,7 @@ const Post = ({
       .orderBy("timestamp", "desc")
       .where("postId", "==", id)
       .limit(4)
-      .get()
-      .then((querySnapShot) => {
+      .onSnapshot((querySnapShot) => {
         setLastKey(querySnapShot.docs[querySnapShot.docs.length - 1]);
         setData(
           querySnapShot.docs.map((doc) => {
@@ -56,9 +56,6 @@ const Post = ({
             };
           })
         );
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
       });
     setComment(true);
   };
@@ -80,34 +77,36 @@ const Post = ({
   let handleLikes = (e) => {
     if (!e.target.matches(".zse")) {
       if (inUse === FavoriteBorderOutlinedIcon) {
-        db.collection("likes")
-          .doc(`${id}_${currentUser.id}`)
-          .set({
-            postId: id,
-            userId: currentUser.id,
-            userName: currentUser.fullName,
-            photo: currentUser.avatar || "",
-          });
-        db.collection("posts")
-          .doc(id)
-          .set(
-            {
-              likes: likes + 1,
-            },
-            { merge: true }
-          );
+        const batch = db.batch();
+        const postReference = db.collection("posts").doc(id);
+        const likeReference = db
+          .collection("likes")
+          .doc(`${id}_${currentUser.id}`);
+
+        batch.update(postReference, {
+          likes: firebase.firestore.FieldValue.increment(1),
+        });
+        batch.set(likeReference, {
+          postId: id,
+          userId: currentUser.id,
+          userName: currentUser.fullName,
+          photo: currentUser.avatar || "",
+        });
         setInUse(FavoriteOutlinedIcon);
+        batch.commit();
       } else {
-        db.collection("posts")
-          .doc(id)
-          .set(
-            {
-              likes: likes - 1,
-            },
-            { merge: true }
-          );
-        db.collection("likes").doc(`${id}_${currentUser.id}`).delete();
+        const otherBatch = db.batch();
+        const postReference = db.collection("posts").doc(id);
+        const likeReference = db
+          .collection("likes")
+          .doc(`${id}_${currentUser.id}`);
+
+        otherBatch.update(postReference, {
+          likes: firebase.firestore.FieldValue.increment(-1),
+        });
+        otherBatch.delete(likeReference);
         setInUse(FavoriteBorderOutlinedIcon);
+        otherBatch.commit();
       }
     }
   };
@@ -122,7 +121,7 @@ const Post = ({
           })
         );
       });
-    setTitle('Likes')
+    setTitle("Likes");
     handleOpen();
   };
 
@@ -150,23 +149,6 @@ const Post = ({
       setViewMore(false);
     }
   };
-
-  useEffect(() => {
-    //https://firebase.google.com/docs/firestore/query-data/listen
-    db.collection("comments")
-      .orderBy("timestamp", "desc")
-      .where("postId", "==", id)
-      .limit(4)
-      .onSnapshot((snapshot) => {
-        setData(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
-      });
-  }, [comment]);
-
 
   useEffect(() => {
     db.collection("likes")

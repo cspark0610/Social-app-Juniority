@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Icon, Paper, Typography } from "@material-ui/core";
+import {  Paper, Typography } from "@material-ui/core";
 import useStyles from "./widgetStyle.js";
 import { Avatar } from "@material-ui/core";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
@@ -16,7 +16,7 @@ const Widget = () => {
   const currentUser = useSelector(state => state.currentUser);
   
   useEffect(()=>{
-    db.collection('user').orderBy('timeStamp')
+    db.collection('user')
     .onSnapshot(shot =>{
       setUsers(shot.docs.map(doc =>({
             id: doc.id,

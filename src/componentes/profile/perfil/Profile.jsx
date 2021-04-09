@@ -13,7 +13,7 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
 
   useEffect(() => {
     const validator = user.followers.filter(
-      (user) => user.id == currentUser.id
+      (user) => user.id === currentUser.id
     );
     validator.length ? setIsFollowing(true) : setIsFollowing(false);
   }, []);
