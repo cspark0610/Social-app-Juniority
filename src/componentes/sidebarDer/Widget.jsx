@@ -8,7 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import IconButton from "@material-ui/core/IconButton";
 import { useSelector } from "react-redux";
 import { addFollow } from "../utils/followSystem.js";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Widget = () => {
   const [ users, setUsers ]= useState([]);
@@ -31,6 +31,8 @@ const Widget = () => {
   const randomIdx1 = Math.floor(Math.random()*usersFiltered.length)
   const randomIdx2 = Math.floor(Math.random()*usersFiltered.length)
   const randomIdx3 = Math.floor(Math.random()*usersFiltered.length)
+  const randomIdx4 = Math.floor(Math.random()*usersFiltered.length)
+  
 
   const classes = useStyles();
 
@@ -92,7 +94,7 @@ const Widget = () => {
           </div>
           <div className={classes.people_right}>
             <Typography>
-            <Link to={ `/profile/${usersFiltered[randomIdx2]?.id}` }>
+            <Link to={ `/profile/${usersFiltered[randomIdx3]?.id}` }>
               {usersFiltered[randomIdx3]?.data?.fullName}
               </Link></Typography>
             <p style={{ color: "gray", fontSize: "12px" }}>
@@ -101,6 +103,27 @@ const Widget = () => {
           </div>
           <div className={classes.icon}>
           <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx3]?.id)}>
+            <PersonAddOutlinedIcon />
+            </IconButton>
+          </div>
+        </div>
+        {/*repetido*/}
+        <hr />
+        <div className={classes.people}>
+          <div className={classes.people_left}>
+            <Avatar>{usersFiltered[randomIdx4]?.data?.fullName.charAt(0).toUpperCase()} </Avatar>
+          </div>
+          <div className={classes.people_right}>
+            <Typography>
+            <Link to={ `/profile/${usersFiltered[randomIdx4]?.id}` }>
+              {usersFiltered[randomIdx4]?.data?.fullName}
+              </Link></Typography>
+            <p style={{ color: "gray", fontSize: "12px" }}>
+              {usersFiltered[randomIdx4]?.data?.email}
+            </p>
+          </div>
+          <div className={classes.icon}>
+          <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx4]?.id)}>
             <PersonAddOutlinedIcon />
             </IconButton>
           </div>

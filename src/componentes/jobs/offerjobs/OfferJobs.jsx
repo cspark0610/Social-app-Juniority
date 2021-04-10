@@ -50,8 +50,7 @@ const OfferJobs = () => {
           (doc) =>
             doc.position.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.description.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
-            doc.availability.toLowerCase().indexOf(keyword.toLowerCase()) >
-              -1 ||
+            doc.availability.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.location.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.salary.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.skills.toLowerCase().indexOf(keyword.toLowerCase()) > -1
