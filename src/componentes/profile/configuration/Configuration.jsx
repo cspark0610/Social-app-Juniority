@@ -6,8 +6,9 @@ import useStyles from "./configurationStyles";
 import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { setCurrentUser } from "../../../store/currentUser";
+
 
 export const Configuration = () => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -42,7 +43,7 @@ export const Configuration = () => {
     e.preventDefault();
 
     let updatedUser = { ...currentUser };
-    console.log("CURRENT", currentUser, imageUrl);
+    //console.log("CURRENT", currentUser, imageUrl);
     updatedUser.fullName = fullNameInput;
     updatedUser.location = locationInput;
     updatedUser.position = positionInput;
@@ -59,73 +60,19 @@ export const Configuration = () => {
       <div className={classes.container}>
         <div className={classes.subContainer}>
           <Paper className={classes.paper}>
-            <form
-              onSubmit={(e) => submitHandler(e)}
-              autoComplete="off"
-              className={`${classes.root} ${classes.form}`}
-            >
+            <form onSubmit={(e) => submitHandler(e)} autoComplete='off' className={`${classes.root} ${classes.form}`}>
               <ToastContainer />
-              <Typography variant="h6">
+              <Typography variant='h6'>
                 <b>Update your profile</b>
               </Typography>
 
-              <TextField
-                className={classes.textField}
-                value={fullNameInput}
-                onChange={(e) => setFullNameInput(e.target.value)}
-                name="fullName"
-                variant="outlined"
-                label="Full Name"
-                placeholder="Full Name"
-                fullWidth
-              />
-              <TextField
-                className={classes.textField}
-                value={positionInput}
-                onChange={(e) => setPositionInput(e.target.value)}
-                name="position"
-                variant="outlined"
-                label="Position"
-                placeholder="Position"
-                fullWidth
-              />
-              <TextField
-                className={classes.textField}
-                value={locationInput}
-                onChange={(e) => setLocationInput(e.target.value)}
-                name="location"
-                variant="outlined"
-                label="Location"
-                placeholder="Location"
-                fullWidth
-              />
-              <TextField
-                className={classes.textField}
-                value={portfolioInput}
-                onChange={(e) => setPortfolioInput(e.target.value)}
-                name="portfolio"
-                variant="outlined"
-                label="Portfolio"
-                placeholder="Portfolio"
-                fullWidth
-              />
-              <label htmlFor="avatar">Profile photo</label>
-              <input
-                onChange={(e) => onFileChange(e)}
-                name="avatar"
-                accept="image/*"
-                id="icon-button-file"
-                type="file"
-                className={classes.avatarInput}
-              />
-              <Button
-                className={classes.buttonSubmit}
-                variant="contained"
-                color="primary"
-                size="large"
-                type="submit"
-                fullWidth
-              >
+              <TextField className={classes.textField} value={fullNameInput} onChange={(e) => setFullNameInput(e.target.value)} name='fullName' variant='outlined' label='Full Name' placeholder='Full Name' fullWidth />
+              <TextField className={classes.textField} value={positionInput} onChange={(e) => setPositionInput(e.target.value)} name='position' variant='outlined' label='Position' placeholder='Position' fullWidth />
+              <TextField className={classes.textField} value={locationInput} onChange={(e) => setLocationInput(e.target.value)} name='location' variant='outlined' label='Location' placeholder='Location' fullWidth />
+              <TextField className={classes.textField} value={portfolioInput} onChange={(e) => setPortfolioInput(e.target.value)} name='portfolio' variant='outlined' label='Portfolio' placeholder='Portfolio' fullWidth />
+              <label htmlFor='avatar'>Profile photo</label>
+              <input onChange={(e) => onFileChange(e)} name='avatar' accept='image/*' id='icon-button-file' type='file' className={classes.avatarInput} />
+              <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth>
                 Update Information
               </Button>
             </form>
