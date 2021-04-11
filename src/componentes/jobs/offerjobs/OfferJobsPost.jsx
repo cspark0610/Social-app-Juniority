@@ -1,20 +1,24 @@
-import { Breadcrumbs, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Chip, Card, Avatar, Typography } from "@material-ui/core";
-import { emphasize, withStyles } from "@material-ui/core/styles";
-import { AccessTime, LocationOn, FavoriteBorder, ChatBubbleOutlineOutlined, ShareOutlined, Favorite, SendOutlined, Cached } from "@material-ui/icons";
-import logo from "../../assets/juniority.svg";
-import inputStyles from "../../post/InputMessageStyle";
-import useStyles from "../../post/PostStyle";
-import { InputIcon } from "../../profile/post/InputIcon";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import firebase from "firebase";
+import { Breadcrumbs, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Chip, Card, Avatar, Typography } from "@material-ui/core";
+import { emphasize, withStyles } from "@material-ui/core/styles";
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import IconButton from "@material-ui/core/IconButton";
+import { AccessTime, LocationOn, FavoriteBorder, ChatBubbleOutlineOutlined, ShareOutlined, Favorite, SendOutlined, Cached } from "@material-ui/icons";
+import logo from "../../assets/juniority.svg";
+import { InputIcon } from "../../profile/post/InputIcon";
 import { useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
-import firebase from "firebase";
+import useStyles from "../../post/PostStyle";
+import inputStyles from "../../post/InputMessageStyle";
+import { useInputStyles } from "../../post/InputMessageStyle";
+import InputOption from "../../post/InputOption";
 
 const OfferJobsPost = ({ jobsOffer, handleClickOpen, open, handleClose, input, setInput, onFileChange, handleSubmit, handleOpen, setUsers, setTitle }) => {
   const inputClasses = inputStyles();
   const classes = useStyles();
-
+  const inputClass = useInputStyles();
   const currentUser = useSelector((state) => state.currentUser);
   const [inUse, setInUse] = useState(Cached);
   const [openComment, setOpenComment] = useState(false);
@@ -248,11 +252,15 @@ const OfferJobsPost = ({ jobsOffer, handleClickOpen, open, handleClose, input, s
                 <DialogContentText>To apply to this job, please enter your email address here and load your CV.</DialogContentText>
                 <TextField autoFocus margin='dense' id='name' label='Email Address' type='email' fullWidth value={input} onChange={(e) => setInput(e.target.value)} />
               </DialogContent>
-              <DialogActions>
+              <DialogActions className={classes.optionsIcons}>
                 <Button onClick={handleClose} color='primary'>Cancel</Button>
-                <input onChange={(e) => onFileChange(e)} accept='file/*' id='icon-button-file' type='file' />
+                <input onChange={(e) => onFileChange(e)} accept='file/*' id='icon-button-file' type='file' className={inputClass.input}/>
                 <label htmlFor='icon-button-file'>
+                  <IconButton color='primary' size='small' aria-label='upload picture' component='span' style={{marginRight:'90px',marginBottom:'20px'}}>
+                    <InputOption Icon={AttachFileIcon} title='Upload your CV' color='#ADD8E6'/>
+                  </IconButton>
                   <Button onClick={handleSubmit} color='primary' type='submit'>Load your CV</Button>
+                
                 </label>
               </DialogActions>
             </Dialog>

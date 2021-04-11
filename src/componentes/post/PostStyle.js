@@ -58,4 +58,8 @@ export default makeStyles({
     },
     cursor: "pointer",
   },
+  optionsIcons: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
 });
