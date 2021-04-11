@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { Profile } from "./perfil/Profile";
 import { Portfolio } from "./portfolio/Portfolio";
 import { PostProfile } from "./post/PostProfile";
-import { Widget } from "./widget/Widget";
+import  Widget  from "../sidebarDer/Widget";
 import { Banner } from "./banner/Banner";
 import Navbar from "../navbar/Navbar";
 import "./style.css";
