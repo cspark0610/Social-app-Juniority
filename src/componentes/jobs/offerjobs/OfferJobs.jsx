@@ -87,27 +87,10 @@ const OfferJobs = () => {
 
   return (
     <>
-      <TransitionsModal
-        open={openPostModal}
-        handleClose={handleClosePostModal}
-        users={userLikes}
-        title={title}
-      />
+      <TransitionsModal open={openPostModal} handleClose={handleClosePostModal} users={userLikes} title={title} />
       {jobsOffers &&
         jobsOffers.map((jobsOffer) => (
-          <OfferJobsPost
-            jobsOffer={jobsOffer}
-            handleClickOpen={handleClickOpen}
-            open={open}
-            handleClose={handleClose}
-            input={input}
-            setInput={setInput}
-            onFileChange={onFileChange}
-            handleSubmit={handleSubmit}
-            handleOpen={handleOpenPostModal}
-            setUsers={setUserLikes}
-            setTitle={setTitle}
-          />
+          <OfferJobsPost jobsOffer={jobsOffer} handleClickOpen={handleClickOpen} open={open} handleClose={handleClose} input={input} setInput={setInput} onFileChange={onFileChange} handleSubmit={handleSubmit} handleOpen={handleOpenPostModal} setUsers={setUserLikes} setTitle={setTitle} />
         ))}
     </>
   );
