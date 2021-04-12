@@ -1,8 +1,9 @@
 import React from "react";
 import "./style.css";
 import BadgeAvatars from "./BadgeAvatars";
-/* import PersonAddIcon from '@material-ui/icons/PersonAdd'; */
+
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
+
 
 const Wid = () => {
   const Articulos = (title, subtitle) => {
@@ -18,7 +19,6 @@ const Wid = () => {
       </div>
     );
   };
-
   return (
     <div className="widgets">
       <div className="widgets__header">

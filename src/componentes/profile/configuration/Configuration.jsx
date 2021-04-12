@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
-import { ToastContainer } from "react-toastify";
 import Navbar from "../../navbar/Navbar";
 import useStyles from "./configurationStyles";
 import firebase from "firebase";
@@ -9,6 +8,7 @@ import { db } from "../../../firebase/firebase";
 import { useHistory } from "react-router-dom";
 import { setCurrentUser } from "../../../store/currentUser";
 import AddIcon from "@material-ui/icons/Add";
+
 
 export const Configuration = () => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -54,6 +54,18 @@ export const Configuration = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    try {
+      let updatedUser = { ...currentUser };
+      //console.log("CURRENT", currentUser, imageUrl);
+      updatedUser.fullName = fullNameInput;
+      updatedUser.location = locationInput;
+      updatedUser.position = positionInput;
+      updatedUser.avatar = imageUrl;
+      updatedUser.portfolio = portfolioInput;
+      console.log(updatedUser);
+      await db.collection("user").doc(currentUser.id).set(updatedUser);
+      dispatch(setCurrentUser(updatedUser));
+      history.push(`/profile/${currentUser.id}`);
 
     let updatedUser = { ...currentUser };
 

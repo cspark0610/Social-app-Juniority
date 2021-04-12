@@ -1,55 +1,24 @@
-import {
-  Breadcrumbs,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
-  TextField,
-  Chip,
-  Card,
-  Avatar,
-  Typography,
-} from "@material-ui/core";
-import { emphasize, withStyles } from "@material-ui/core/styles";
-import {
-  AccessTime,
-  LocationOn,
-  FavoriteBorder,
-  ChatBubbleOutlineOutlined,
-  ShareOutlined,
-  Favorite,
-  SendOutlined,
-  Cached,
-} from "@material-ui/icons";
-import logo from "../../assets/juniority.svg";
-import inputStyles from "../../post/InputMessageStyle";
-import useStyles from "../../post/PostStyle";
-import { InputIcon } from "../../profile/post/InputIcon";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import firebase from "firebase";
+import { Breadcrumbs, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField, Chip, Card, Avatar, Typography } from "@material-ui/core";
+import { emphasize, withStyles } from "@material-ui/core/styles";
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import IconButton from "@material-ui/core/IconButton";
+import { AccessTime, LocationOn, FavoriteBorder, ChatBubbleOutlineOutlined, ShareOutlined, Favorite, SendOutlined, Cached } from "@material-ui/icons";
+import logo from "../../assets/juniority.svg";
+import { InputIcon } from "../../profile/post/InputIcon";
 import { useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
-import firebase from "firebase";
+import useStyles from "../../post/PostStyle";
+import inputStyles from "../../post/InputMessageStyle";
+import { useInputStyles } from "../../post/InputMessageStyle";
+import InputOption from "../../post/InputOption";
 
-const OfferJobsPost = ({
-  jobsOffer,
-  handleClickOpen,
-  open,
-  handleClose,
-  input,
-  setInput,
-  onFileChange,
-  handleSubmit,
-  handleOpen,
-  setUsers,
-  setTitle,
-}) => {
+const OfferJobsPost = ({ jobsOffer, handleClickOpen, open, handleClose, input, setInput, onFileChange, handleSubmit, handleOpen, setUsers, setTitle }) => {
   const inputClasses = inputStyles();
   const classes = useStyles();
-
+  const inputClass = useInputStyles();
   const currentUser = useSelector((state) => state.currentUser);
   const [inUse, setInUse] = useState(Cached);
   const [openComment, setOpenComment] = useState(false);
@@ -79,9 +48,7 @@ const OfferJobsPost = ({
       if (inUse === FavoriteBorder) {
         const batch = db.batch();
         const jobReference = db.collection("jobs").doc(jobsOffer.id);
-        const likeReference = db
-          .collection("jobsLikes")
-          .doc(`${jobsOffer.id}_${currentUser.id}`);
+        const likeReference = db.collection("jobsLikes").doc(`${jobsOffer.id}_${currentUser.id}`);
         batch.update(jobReference, {
           likes: firebase.firestore.FieldValue.increment(1),
         });
@@ -96,9 +63,7 @@ const OfferJobsPost = ({
       } else {
         const otherBatch = db.batch();
         const jobReference = db.collection("jobs").doc(jobsOffer.id);
-        const likeReference = db
-          .collection("jobsLikes")
-          .doc(`${jobsOffer.id}_${currentUser.id}`);
+        const likeReference = db.collection("jobsLikes").doc(`${jobsOffer.id}_${currentUser.id}`);
 
         otherBatch.update(jobReference, {
           likes: firebase.firestore.FieldValue.increment(-1),
@@ -198,111 +163,60 @@ const OfferJobsPost = ({
   return (
     <>
       {jobsOffer && (
-        <div
-          className="job__container"
-          style={{ backgroundColor: "white" }}
-          key={jobsOffer.id}
-        >
+        <div className='job__container' style={{ backgroundColor: "white" }} key={jobsOffer.id}>
           <Grid container>
             <Grid item md={2}>
-              <img
-                src={logo}
-                className="logo"
-                alt="Logo Juniority"
-                width="60%"
-                height="60%"
-              />
+              <img src={logo} className='logo' alt='Logo Juniority' width='60%' height='60%' />
             </Grid>
-            <Grid item md={6} className="text__job__left text__job">
+            <Grid item md={6} className='text__job__left text__job'>
               <h2>{jobsOffer.position}</h2>
               <p>Juniority</p>
-              <p>
-                <LocationOn className="date__icon" />
-                {jobsOffer.location}
-              </p>
+              <p><LocationOn className='date__icon'/>{jobsOffer.location}</p>
             </Grid>
-            <Grid item md={4} className="text__job__right">
-              <p>
-                <AccessTime className="date__icon" />
-                {moment(
-                  new Date(jobsOffer.timestamp?.toDate().toUTCString())
-                ).fromNow()}
-              </p>
+            <Grid item md={4} className='text__job__right'>
+              <p><AccessTime className='date__icon' />{moment(new Date(jobsOffer.timestamp?.toDate().toUTCString())).fromNow()}</p>
             </Grid>
           </Grid>
-          <hr className="line__profile__widget" />
-          <div className="salary_availability">
+          <hr className='line__profile__widget' />
+          <div className='salary_availability'>
             <p> {jobsOffer.salary} </p>
             <p> {jobsOffer.availability}</p>
           </div>
-          <div className="description">
+          <div className='description'>
             <p>{jobsOffer.description}</p>
           </div>
-          <div className="skills">
-            <Breadcrumbs aria-label="breadcrumb">
-              {jobsOffer.skills.split(" ") &&
-                jobsOffer.skills
-                  .split(" ")
-                  .map((skill) => <StyledBreadcrumb label={skill} />)}
-            </Breadcrumbs>
+          <div className='skills'>
+            <Breadcrumbs aria-label='breadcrumb'>{jobsOffer.skills.split(" ") && jobsOffer.skills.split(" ").map((skill) => <StyledBreadcrumb label={skill} />)}</Breadcrumbs>
           </div>
-          <hr className="line__profile__widget" />
-          <div className="job__buttom" style={{ display: "flex" }}>
+          <hr className='line__profile__widget' />
+          <div className='job__buttom' style={{ display: "flex" }}>
             <span onClick={handleLike}>
-              <InputIcon
-                Icon={inUse}
+              <InputIcon Icon={inUse} color='red'
                 title={
                   <div onClick={openLikes} className={`${classes.likes} zse`}>
                     {jobsOffer.likes || 0}
                   </div>
-                }
-                color="red"
-              />
+                }/>
             </span>
             <span onClick={handleComment}>
-              <InputIcon Icon={ChatBubbleOutlineOutlined} color="black" />
+              <InputIcon Icon={ChatBubbleOutlineOutlined} color='black' />
             </span>
-            <InputIcon Icon={ShareOutlined} title="2" color="black" />
-            <Button
-              size="large"
-              variant="contained"
-              color="primary"
-              className="button__apply"
-              onClick={handleClickOpen}
-              style={{ marginLeft: "auto" }}
-            >
+            <InputIcon Icon={ShareOutlined} title='2' color='black' />
+            <Button size='large' variant='contained' color='primary' className='button__apply' onClick={handleClickOpen} style={{ marginLeft: "auto" }}>
               Apply
             </Button>
           </div>
-          <hr className="line__profile__widget" />
+          <hr className='line__profile__widget' />
 
           {openComment && (
-            <div
-              className="max-w-full shadow-xl my-3.5 "
-              style={{ background: "white", borderRadius: "10px" }}
-            >
+            <div className='max-w-full shadow-xl my-3.5 ' style={{ background: "white", borderRadius: "10px" }}>
               <Card className={inputClasses.container}>
                 <div className={inputClasses.container_input}>
                   <Avatar src={currentUser.avatar} />
-                  <form
-                    onSubmit={handleCommentSubmit}
-                    style={{ display: "flex", width: "100%" }}
-                  >
-                    <input
-                      placeholder="Write a comment"
-                      type="text"
-                      value={commentInput}
-                      onChange={(e) => setCommentInput(e.target.value)}
-                      style={{
-                        border: "none",
-                        flex: "1",
-                        marginLeft: "10px",
-                        outlineWidth: "0",
-                        fontWeight: "600",
-                        fontSize: "74%",
-                      }}
-                    />
-                    <button type="submit">
+                  <form onSubmit={handleCommentSubmit} style={{ display: "flex", width: "100%" }}>
+                    <input placeholder='Write a comment'type='text' value={commentInput} onChange={(e) => setCommentInput(e.target.value)}
+                      style={{ border: "none",flex: "1",marginLeft: "10px",outlineWidth: "0",fontWeight: "600", fontSize: "74%"}}/>
+                    <button type='submit'>
                       <SendOutlined style={{ color: "#ADD8E6" }} />
                     </button>
                   </form>
@@ -314,10 +228,7 @@ const OfferJobsPost = ({
                     <div className={classes.containerComment} key={comment.id}>
                       <Avatar src={comment.data.photo} />
                       <div className={classes.containerCommentText}>
-                        <a
-                          href={`/profile/${comment.data.userId}`}
-                          className={classes.titleComment}
-                        >
+                        <a href={`/profile/${comment.data.userId}`} className={classes.titleComment}>
                           {comment.data.userName}
                         </a>
                         <br />
@@ -326,12 +237,7 @@ const OfferJobsPost = ({
                     </div>
                   ))}
                   {viewMore && (
-                    <Typography
-                      color="primary"
-                      variant="caption"
-                      className={classes.likes}
-                      onClick={seeMore}
-                    >
+                    <Typography color='primary' variant='caption' className={classes.likes} onClick={seeMore}>
                       ver mas ...
                     </Typography>
                   )}
@@ -339,46 +245,22 @@ const OfferJobsPost = ({
               ) : null}
             </div>
           )}
-
           <div>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="form-dialog-title"
-            >
-              <DialogTitle id="form-dialog-title">Apply</DialogTitle>
+            <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
+              <DialogTitle id='form-dialog-title'>Apply</DialogTitle>
               <DialogContent>
-                <DialogContentText>
-                  To apply to this job, please enter your email address here and
-                  load your CV.
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Email Address"
-                  type="email"
-                  fullWidth
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                />
+                <DialogContentText>To apply to this job, please enter your email address here and load your CV.</DialogContentText>
+                <TextField autoFocus margin='dense' id='name' label='Email Address' type='email' fullWidth value={input} onChange={(e) => setInput(e.target.value)} />
               </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                  {" "}
-                  Cancel{" "}
-                </Button>
-                <input
-                  onChange={(e) => onFileChange(e)}
-                  accept="file/*"
-                  id="icon-button-file"
-                  type="file"
-                />
-                <label htmlFor="icon-button-file">
-                  <Button onClick={handleSubmit} color="primary" type="submit">
-                    {" "}
-                    Load your CV{" "}
-                  </Button>
+              <DialogActions className={classes.optionsIcons}>
+                <Button onClick={handleClose} color='primary'>Cancel</Button>
+                <input onChange={(e) => onFileChange(e)} accept='file/*' id='icon-button-file' type='file' className={inputClass.input}/>
+                <label htmlFor='icon-button-file'>
+                  <IconButton color='primary' size='small' aria-label='upload picture' component='span' style={{marginRight:'90px',marginBottom:'20px'}}>
+                    <InputOption Icon={AttachFileIcon} title='Upload your CV' color='#ADD8E6'/>
+                  </IconButton>
+                  <Button onClick={handleSubmit} color='primary' type='submit'>Load your CV</Button>
+                
                 </label>
               </DialogActions>
             </Dialog>
