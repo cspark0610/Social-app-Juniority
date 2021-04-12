@@ -12,6 +12,11 @@ export const createIconStyle = {
   position: "relative",
   top: "27%",
 };
+export const createIconStyle2 = {
+  marginLeft: "10px",
+  position: "relative",
+  top: "1.5%",
+};
 export const useAvatarStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -64,4 +69,8 @@ export default makeStyles({
     display: "flex",
     justifyContent: "space-between",
   },
+  noShow:{
+    display: 'none',
+  },
+ 
 });

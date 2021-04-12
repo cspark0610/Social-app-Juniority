@@ -18,11 +18,13 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^3.0.3",
+    "react-player": "^2.9.0",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-select": "^4.3.0",
     "react-slick": "^0.28.1",
+    "react-syntax-highlighter": "^15.4.3",
     "react-toastify": "^7.0.3",
     "reactfire": "^3.0.0-rc.0",
     "redux": "^4.0.5",
@@ -56,6 +58,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-react-app": "^6.0.0"
+    "eslint-config-react-app": "^6.0.0",
+    "html-webpack-plugin": "^4.5.2"
   }
 }

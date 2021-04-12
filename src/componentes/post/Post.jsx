@@ -9,14 +9,16 @@ import useStyles from "./PostStyle.js";
 import InputOption from "./InputOption";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
-
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import ReactPlayer from 'react-player';
 
-const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
+const Post = ({ id, name, message, messageCode, messageVideo ,userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
   const classes = useStyles();
   const inputClasses = inputStyles();
   const date = new Date(timestamp?.toDate()).toUTCString();
@@ -27,6 +29,7 @@ const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, h
   const [inUse, setInUse] = useState(FavoriteBorderOutlinedIcon);
   const [lastKey, setLastKey] = useState("En un comienzo");
   const [viewMore, setViewMore] = useState(true);
+
 
   const handleComment = () => {
     db.collection("comments")
@@ -160,7 +163,22 @@ const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, h
       <div className={classes.message}>
         <p> {message} </p>
       </div>
+      <hr/>
+      {messageCode ? (
+          <div className={classes.message}>
+          <SyntaxHighlighter language="javascript" style={docco} showLineNumbers={true} wrapLines={true}>
+            {messageCode}  
+          </SyntaxHighlighter>
+          </div>
+        ) : null}
       <hr />
+      {messageVideo ?(
+        <div className={classes.body}>
+          <ReactPlayer url={messageVideo} controls={true} width='90%' style={{height:'auto !important'}}/>
+        </div>
+      ) :null }
+
+      <hr/>
       {postImage !== "" ? (
         <>
           <div className={classes.body}>
@@ -186,6 +204,7 @@ const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, h
       {comment && (
         <div className='max-w-full shadow-xl my-3.5 ' style={{ background: "white", borderRadius: "10px" }}>
           <Card className={inputClasses.container}>
+             
             <div className={inputClasses.container_input}>
               <Avatar src={currentUser.avatar} />
               <form onSubmit={handleSubmit} style={{ display: "flex", width: "100%" }}>
@@ -196,6 +215,7 @@ const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, h
                 </button>
               </form>
             </div>
+
           </Card>
           {data.length > 0 ? (
             <>
