@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 import { setCurrentUser } from "../../../store/currentUser";
 import AddIcon from "@material-ui/icons/Add";
 
-
 export const Configuration = () => {
   const currentUser = useSelector((state) => state.currentUser);
   const classes = useStyles();
@@ -46,26 +45,13 @@ export const Configuration = () => {
     setPortfolioInput(currentUser.portfolio);
     setAboutMeInput(currentUser.aboutMe);
     setImageUrl(currentUser.avatar);
-    setExperience(currentUser.experience)
+    setExperience(currentUser.experience);
   }, [currentUser]);
 
-  useEffect(() => {
-  }, [experience])
+  useEffect(() => {}, [experience]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    try {
-      let updatedUser = { ...currentUser };
-      //console.log("CURRENT", currentUser, imageUrl);
-      updatedUser.fullName = fullNameInput;
-      updatedUser.location = locationInput;
-      updatedUser.position = positionInput;
-      updatedUser.avatar = imageUrl;
-      updatedUser.portfolio = portfolioInput;
-      console.log(updatedUser);
-      await db.collection("user").doc(currentUser.id).set(updatedUser);
-      dispatch(setCurrentUser(updatedUser));
-      history.push(`/profile/${currentUser.id}`);
 
     let updatedUser = { ...currentUser };
 
@@ -170,10 +156,10 @@ export const Configuration = () => {
             </button>
             {experience.length
               ? experience.map((job) => {
-                  return(
-                  <>
-                    <h6>{`- ${job.company}: ${job.startDate} - ${job.finishDate}`}</h6>
-                  </>
+                  return (
+                    <>
+                      <h6>{`- ${job.company}: ${job.startDate} - ${job.finishDate}`}</h6>
+                    </>
                   );
                 })
               : null}
