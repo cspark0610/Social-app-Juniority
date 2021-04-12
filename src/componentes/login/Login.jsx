@@ -15,7 +15,6 @@ import {
 import { setCurrentUser } from "../../store/currentUser";
 import Alert from "@material-ui/lab/Alert";
 
-
 const Login = () => {
   const firebase = useFirebaseApp();
   const classes = useStyles();
@@ -31,11 +30,11 @@ const Login = () => {
       .signInWithPopup(method)
       .then((result) => {
         if (result.additionalUserInfo.providerId === "github.com") {
+          console.log(result.user.email);
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,
-            email: result.additionalUserInfo.profile.email,
-           
+            email: result.user.email,
             avatar: result.additionalUserInfo.profile.avatar_url,
             follow: [],
             followers: [],
@@ -44,8 +43,7 @@ const Login = () => {
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.profile.name,
-            email: result.additionalUserInfo.profile.email,
-            
+            email: result.user.email,
             avatar: result.additionalUserInfo.profile.picture,
             follow: [],
             followers: [],
