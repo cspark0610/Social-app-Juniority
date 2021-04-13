@@ -106,8 +106,8 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
         )}
         <br />
         <hr className="line__profile" />
-        <button onClick={(e) => openFollowModal(e, following, "Follow")}>
-          <h3>Follow</h3>
+        <button onClick={(e) => openFollowModal(e, following, "Following")}>
+          <h3>Following</h3>
         </button>
         <h4>{following.length}</h4>
 
