@@ -27,10 +27,8 @@ const Navbar = () => {
   const classes = useStyles();
   const currentUser = useSelector((state) => state.currentUser);
   const locationUrl = useSelector((state) => state.locationUrl);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [queryNavbar, setQueryNavbar] = useState("");
@@ -70,18 +68,10 @@ const Navbar = () => {
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
+    <Menu anchorEl={anchorEl} anchorOrigin={{ vertical: "top", horizontal: "right" }} id={menuId} keepMounted transformOrigin={{ vertical: "top", horizontal: "right" }} open={isMenuOpen} onClose={handleMenuClose}>
       <Link to={`/profile/${currentUser.id}`}>
         {" "}
-        <MenuItem onClick={handleMenuClose} className="backgroundAcc">
+        <MenuItem onClick={handleMenuClose} className='backgroundAcc'>
           Profile
         </MenuItem>
       </Link>
@@ -91,39 +81,26 @@ const Navbar = () => {
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
+    <Menu anchorEl={mobileMoreAnchorEl} anchorOrigin={{ vertical: "top", horizontal: "right" }} id={mobileMenuId} keepMounted transformOrigin={{ vertical: "top", horizontal: "right" }} open={isMobileMenuOpen} onClose={handleMobileMenuClose}>
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="primary">
-            <MailIcon className="iconColor" />
+        <IconButton aria-label='show 4 new mails' color='inherit'>
+          <Badge badgeContent={4} color='primary'>
+            <MailIcon className='iconColor' />
           </Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon className="iconColor" />
+        <IconButton aria-label='show 11 new notifications'>
+          <Badge badgeContent={11} color='secondary'>
+            <NotificationsIcon className='iconColor' />
           </Badge>
         </IconButton>
         <p>Notificationss</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle className="iconColor" />
+        <IconButton aria-label='account of current user' aria-controls='primary-search-account-menu' aria-haspopup='true' color='inherit'>
+          <AccountCircle className='iconColor' />
         </IconButton>
         <Link to={`/profile/${currentUser.id}`}>
           <p>Profile</p>
@@ -134,35 +111,24 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="navbar">
-        <Link className="containerLogo" to="/">
-          <img src={logo} className="logo" alt="Logo Juniority" />
+      <div className='navbar'>
+        <Link className='containerLogo' to='/'>
+          <img src={logo} className='logo' alt='Logo Juniority' />
         </Link>
 
-        <div className="containerinputNav">
+        <div className='containerinputNav'>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <Button onClick={handleClickNavbar}>
-                <HighlightOffIcon
-                  className="searchIcon"
-                  onClick={handleClickNavbar}
-                />
+                <HighlightOffIcon className='searchIcon' onClick={handleClickNavbar} />
               </Button>
             </div>
-            <InputBase
-              placeholder="Search…"
-              value={queryNavbar}
-              onChange={(e) => setQueryNavbar(e.target.value)}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <InputBase placeholder='Search…' value={queryNavbar} onChange={(e) => setQueryNavbar(e.target.value)}
+              classes={{root: classes.inputRoot,input: classes.inputInput}} inputProps={{ "aria-label": "search" }}/>
           </div>
         </div>
 
-        <div className="containerbuttonsNavbar ">
+        <div className='containerbuttonsNavbar '>
           <div className={classes.sectionDesktop}>
             <Link to="/jobs">
               <IconButton>
@@ -181,30 +147,17 @@ const Navbar = () => {
                 <MailIcon className="iconColor" />
               </Badge>
             </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon className="iconColor" />
+            <IconButton aria-label='show 17 new notifications' color='inherit'>
+              <Badge badgeContent={17} color='secondary'>
+                <NotificationsIcon className='iconColor' />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
+            <IconButton edge='end' aria-label='account of current user' aria-controls={menuId} aria-haspopup='true' onClick={handleProfileMenuOpen} color='inherit'>
               <Avatar src={currentUser.avatar} />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
+            <IconButton aria-label='show more' aria-controls={mobileMenuId} aria-haspopup='true' onClick={handleMobileMenuOpen} color='inherit'>
               <MoreIcon />
             </IconButton>
           </div>

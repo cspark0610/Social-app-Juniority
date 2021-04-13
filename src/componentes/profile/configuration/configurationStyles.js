@@ -40,4 +40,19 @@ export default makeStyles((theme) => ({
       backgroundColor: "#3cb4e5",
     },
   },
+  textArea: {
+    width: '100%'
+  },
+  experience: {
+    display: 'inline'
+  },
+  experienceButt: {
+    marginLeft: '43em'
+  },
+  textFieldExperienceForm: {
+    display: 'inline',
+  },
+  submitExperience: {
+    marginLeft: '20em'
+  }
 }));

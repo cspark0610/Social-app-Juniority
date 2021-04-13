@@ -16,20 +16,7 @@ import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-
-const Post = ({
-  id,
-  name,
-  message,
-  userId,
-  photo,
-  postImage,
-  likes,
-  timestamp,
-  handleOpen,
-  setUsers,
-  setTitle,
-}) => {
+const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
   const classes = useStyles();
   const inputClasses = inputStyles();
   const date = new Date(timestamp?.toDate()).toUTCString();
@@ -79,9 +66,7 @@ const Post = ({
       if (inUse === FavoriteBorderOutlinedIcon) {
         const batch = db.batch();
         const postReference = db.collection("posts").doc(id);
-        const likeReference = db
-          .collection("likes")
-          .doc(`${id}_${currentUser.id}`);
+        const likeReference = db.collection("likes").doc(`${id}_${currentUser.id}`);
 
         batch.update(postReference, {
           likes: firebase.firestore.FieldValue.increment(1),
@@ -97,9 +82,7 @@ const Post = ({
       } else {
         const otherBatch = db.batch();
         const postReference = db.collection("posts").doc(id);
-        const likeReference = db
-          .collection("likes")
-          .doc(`${id}_${currentUser.id}`);
+        const likeReference = db.collection("likes").doc(`${id}_${currentUser.id}`);
 
         otherBatch.update(postReference, {
           likes: firebase.firestore.FieldValue.increment(-1),
@@ -167,8 +150,8 @@ const Post = ({
         <Avatar src={photo} />
         <div className={classes.info}>
           <Link to={`/profile/${userId}`}>
-            <h1 className="font-bold text-transform: uppercase">{name}</h1>
-            <h4 className="text-gray-400">Fullstack Developer</h4>
+            <h1 className='font-bold text-transform: uppercase'>{name}</h1>
+            <h4 className='text-gray-400'>Fullstack Developer</h4>
           </Link>
         </div>
         <p>{moment(date).fromNow()}</p>
@@ -181,63 +164,34 @@ const Post = ({
       {postImage !== "" ? (
         <>
           <div className={classes.body}>
-            <img src={postImage} width="85%" height="85%" alt="" />
+            <img src={postImage} width='85%' height='85%' alt='' />
           </div>
           <hr />
         </>
       ) : null}
       <div className={classes.buttons}>
         <span onClick={(e) => handleLikes(e)}>
-          <InputOption
-            Icon={inUse}
+          <InputOption Icon={inUse} color='#E60026'
             title={
-              <div>
-                Likes{" "}
-                <span onClick={openLikes} className={`${classes.likes} zse`}>
-                  {likes || 0}
-                </span>
-              </div>
-            }
-            color="#E60026"
+              <div> Likes <span onClick={openLikes} className={`${classes.likes} zse`}>{likes || 0}</span></div>
+                  }
           />
         </span>
         <span onClick={handleComment}>
-          <InputOption
-            Icon={ChatBubbleOutlineOutlinedIcon}
-            title="Comment"
-            color="#ADD8E6"
-          />
+          <InputOption Icon={ChatBubbleOutlineOutlinedIcon} title='Comment' color='#ADD8E6' />
         </span>
-        <InputOption Icon={ShareOutlinedIcon} title="Share" />
+        <InputOption Icon={ShareOutlinedIcon} title='Share' />
       </div>
       <hr />
       {comment && (
-        <div
-          className="max-w-full shadow-xl my-3.5 "
-          style={{ background: "white", borderRadius: "10px" }}
-        >
+        <div className='max-w-full shadow-xl my-3.5 ' style={{ background: "white", borderRadius: "10px" }}>
           <Card className={inputClasses.container}>
             <div className={inputClasses.container_input}>
               <Avatar src={currentUser.avatar} />
-              <form
-                onSubmit={handleSubmit}
-                style={{ display: "flex", width: "100%" }}
-              >
-                <input
-                  placeholder="Write a comment"
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  style={{
-                    border: "none",
-                    flex: "1",
-                    marginLeft: "10px",
-                    outlineWidth: "0",
-                    fontWeight: "600",
-                    fontSize: "74%",
-                  }}
-                />
-                <button type="submit">
+              <form onSubmit={handleSubmit} style={{ display: "flex", width: "100%" }}>
+                <input placeholder='Write a comment' type='text'value={input} onChange={(e) => setInput(e.target.value)}
+                  style={{border: "none",flex: "1", marginLeft: "10px",outlineWidth: "0",fontWeight: "600",fontSize: "74%"}}/>
+                <button type='submit'>
                   <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
                 </button>
               </form>
@@ -249,10 +203,7 @@ const Post = ({
                 <div className={classes.containerComment} key={comment.id}>
                   <Avatar src={comment.data.photo} />
                   <div className={classes.containerCommentText}>
-                    <a
-                      href={`/profile/${comment.data.userId}`}
-                      className={classes.titleComment}
-                    >
+                    <a href={`/profile/${comment.data.userId}`} className={classes.titleComment}>
                       {comment.data.userName}
                     </a>
                     <br />
@@ -261,12 +212,7 @@ const Post = ({
                 </div>
               ))}
               {viewMore && (
-                <Typography
-                  color="primary"
-                  variant="caption"
-                  className={classes.likes}
-                  onClick={seeMore}
-                >
+                <Typography color='primary' variant='caption' className={classes.likes} onClick={seeMore}>
                   ver mas ...
                 </Typography>
               )}

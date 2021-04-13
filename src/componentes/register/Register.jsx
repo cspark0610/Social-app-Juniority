@@ -37,6 +37,7 @@ const Register = () => {
   const { fullName, email, password1, password2 } = formData;
   const [change, setChange] = useState(["primary", "secondary"]);
   const currentUser = useSelector((state) => state.currentUser);
+  const [changeUser, setChangeUser] = useState(["primary", "secondary"]);
 
   const handleChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
@@ -58,10 +59,11 @@ const Register = () => {
             email,
             follow: [],
             followers: [],
-            location: 'No info',
-            position: 'No info',
-            avatar:'https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg',
-            
+            location: "No info",
+            position: "No info",
+            avatar:
+              "https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg",
+            userType: changeUser[0] === "primary" ? "user" : "company",
           };
           db.collection("user")
             .doc(user.user.uid)
@@ -92,11 +94,7 @@ const Register = () => {
             <Grid
               item
               xs={12}
-              style={{
-                margin: 0,
-                padding: 0,
-                textAlign: "end",
-              }}
+              style={{ margin: 0, padding: 0, textAlign: "end" }}
             >
               <Button
                 color={change[0]}
@@ -104,6 +102,7 @@ const Register = () => {
                 onClick={() => {
                   setChange(["primary", "secondary"]);
                 }}
+                className={classes.button}
               >
                 Log in
               </Button>
@@ -113,6 +112,7 @@ const Register = () => {
                 onClick={() => {
                   setChange(["secondary", "primary"]);
                 }}
+                className={classes.button}
               >
                 Register
               </Button>
@@ -140,8 +140,9 @@ const Register = () => {
                     variant="body2"
                     style={{ backgroundColor: "white" }}
                   >
-      Un lugar donde la gente pueda postear dudas. Un lugar donde juniors, puedan conseguir empleo. Un lugar donde las empresas, puedan conseguir juniors
-
+                    Un lugar donde la gente pueda postear dudas. Un lugar donde
+                    juniors, puedan conseguir empleo. Un lugar donde las
+                    empresas, puedan conseguir juniors
                   </Typography>
                 </div>
               </div>
@@ -156,6 +157,32 @@ const Register = () => {
                 <Login />
               ) : (
                 <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+                  <Grid
+                    item
+                    xs={12}
+                    className={`${classes.companyOrUser} py-5 `}
+                  >
+                    <Button
+                      color={changeUser[0]}
+                      variant="contained"
+                      onClick={() => {
+                        setChangeUser(["primary", "secondary"]);
+                      }}
+                      className={classes.button}
+                    >
+                      User
+                    </Button>
+                    <Button
+                      className={classes.button}
+                      color={changeUser[1]}
+                      variant="contained"
+                      onClick={() => {
+                        setChangeUser(["secondary", "primary"]);
+                      }}
+                    >
+                      Company
+                    </Button>
+                  </Grid>
                   <TextField
                     className={classes.textField}
                     id="outlined-name"
@@ -199,11 +226,7 @@ const Register = () => {
                     onChange={handleChange("password2")}
                     value={password2}
                   />
-                  <div
-                    style={{
-                      marginTop: "1%",
-                    }}
-                  >
+                  <div style={{ marginTop: "1%" }}>
                     {passwordError && (
                       <Alert severity="error" className="mt-5">
                         {passwordError}

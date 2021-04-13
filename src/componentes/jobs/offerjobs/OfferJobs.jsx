@@ -17,6 +17,7 @@ const OfferJobs = () => {
   const [cvUrl, setCvUrl] = useState("");
   const [jobsOffers, setJobsOffers] = useState([]);
   const keyword = useSelector((state) => state.keyword);
+  console.log(keyword);
 
   const handleClosePostModal = () => {
     setOpenPostModal(false);
@@ -50,8 +51,7 @@ const OfferJobs = () => {
           (doc) =>
             doc.position.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.description.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
-            doc.availability.toLowerCase().indexOf(keyword.toLowerCase()) >
-              -1 ||
+            doc.availability.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.location.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.salary.toLowerCase().indexOf(keyword.toLowerCase()) > -1 ||
             doc.skills.toLowerCase().indexOf(keyword.toLowerCase()) > -1
@@ -88,27 +88,10 @@ const OfferJobs = () => {
 
   return (
     <>
-      <TransitionsModal
-        open={openPostModal}
-        handleClose={handleClosePostModal}
-        users={userLikes}
-        title={title}
-      />
+      <TransitionsModal open={openPostModal} handleClose={handleClosePostModal} users={userLikes} title={title} />
       {jobsOffers &&
         jobsOffers.map((jobsOffer) => (
-          <OfferJobsPost
-            jobsOffer={jobsOffer}
-            handleClickOpen={handleClickOpen}
-            open={open}
-            handleClose={handleClose}
-            input={input}
-            setInput={setInput}
-            onFileChange={onFileChange}
-            handleSubmit={handleSubmit}
-            handleOpen={handleOpenPostModal}
-            setUsers={setUserLikes}
-            setTitle={setTitle}
-          />
+          <OfferJobsPost jobsOffer={jobsOffer} handleClickOpen={handleClickOpen} open={open} handleClose={handleClose} input={input} setInput={setInput} onFileChange={onFileChange} handleSubmit={handleSubmit} handleOpen={handleOpenPostModal} setUsers={setUserLikes} setTitle={setTitle} />
         ))}
     </>
   );
