@@ -1,35 +1,58 @@
 import { makeStyles } from "@material-ui/core/styles";
-
 export default makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-    },
+  mainContainer: {
+    background: "lightgrey",
+    height: "100vh",
   },
   container: {
-    position: 'relative',
-    top: '20em',
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column'
+    position: "relative",
+    top: "70px",
+    padding: 50,
+    background: "lightgrey",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  subContainer: {
-    width: '50%'
-  },
+
   paper: {
+    height: "40%",
+    width: "50%",
+    position: "relative",
     overflow: "hidden",
     borderRadius: 10,
     background: "#E8F4F2",
-    justifyContent: "row",
-    alignItems: "center",
-    padding: '20px',
+    padding: 50,
+    top: "50%",
   },
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+    },
+  },
+  textField: {
+ 
+  },
+  avatarInput: {
+   },
   buttonSubmit: {
-    marginBottom: 10,
-    width: '97%',
-    margin: '10px 0',
-    '&:hover':{
-      backgroundColor:'#3cb4e5',
-    }
+    margin: "10px 0",
+    "&:hover": {
+      backgroundColor: "#3cb4e5",
+    },
+  },
+  textArea: {
+    width: '100%'
+  },
+  experience: {
+    display: 'inline'
+  },
+  experienceButt: {
+    marginLeft: '43em'
+  },
+  textFieldExperienceForm: {
+    display: 'inline',
+  },
+  submitExperience: {
+    marginLeft: '20em'
   }
 }));
