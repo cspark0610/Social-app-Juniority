@@ -40,5 +40,11 @@ export default makeStyles({
         backgroundColor:'light-gray',
         color:'#ADD8E6',
         borderRadius:'5px'
-    }
+    },
+    chart:{
+        display:'flex',
+        overflowWrap: "anywhere",
+        padding:'8px',
+       
+    },
 })

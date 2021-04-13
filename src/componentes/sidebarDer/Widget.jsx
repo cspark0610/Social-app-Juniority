@@ -11,6 +11,8 @@ import { addFollow } from "../utils/followSystem.js";
 import { Link } from "react-router-dom";
 
 const Widget = () => {
+  
+  const classes = useStyles();
   const [ users, setUsers ]= useState([]);
   const [ userLogueado ] = useAuthState(auth);
   const currentUser = useSelector(state => state.currentUser);
@@ -33,9 +35,6 @@ const Widget = () => {
   const randomIdx3 = Math.floor(Math.random()*usersFiltered.length)
   const randomIdx4 = Math.floor(Math.random()*usersFiltered.length)
   
-
-  const classes = useStyles();
-
   const handleClick = (e, user) => {
     e.preventDefault();
     db.collection('user').doc(user).get()
