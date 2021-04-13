@@ -17,6 +17,7 @@ const OfferJobs = () => {
   const [cvUrl, setCvUrl] = useState("");
   const [jobsOffers, setJobsOffers] = useState([]);
   const keyword = useSelector((state) => state.keyword);
+  console.log(keyword);
 
   const handleClosePostModal = () => {
     setOpenPostModal(false);
