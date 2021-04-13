@@ -1,4 +1,4 @@
-import React,{ useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import logo from "../assets/juniority.svg";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ import useStyles from "./navBarStyle";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import { Avatar, Button } from "@material-ui/core";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
 import { setLocationUrl } from "../../store/locationUrl";
@@ -25,8 +25,8 @@ import { setKeynavbar } from "../../store/keywordNavbar";
 const Navbar = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const currentUser = useSelector(state => state.currentUser);
-  const locationUrl = useSelector(state => state.locationUrl);
+  const currentUser = useSelector((state) => state.currentUser);
+  const locationUrl = useSelector((state) => state.locationUrl);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -35,14 +35,14 @@ const Navbar = () => {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [queryNavbar, setQueryNavbar] = useState("");
 
-  useEffect(()=>{
-      dispatch(setKeynavbar(queryNavbar))
-  },[queryNavbar]);
+  useEffect(() => {
+    dispatch(setKeynavbar(queryNavbar));
+  }, [queryNavbar]);
 
   const handleClickNavbar = (e) => {
     e.preventDefault();
     setQueryNavbar("");
-  }
+  };
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,7 +54,7 @@ const Navbar = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    dispatch(setLocationUrl(!locationUrl))
+    dispatch(setLocationUrl(!locationUrl));
     handleMobileMenuClose();
   };
 
@@ -85,7 +85,7 @@ const Navbar = () => {
           Profile
         </MenuItem>
       </Link>
-      <MenuItem onClick={e => logOut(e)}>Log Out</MenuItem>
+      <MenuItem onClick={(e) => logOut(e)}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -131,7 +131,6 @@ const Navbar = () => {
       </MenuItem>
     </Menu>
   );
-  
 
   return (
     <div>
@@ -143,14 +142,17 @@ const Navbar = () => {
         <div className="containerinputNav">
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <Button onClick={handleClickNavbar} >
-                <HighlightOffIcon className="searchIcon" onClick={handleClickNavbar}/>
+              <Button onClick={handleClickNavbar}>
+                <HighlightOffIcon
+                  className="searchIcon"
+                  onClick={handleClickNavbar}
+                />
               </Button>
             </div>
             <InputBase
               placeholder="Search…"
               value={queryNavbar}
-              onChange={e=> setQueryNavbar(e.target.value)}
+              onChange={(e) => setQueryNavbar(e.target.value)}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -162,15 +164,18 @@ const Navbar = () => {
 
         <div className="containerbuttonsNavbar ">
           <div className={classes.sectionDesktop}>
-            <IconButton>
-              <WorkOutlineIcon className="ibutton" />
-              <div className="letrabutton"><Link to='/jobs'>Jobs</Link></div>
-            </IconButton>
-            <IconButton>
-              <PeopleOutlineIcon className="ibutton" />{" "}
-              <div className="letrabutton">Connection</div>
-            </IconButton>
-
+            <Link to="/jobs">
+              <IconButton>
+                <WorkOutlineIcon className="ibutton" />
+                <div className="letrabutton">Jobs</div>
+              </IconButton>
+            </Link>
+            <Link to="/connections">
+              <IconButton>
+                <PeopleOutlineIcon className="ibutton" />{" "}
+                <div className="letrabutton">Connection</div>
+              </IconButton>
+            </Link>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="primary">
                 <MailIcon className="iconColor" />
