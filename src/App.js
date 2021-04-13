@@ -12,6 +12,7 @@ import { setCurrentUser } from "./store/currentUser";
 import HomeProfile from "./componentes/profile/HomeProfile";
 import HomeJobs from "./componentes/jobs/HomeJobs";
 import { Configuration } from "./componentes/profile/configuration/Configuration";
+import Connections from "./componentes/connections/Connections";
 import Courses from "./componentes/courses/Courses";
 
 function App() {
@@ -44,6 +45,8 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/password-recovery" component={PasswordRecovery} />
         <Route path="/jobs" component={HomeJobs} />
+        <Route path="/connections" component={Connections} />
+
         <Route path="/courses" component={Courses} />
       </Switch>
     </>
