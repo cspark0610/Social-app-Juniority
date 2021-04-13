@@ -5,11 +5,13 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { addFollow, unFollow } from "../../utils/followSystem";
+import { db } from "../../../firebase/firebase";
 
 export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
-  
   const currentUser = useSelector((state) => state.currentUser);
   const [isFollowing, setIsFollowing] = useState();
+  const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState([]);
 
   useEffect(() => {
     const validator = user.followers.filter(
@@ -30,6 +32,18 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
       addFollow(user, currentUser, setIsFollowing);
     }
   };
+
+  useEffect(() => {
+    db.collection('user').where('id', '==', user.id)
+    .onSnapshot(snapshot => {
+      snapshot.forEach(doc => {
+        const localUser = doc.data();
+
+        setFollowing(localUser.follow)
+        setFollowers(localUser.followers)
+      })
+    })
+  }, [])
 
 
   const openFollowModal = (e, users, modalTitle) => {
@@ -76,16 +90,16 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle}) => {
         {user.id === currentUser.id ? null : <Button className="button__profile__hire">Hire</Button>}
         <br />
         <hr className="line__profile" />
-        <button onClick={e => openFollowModal(e, user.follow, 'Follow')}>
+        <button onClick={e => openFollowModal(e, following, 'Follow')}>
         <h3>Follow</h3>
         </button>
-        <h4>{user.follow.length}</h4>
+        <h4>{following.length}</h4>
 
         <hr className="line__profile" />
-        <button onClick={e => openFollowModal(e, user.followers, 'Followers')}>
+        <button onClick={e => openFollowModal(e, followers, 'Followers')}>
         <h3>Followers</h3>
         </button>
-        <h4>{user.followers.length}</h4>
+        <h4>{followers.length}</h4>
         <hr className="line__profile" />
         <br />
 
