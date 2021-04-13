@@ -130,19 +130,21 @@ const Navbar = () => {
 
         <div className='containerbuttonsNavbar '>
           <div className={classes.sectionDesktop}>
-            <IconButton>
-              <WorkOutlineIcon className='ibutton' />
-              <div className='letrabutton'>
-                <Link to='/jobs'>Jobs</Link>
-              </div>
-            </IconButton>
-            <IconButton>
-              <PeopleOutlineIcon className='ibutton' /> <div className='letrabutton'>Connection</div>
-            </IconButton>
-
-            <IconButton aria-label='show 4 new mails' color='inherit'>
-              <Badge badgeContent={4} color='primary'>
-                <MailIcon className='iconColor' />
+            <Link to="/jobs">
+              <IconButton>
+                <WorkOutlineIcon className="ibutton" />
+                <div className="letrabutton">Jobs</div>
+              </IconButton>
+            </Link>
+            <Link to="/connections">
+              <IconButton>
+                <PeopleOutlineIcon className="ibutton" />{" "}
+                <div className="letrabutton">Connection</div>
+              </IconButton>
+            </Link>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="primary">
+                <MailIcon className="iconColor" />
               </Badge>
             </IconButton>
             <IconButton aria-label='show 17 new notifications' color='inherit'>
