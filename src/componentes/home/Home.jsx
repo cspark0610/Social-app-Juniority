@@ -16,14 +16,13 @@ import { setSelectedUser } from "../../store/selectedUser";
 import TransitionsModal from "../home/TransitionModal";
 
 const Home = () => {
-  
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
 
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState()
+  const [title, setTitle] = useState();
 
   const handleClose = () => {
     setOpen(false);
@@ -77,13 +76,12 @@ const Home = () => {
                 handleOpen={handleOpen}
                 setTitle={setTitle}
               />
-              <Jobs />
+              <Jobs type={"courses"} title={"Courses"} />
             </Grid>
 
             <Grid item md={6}>
               <TransitionsModal
                 open={open}
-               
                 handleClose={handleClose}
                 users={users}
                 title={title}
