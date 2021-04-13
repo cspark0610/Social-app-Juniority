@@ -50,6 +50,7 @@ const Register = () => {
             email,
             follow: [],
             followers: [],
+            experience: [],
             location: "No info",
             position: "No info",
             avatar: "https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg",

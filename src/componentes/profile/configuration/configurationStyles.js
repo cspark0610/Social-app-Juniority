@@ -47,12 +47,15 @@ export default makeStyles((theme) => ({
     display: 'inline'
   },
   experienceButt: {
-    marginLeft: '43em'
+    marginLeft: '86%'
   },
   textFieldExperienceForm: {
     display: 'inline',
   },
   submitExperience: {
     marginLeft: '20em'
+  },
+  educationButt: {
+    marginLeft: '87%'
   }
 }));

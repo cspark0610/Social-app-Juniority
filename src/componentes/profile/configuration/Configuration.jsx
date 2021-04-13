@@ -25,6 +25,14 @@ export const Configuration = () => {
   const [experienceStartDate, setExperienceStartDate] = useState();
   const [experienceFinishDate, setExperienceFinishDate] = useState();
   const [showExperienceForm, setShowExperienceForm] = useState();
+  const [experienceDescription, setExperienceDescription] = useState();
+  const [education, setEducation] = useState([]);
+  const [educationInstituteInput, setEducationInstituteInput] = useState();
+  const [educationGradeInput, setEducationGradeInput] = useState();
+  const [educationStartDate, setEducationStartDate] = useState();
+  const [educationFinishDate, setEducationFinishDate] = useState();
+  const [showEducationForm, setShowEducationForm] = useState();
+  const [educationDescription, setEducationDescription] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -46,6 +54,7 @@ export const Configuration = () => {
     setAboutMeInput(currentUser.aboutMe);
     setImageUrl(currentUser.avatar);
     setExperience(currentUser.experience);
+    setEducation(currentUser.education);
   }, [currentUser]);
 
   useEffect(() => {}, [experience]);
@@ -62,15 +71,16 @@ export const Configuration = () => {
     updatedUser.portfolio = portfolioInput;
     updatedUser.aboutMe = aboutMeInput;
     updatedUser.experience = experience;
+    updatedUser.education = education;
 
     await db.collection("user").doc(currentUser.id).set(updatedUser);
     dispatch(setCurrentUser(updatedUser));
     history.push(`/profile/${currentUser.id}`);
   };
 
-  const addClickHandler = (e) => {
+  const addClickHandler = (e, func) => {
     e.preventDefault();
-    setShowExperienceForm(true);
+    func(true);
   };
 
   const experienceSubmitHandler = (e) => {
@@ -83,6 +93,7 @@ export const Configuration = () => {
     experienceObj.location = experienceLocationInput;
     experienceObj.startDate = experienceStartDate;
     experienceObj.finishDate = experienceFinishDate;
+    experienceObj.description = experienceDescription;
 
     setExperience((state) => [...state, experienceObj]);
     setShowExperienceForm(false);
@@ -91,7 +102,27 @@ export const Configuration = () => {
     setExperienceLocationInput();
     setExperienceStartDate();
     setExperienceFinishDate();
-    setShowExperienceForm();
+    setExperienceDescription();
+  };
+
+  const educationSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const educationObj = {};
+
+    educationObj.institute = educationInstituteInput;
+    educationObj.grade = educationGradeInput;
+    educationObj.startDate = educationStartDate;
+    educationObj.finishDate = educationFinishDate;
+    educationObj.description = educationDescription;
+
+    setEducation((state) => [...state, educationObj]);
+    setShowEducationForm(false);
+    setEducationInstituteInput();
+    setEducationGradeInput();
+    setEducationStartDate();
+    setEducationFinishDate();
+    setEducationDescription();
   };
 
   return (
@@ -147,14 +178,14 @@ export const Configuration = () => {
               rows={4}
               variant="outlined"
             />
-            <h5 className={classes.experience}>Experience</h5>{" "}
+            <h5 className={classes.experience}>Experience:</h5>{" "}
             <button
-              onClick={(e) => addClickHandler(e)}
+              onClick={(e) => addClickHandler(e, setShowExperienceForm)}
               className={(classes.experience, classes.experienceButt)}
             >
               <AddIcon></AddIcon>
             </button>
-            {experience.length
+            {experience && experience.length
               ? experience.map((job) => {
                   return (
                     <>
@@ -200,6 +231,16 @@ export const Configuration = () => {
                   label="Finish date"
                   variant="outlined"
                 />
+                <TextField
+                  className={classes.textArea}
+                  value={experienceDescription}
+                  id="outlined-multiline-static"
+                  label="Description"
+                  onChange={(e) => setExperienceDescription(e.target.value)}
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                />
                 <Button
                   className={classes.submitExperience}
                   variant="contained"
@@ -209,6 +250,74 @@ export const Configuration = () => {
                   type="submit"
                 >
                   Add experience
+                </Button>
+              </>
+            ) : null}
+            <h5 className={classes.experience}>Education:</h5>{" "}
+            <button
+              onClick={(e) => addClickHandler(e, setShowEducationForm)}
+              className={(classes.experience, classes.educationButt)}
+            >
+              <AddIcon></AddIcon>
+            </button>
+            {education && education.length
+              ? education.map((job) => {
+                  return (
+                    <>
+                      <h6>{`- ${job.institute}: ${job.startDate} - ${job.finishDate}`}</h6>
+                    </>
+                  );
+                })
+              : null}
+            {showEducationForm ? (
+              <>
+                <TextField
+                  id="outlined-helperText"
+                  onChange={(e) => setEducationInstituteInput(e.target.value)}
+                  value={educationInstituteInput}
+                  label="Institute"
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined-helperText"
+                  onChange={(e) => setEducationGradeInput(e.target.value)}
+                  value={educationGradeInput}
+                  label="Grade"
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined-helperText"
+                  onChange={(e) => setEducationStartDate(e.target.value)}
+                  value={educationStartDate}
+                  label="Start date"
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined-helperText"
+                  onChange={(e) => setEducationFinishDate(e.target.value)}
+                  value={educationFinishDate}
+                  label="Finish date"
+                  variant="outlined"
+                />
+                <TextField
+                  className={classes.textArea}
+                  value={educationDescription}
+                  id="outlined-multiline-static"
+                  label="Description"
+                  onChange={(e) => setEducationDescription(e.target.value)}
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                />
+                <Button
+                  className={classes.submitExperience}
+                  variant="contained"
+                  onClick={(e) => educationSubmitHandler(e)}
+                  color="primary"
+                  size="large"
+                  type="submit"
+                >
+                  Add education
                 </Button>
               </>
             ) : null}
