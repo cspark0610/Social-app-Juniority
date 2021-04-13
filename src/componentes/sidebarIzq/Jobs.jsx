@@ -5,23 +5,37 @@ import { Paper } from "@material-ui/core";
 import CardJob from "./CardJob";
 import { db } from "../../firebase/firebase";
 
-export default function Jobs() {
+export default function Jobs({ type, title }) {
   const classes = useStyles();
 
-  const [jobsOffers, setJobsOffers] = useState([]);
+  const [offers, setOffers] = useState([]);
 
   useEffect(() => {
-    db.collection("jobs")
-      .orderBy("timestamp", "desc")
-      .limit(4)
-      .onSnapshot((shot) => {
-        setJobsOffers(
-          shot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
-      });
+    if (type === "jobs") {
+      db.collection("jobs")
+        .orderBy("timestamp", "desc")
+        .limit(4)
+        .onSnapshot((shot) => {
+          setOffers(
+            shot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          );
+        });
+    } else {
+      db.collection("courses")
+        .orderBy("timestamp", "desc")
+        .limit(4)
+        .onSnapshot((shot) => {
+          setOffers(
+            shot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          );
+        });
+    }
   }, []);
 
   return (
@@ -30,21 +44,25 @@ export default function Jobs() {
         <Paper className={classes.top}>
           <div className={classes.heading}>
             <h4>
-              <Link to="/courses">
-                <b>Courses</b>
+              <Link to={type === "jobs" ? "/jobs" : "/courses"}>
+                <b>{title}</b>
               </Link>
             </h4>
           </div>
           <hr />
 
-          {jobsOffers &&
-            jobsOffers.map(
-              ({ id, data: { position, location, timestamp } }) => (
+          {offers &&
+            offers.map(
+              ({
+                id,
+                data: { position, location, timestamp, name, hours },
+              }) => (
                 <CardJob
                   key={id}
-                  position={position}
-                  location={location}
+                  position={position || name}
+                  location={location || hours}
                   timestamp={timestamp}
+                  type={type}
                 />
               )
             )}

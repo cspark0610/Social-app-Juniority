@@ -7,6 +7,7 @@ import Search from "./Search";
 import Navbar from "../navbar/Navbar";
 import FormCourses from "./FormCourses";
 import OfferCourses from "./OfferCourses";
+import Jobs from "../sidebarIzq/Jobs";
 
 const Courses = () => {
   const history = useHistory();
@@ -53,7 +54,7 @@ const Courses = () => {
               </Grid>
 
               <Grid item md={3} className="padding">
-                {/* <MostViews /> */}
+                <Jobs type={"jobs"} title={"Jobs"} />
               </Grid>
             </Grid>
           </div>

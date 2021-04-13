@@ -6,7 +6,7 @@ import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
 import RestoreIcon from "@material-ui/icons/Restore";
 import moment from "moment";
 
-const CardJob = ({ id, position, location, timestamp }) => {
+const CardJob = ({ id, position, location, timestamp, type }) => {
   const classes = useStyles();
 
   return (
@@ -18,7 +18,7 @@ const CardJob = ({ id, position, location, timestamp }) => {
               <b className={classes.tituloJob}>{position ? position : ""}</b>
               <p className={classes.subtituloJob}>Juniority</p>
               <p className={classes.subtituloJob1}>
-                <PersonPinCircleIcon />
+                {type === "jobs" ? <PersonPinCircleIcon /> : null}
                 {location ? location : ""}
               </p>
             </div>
@@ -30,11 +30,13 @@ const CardJob = ({ id, position, location, timestamp }) => {
           </div>
           <hr className={classes.divider} />
           <div className={classes.section1}>
-            <div>
-              <p className={classes.subtituloConection}>
-                <b>18 connections</b>{" "}
-              </p>
-            </div>
+            {type === "jobs" ? (
+              <div>
+                <p className={classes.subtituloConection}>
+                  <b>18 connections</b>{" "}
+                </p>
+              </div>
+            ) : null}
             <div className={classes.conection}>
               <img
                 src="https://cflvdg.avoz.es/default/2017/11/20/00121511209023018696270/Foto/dpa_20171103_172213720.jpg"
@@ -55,7 +57,8 @@ const CardJob = ({ id, position, location, timestamp }) => {
                 src="https://cflvdg.avoz.es/default/2017/11/20/00121511209023018696270/Foto/dpa_20171103_172213720.jpg"
                 alt="logo juniority"
                 className={classes.logoConection}
-        w      />
+                w
+              />
             </div>
           </div>
           <hr className={classes.divider1} />
