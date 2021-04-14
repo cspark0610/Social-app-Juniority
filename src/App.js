@@ -19,9 +19,7 @@ function App() {
   const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
   const locationUrl = useSelector((state) => state.locationUrl);
-  const currentUserlocalStorage = JSON.parse(
-    localStorage.getItem("currentUser")
-  );
+  const currentUserlocalStorage = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {}, [locationUrl]);
 
@@ -34,7 +32,7 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Home />
         </Route>
         <Route path="/profile/configuration" component={Configuration} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import { TextField, Button, Typography } from "@material-ui/core";
 import Navbar from "../../navbar/Navbar";
 import useStyles from "./configurationStyles";
 import firebase from "firebase";
@@ -130,12 +130,8 @@ export const Configuration = () => {
       <Navbar></Navbar>
       <div className={classes.container}>
         <div className={classes.paper}>
-          <form
-            onSubmit={(e) => submitHandler(e)}
-            autoComplete="off"
-            className={`${classes.root} ${classes.form}`}
-          >
-            <Typography variant="h5">
+          <form onSubmit={(e) => submitHandler(e)} autoComplete='off' className={`${classes.root} ${classes.form}`}>
+            <Typography variant='h5'>
               <b>Update your profile</b>
             </Typography>
             <TextField

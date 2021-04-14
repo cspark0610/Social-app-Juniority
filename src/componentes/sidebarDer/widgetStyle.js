@@ -32,7 +32,8 @@ export default makeStyles({
 
     },
     people_right:{
-        flex:1,
+        width:'70%',
+        // flex:1,
     },
     icon:{
         paddingRight:'5px',
@@ -40,5 +41,11 @@ export default makeStyles({
         backgroundColor:'light-gray',
         color:'#ADD8E6',
         borderRadius:'5px'
-    }
+    },
+    chart:{
+        display:'flex',
+        overflowWrap: "anywhere",
+        padding:'8px',
+       
+    },
 })

@@ -11,6 +11,8 @@ import { addFollow } from "../utils/followSystem.js";
 import { Link } from "react-router-dom";
 
 const Widget = () => {
+  
+  const classes = useStyles();
   const [ users, setUsers ]= useState([]);
   const [ userLogueado ] = useAuthState(auth);
   const currentUser = useSelector(state => state.currentUser);
@@ -28,14 +30,11 @@ const Widget = () => {
  
   const usersFiltered = users.filter(user => user['data'].email !== userLogueado.email )
 
-  const randomIdx1 = Math.floor(Math.random()*usersFiltered.length)
-  const randomIdx2 = Math.floor(Math.random()*usersFiltered.length)
-  const randomIdx3 = Math.floor(Math.random()*usersFiltered.length)
-  const randomIdx4 = Math.floor(Math.random()*usersFiltered.length)
+  const randomIdx1 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length) :null
+  const randomIdx2 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length) :null
+  const randomIdx3 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length) :null
+  const randomIdx4 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length):null
   
-
-  const classes = useStyles();
-
   const handleClick = (e, user) => {
     e.preventDefault();
     db.collection('user').doc(user).get()
@@ -57,7 +56,7 @@ const Widget = () => {
           </div>
           <div className={classes.people_right}>
             <Typography><Link to={ `/profile/${usersFiltered[randomIdx1]?.id}` }>{usersFiltered[randomIdx1]?.data?.fullName} </Link></Typography>
-            <p style={{ color: "gray", fontSize: "12px" }}>
+            <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx1]?.data?.email}
             </p>
           </div>
@@ -76,7 +75,7 @@ const Widget = () => {
           <div className={classes.people_right}>
             <Typography><Link to={ `/profile/${usersFiltered[randomIdx2]?.id}` }>{usersFiltered[randomIdx2]?.data?.fullName}</Link>
               </Typography>
-            <p style={{ color: "gray", fontSize: "12px" }}>
+            <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx2]?.data?.email}
             </p>
           </div>
@@ -97,7 +96,7 @@ const Widget = () => {
             <Link to={ `/profile/${usersFiltered[randomIdx3]?.id}` }>
               {usersFiltered[randomIdx3]?.data?.fullName}
               </Link></Typography>
-            <p style={{ color: "gray", fontSize: "12px" }}>
+            <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx3]?.data?.email}
             </p>
           </div>
@@ -118,7 +117,7 @@ const Widget = () => {
             <Link to={ `/profile/${usersFiltered[randomIdx4]?.id}` }>
               {usersFiltered[randomIdx4]?.data?.fullName}
               </Link></Typography>
-            <p style={{ color: "gray", fontSize: "12px" }}>
+            <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx4]?.data?.email}
             </p>
           </div>

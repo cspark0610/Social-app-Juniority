@@ -174,7 +174,7 @@ const Connections = ({ user }) => {
                       })}
                     </List>
                   </div>
-                </div>
+                </div>   
               </div>
             </div>
           </div>
