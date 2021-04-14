@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import InputMessage from "../post/InputMessage";
 import Navbar from "../navbar/Navbar";
 import Widget from "../sidebarDer/Widget";
-import Graph from "../sidebarDer/Graph";
+import GraphViews from "../sidebarDer/GraphViews";
 import { Profile } from "../profile/perfil/Profile";
 import Jobs from "../sidebarIzq/Jobs";
 import { Grid } from "@material-ui/core";
@@ -72,7 +72,7 @@ const Home = () => {
             <Grid item md={3} >
               <div>
                 <Widget/>
-                <Graph/>
+                <GraphViews/>
               </div>
             </Grid>
           </Grid>

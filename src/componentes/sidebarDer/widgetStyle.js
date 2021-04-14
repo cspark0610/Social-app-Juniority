@@ -32,7 +32,8 @@ export default makeStyles({
 
     },
     people_right:{
-        flex:1,
+        width:'70%',
+        // flex:1,
     },
     icon:{
         paddingRight:'5px',
