@@ -19,9 +19,7 @@ function App() {
   const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
   const locationUrl = useSelector((state) => state.locationUrl);
-  const currentUserlocalStorage = JSON.parse(
-    localStorage.getItem("currentUser")
-  );
+  const currentUserlocalStorage = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {}, [locationUrl]);
 
@@ -34,20 +32,17 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Home />
         </Route>
-        <Route path="/profile/configuration" component={Configuration} />
-        <Route
-          path="/profile/:id"
-          render={({ match }) => <HomeProfile match={match} />}
-        />
-        <Route path="/register" component={Register} />
-        <Route path="/password-recovery" component={PasswordRecovery} />
-        <Route path="/jobs" component={HomeJobs} />
-        <Route path="/connections" component={Connections} />
+        <Route path='/profile/configuration' component={Configuration} />
+        <Route path='/profile/:id' render={({ match }) => <HomeProfile match={match} />} />
+        <Route path='/register' component={Register} />
+        <Route path='/password-recovery' component={PasswordRecovery} />
+        <Route path='/jobs' component={HomeJobs} />
+        <Route path='/connections' component={Connections} />
 
-        <Route path="/courses" component={Courses} />
+        <Route path='/courses' component={Courses} />
       </Switch>
     </>
   );

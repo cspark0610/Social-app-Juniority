@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import InputMessage from "../post/InputMessage";
 import Navbar from "../navbar/Navbar";
 import Widget from "../sidebarDer/Widget";
+import GraphViews from "../sidebarDer/GraphViews";
 import { Profile } from "../profile/perfil/Profile";
 import Jobs from "../sidebarIzq/Jobs";
 import { Grid } from "@material-ui/core";
@@ -56,40 +57,23 @@ const Home = () => {
       ) : (
         <>
           <Navbar />
-          <Grid
-            container
-            display="flex"
-            align="center"
-            style={{
-              position: "absolute",
-              top: 70,
-              background: "lightgrey",
-              paddingLeft: 70,
-              paddingRight: 70,
-            }}
-            spacing={3}
-          >
+          <Grid container display='flex' align='center'
+            style={{position:"absolute",top: 70,background: "lightgrey",paddingLeft: 70,paddingRight: 70,}}spacing={3}>
             <Grid item md={3} style={{ paddingTop: 100 }}>
-              <Profile
-                user={currentUser}
-                setUsers={setUsers}
-                handleOpen={handleOpen}
-                setTitle={setTitle}
-              />
-              <Jobs type={"courses"} title={"Courses"} />
+              <Profile user={currentUser} setUsers={setUsers} handleOpen={handleOpen} setTitle={setTitle} />
+              <Jobs title={'Courses'} type={'courses'}/>
             </Grid>
 
             <Grid item md={6}>
-              <TransitionsModal
-                open={open}
-                handleClose={handleClose}
-                users={users}
-                title={title}
-              />
+              <TransitionsModal open={open} handleClose={handleClose} users={users} title={title} />
               <InputMessage />
             </Grid>
-            <Grid item md={3}>
-              <Widget />
+
+            <Grid item md={3} >
+              <div>
+                <Widget/>
+                <GraphViews/>
+              </div>
             </Grid>
           </Grid>
         </>

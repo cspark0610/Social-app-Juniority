@@ -51,21 +51,7 @@ export default function Jobs({ type, title }) {
           </div>
           <hr />
 
-          {offers &&
-            offers.map(
-              ({
-                id,
-                data: { position, location, timestamp, name, hours },
-              }) => (
-                <CardJob
-                  key={id}
-                  position={position || name}
-                  location={location || hours}
-                  timestamp={timestamp}
-                  type={type}
-                />
-              )
-            )}
+          {offers && offers.map(({ id, data: { position, location, timestamp, name, hours } }) => <CardJob key={id} position={position || name} location={location || hours} timestamp={timestamp} type={type} />)}
         </Paper>
       </div>
     </>

@@ -36,12 +36,7 @@ const Connections = () => {
       <Navbar />
       <div className={classes.main}>
         <div className={classes.containerCard}>
-          <img
-            src="https://uxwing.com/wp-content/themes/uxwing/download/12-people-gesture/user-profile.png"
-            width="50px"
-            alt="mi avatar"
-            className={classes.imgCard}
-          />
+          <img src='https://uxwing.com/wp-content/themes/uxwing/download/12-people-gesture/user-profile.png' width='50px' alt='mi avatar' className={classes.imgCard} />
 
           <div className={classes.nameUser}>
             <h1> Pätricio Fernandez </h1> <br />
@@ -57,9 +52,9 @@ const Connections = () => {
               Following <b>353</b>
             </h7>
           </div>
-          <Link to="/profile/configuration">
-            <IconButton aria-label="delete" className={classes.margin}>
-              <EditIcon className={classes.iconoEdit} fontSize="large" />
+          <Link to='/profile/configuration'>
+            <IconButton aria-label='delete' className={classes.margin}>
+              <EditIcon className={classes.iconoEdit} fontSize='large' />
             </IconButton>
           </Link>
         </div>
@@ -76,25 +71,13 @@ const Connections = () => {
                     return (
                       <ListItem key={value} button>
                         <ListItemAvatar>
-                          <Avatar
-                            src={`/static/images/avatar/${value + 1}.jpg`}
-                          />
+                          <Avatar src={`/static/images/avatar/${value + 1}.jpg`} />
                         </ListItemAvatar>
-                        <div className={classes.nameProfile}>
-                          Luis Fernandez
-                        </div>
-                        <ListItemText
-                          className={classes.nameText}
-                          id={labelId}
-                        />
+                        <div className={classes.nameProfile}>Luis Fernandez</div>
+                        <ListItemText className={classes.nameText} id={labelId} />
 
                         <ListItemSecondaryAction>
-                          <Button
-                            variant="contained"
-                            className={classes.delButton}
-                            startIcon={<DeleteIcon />}
-                            size="small"
-                          >
+                          <Button variant='contained' className={classes.delButton} startIcon={<DeleteIcon />} size='small'>
                             Remove
                           </Button>
                         </ListItemSecondaryAction>
@@ -116,24 +99,13 @@ const Connections = () => {
                     return (
                       <ListItem key={value} button>
                         <ListItemAvatar>
-                          <Avatar
-                            src={`/static/images/avatar/${value + 1}.jpg`}
-                          />
+                          <Avatar src={`/static/images/avatar/${value + 1}.jpg`} />
                         </ListItemAvatar>
-                        <div className={classes.nameProfile}>
-                          aaaaaaaaaaaaaaa
-                        </div>
-                        <ListItemText
-                          className={classes.nameText}
-                          id={labelId}
-                        />
+                        <div className={classes.nameProfile}>aaaaaaaaaaaaaaa</div>
+                        <ListItemText className={classes.nameText} id={labelId} />
 
                         <ListItemSecondaryAction>
-                          <Button
-                            variant="contained"
-                            className={classes.delButton}
-                            size="small"
-                          >
+                          <Button variant='contained' className={classes.delButton} size='small'>
                             Following
                           </Button>
                         </ListItemSecondaryAction>

@@ -9,14 +9,16 @@ import useStyles from "./PostStyle.js";
 import InputOption from "./InputOption";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
-
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import ReactPlayer from "react-player";
 
-const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
+const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
   const classes = useStyles();
   const inputClasses = inputStyles();
   const date = new Date(timestamp?.toDate()).toUTCString();
@@ -161,6 +163,21 @@ const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, h
         <p> {message} </p>
       </div>
       <hr />
+      {messageCode ? (
+        <div className={classes.message}>
+          <SyntaxHighlighter language='javascript' style={docco} showLineNumbers={true} wrapLines={true}>
+            {messageCode}
+          </SyntaxHighlighter>
+        </div>
+      ) : null}
+      <hr />
+      {messageVideo ? (
+        <div className={classes.body}>
+          <ReactPlayer url={messageVideo} controls={true} width='90%' style={{ height: "auto !important" }} />
+        </div>
+      ) : null}
+
+      <hr />
       {postImage !== "" ? (
         <>
           <div className={classes.body}>
@@ -171,10 +188,18 @@ const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, h
       ) : null}
       <div className={classes.buttons}>
         <span onClick={(e) => handleLikes(e)}>
-          <InputOption Icon={inUse} color='#E60026'
+          <InputOption
+            Icon={inUse}
+            color='#E60026'
             title={
-              <div> Likes <span onClick={openLikes} className={`${classes.likes} zse`}>{likes || 0}</span></div>
-                  }
+              <div>
+                {" "}
+                Likes{" "}
+                <span onClick={openLikes} className={`${classes.likes} zse`}>
+                  {likes || 0}
+                </span>
+              </div>
+            }
           />
         </span>
         <span onClick={handleComment}>
@@ -189,8 +214,7 @@ const Post = ({ id, name, message, userId, photo, postImage, likes, timestamp, h
             <div className={inputClasses.container_input}>
               <Avatar src={currentUser.avatar} />
               <form onSubmit={handleSubmit} style={{ display: "flex", width: "100%" }}>
-                <input placeholder='Write a comment' type='text'value={input} onChange={(e) => setInput(e.target.value)}
-                  style={{border: "none",flex: "1", marginLeft: "10px",outlineWidth: "0",fontWeight: "600",fontSize: "74%"}}/>
+                <input placeholder='Write a comment' type='text' value={input} onChange={(e) => setInput(e.target.value)} style={{ border: "none", flex: "1", marginLeft: "10px", outlineWidth: "0", fontWeight: "600", fontSize: "74%" }} />
                 <button type='submit'>
                   <SendOutlinedIcon style={{ color: "#ADD8E6" }} />
                 </button>
