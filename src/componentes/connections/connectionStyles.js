@@ -66,6 +66,7 @@ export default makeStyles((theme) => ({
     width: 90,
     height: 90,
     marginRight: 100,
+    borderRadius: 50
   },
   nameUser: {
     marginTop: "auto",

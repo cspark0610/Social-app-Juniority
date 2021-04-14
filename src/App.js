@@ -45,7 +45,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/password-recovery" component={PasswordRecovery} />
         <Route path="/jobs" component={HomeJobs} />
-        <Route path="/connections" component={Connections} />
+        <Route path="/connections" render={() => <Connections user={currentUser}/>} />
 
         <Route path="/courses" component={Courses} />
       </Switch>
