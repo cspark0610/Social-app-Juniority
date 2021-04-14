@@ -35,3 +35,13 @@ export const unFollow = async (targetUser, actualUser, func) => {
 
     if(func) func(false);
   };
+
+export const removeFollower = async (targetUser, actualUser) => {
+    const thisUser = {...actualUser};
+    
+    thisUser.followers = thisUser.followers.filter(follower => follower.id !== targetUser.id);
+    targetUser.follow = targetUser.follow.filter(following => following.id !== thisUser.id)
+
+    await db.collection('user').doc(thisUser.id).set(thisUser);
+    await db.collection('user').doc(targetUser.id).set(targetUser);
+  };
