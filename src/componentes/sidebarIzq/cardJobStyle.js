@@ -16,7 +16,6 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "row",
     alignItems: "center",
   },
-
   section1: {
     display: "flex",
     flexDirection: "row",

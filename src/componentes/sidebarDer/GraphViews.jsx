@@ -27,10 +27,10 @@ const GraphViews = () => {
       }, []);
 
       
-    const dateExampleRecent = posts ? new Date(posts[0].timestamp?.toDate()).toUTCString() : null
-    const dateExampleOldest = posts ? new Date(posts[posts.length-1].timestamp?.toDate()).toUTCString() :null;
+  const dateExampleRecent = posts ? new Date(posts[0].timestamp?.toDate()).toUTCString() : null
+  const dateExampleOldest = posts ? new Date(posts[posts.length-1].timestamp?.toDate()).toUTCString() :null;
 
-    const dates = [moment(dateExampleOldest), moment(dateExampleRecent)];
+  const dates = [moment(dateExampleOldest), moment(dateExampleRecent)];
     
     return (
         <div className={classes.body}>
@@ -47,9 +47,8 @@ const GraphViews = () => {
                 <div><b>Range Dates</b><AssessmentIcon fontSize="large" className={classes.iconGraph} />
                     {dates ? (
                     <div className={classes.numberGraph}>
-                       
-                          <b>{`From ${ String(dates[0]._i).slice(4,16) } `}</b>
-                          <b>{`Until ${ String(dates[1]._i).slice(4,16) } `}</b>
+                        <b>{`From ${ String(dates[0]._i).slice(4,16) } `}</b>
+                        <b>{`Until ${ String(dates[1]._i).slice(4,16) } `}</b>
                     </div>
                     ) : null}  
                 </div>

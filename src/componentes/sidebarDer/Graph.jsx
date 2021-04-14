@@ -31,7 +31,7 @@ const Graph = () => {
       return null;
     }
   }
-  console.log('dates',dates);
+  
   
   let monCount=0;let tueCount=0;let wedCount=0;let thuCount=0;let friCount=0;let satCount=0;let sunCount=0;
   for(let j=0; j<dates.length ;j++){

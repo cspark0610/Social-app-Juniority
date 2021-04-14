@@ -61,7 +61,7 @@ const Home = () => {
             style={{position:"absolute",top: 70,background: "lightgrey",paddingLeft: 70,paddingRight: 70,}}spacing={3}>
             <Grid item md={3} style={{ paddingTop: 100 }}>
               <Profile user={currentUser} setUsers={setUsers} handleOpen={handleOpen} setTitle={setTitle} />
-              <Jobs />
+              <Jobs title={'Courses'} type={'courses'}/>
             </Grid>
 
             <Grid item md={6}>
