@@ -14,6 +14,8 @@ import HomeJobs from "./componentes/jobs/HomeJobs";
 import { Configuration } from "./componentes/profile/configuration/Configuration";
 import Connections from "./componentes/connections/Connections";
 import Courses from "./componentes/courses/Courses";
+import { Portfolio } from "./componentes/profile/portfolio/Portfolio";
+import PortafolioGeneral from "./componentes/portafolioGeneral/PortafolioGeneral";
 
 function App() {
   const currentUser = useSelector((state) => state.currentUser);
@@ -43,6 +45,8 @@ function App() {
         <Route path='/connections' component={Connections} />
 
         <Route path='/courses' component={Courses} />
+        <Route path='/portfolio' component={PortafolioGeneral} />
+
       </Switch>
     </>
   );

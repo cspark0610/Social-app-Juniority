@@ -45,10 +45,10 @@ const Connections = () => {
           <div className={classes.nameUser}>
             <h1>
               Followers <b>646</b>
-            </h1>{" "}
+            </h1> 
             <br />
             <h7>
-              {" "}
+          
               Following <b>353</b>
             </h7>
           </div>

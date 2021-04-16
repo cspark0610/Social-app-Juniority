@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import logo from "../assets/juniority.svg";
-import { Link } from "react-router-dom";
+  import { Link } from "react-router-dom";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
