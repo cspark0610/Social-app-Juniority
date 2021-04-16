@@ -8,7 +8,7 @@ const MostViews = () => {
   
   return (
     <div >
-    <Jobs/>
+    <Jobs title={'Courses'} type={'courses'}/>
     </div> 
   );
 };

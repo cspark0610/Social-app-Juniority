@@ -12,17 +12,17 @@ import { setCurrentUser } from "./store/currentUser";
 import HomeProfile from "./componentes/profile/HomeProfile";
 import HomeJobs from "./componentes/jobs/HomeJobs";
 import { Configuration } from "./componentes/profile/configuration/Configuration";
+import Connections from "./componentes/connections/Connections";
+import Courses from "./componentes/courses/Courses";
+import PortafolioGeneral from "./componentes/portafolioGeneral/PortafolioGeneral";
 
 function App() {
   const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
-  const locationUrl = useSelector(state => state.locationUrl)
-  const currentUserlocalStorage = JSON.parse(
-    localStorage.getItem("currentUser")
-  );
+  const locationUrl = useSelector((state) => state.locationUrl);
+  const currentUserlocalStorage = JSON.parse(localStorage.getItem("currentUser"));
 
-  useEffect(() => {
-  }, [locationUrl])
+  useEffect(() => {}, [locationUrl]);
 
   useEffect(() => {
     dispatch(setCurrentUser(currentUserlocalStorage));
@@ -33,16 +33,19 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Home />
         </Route>
-        <Route path='/profile/configuration' component={Configuration}/>
-        <Route path="/profile/:id" render={({ match }) => <HomeProfile match={match}/>} />
-        <Route path="/register" component={Register} />
-        <Route path="/password-recovery" component={PasswordRecovery} />
-        <Route path="/jobs" component={HomeJobs} />
+        <Route path='/profile/configuration' component={Configuration} />
+        <Route path='/profile/:id' render={({ match }) => <HomeProfile match={match} />} />
+        <Route path='/register' component={Register} />
+        <Route path='/password-recovery' component={PasswordRecovery} />
+        <Route path='/jobs' component={HomeJobs} />
+        <Route path="/connections" render={() => <Connections user={currentUser}/>} />
+        <Route path='/courses' component={Courses} />
+        <Route path='/portfolio' component={PortafolioGeneral} />
+
       </Switch>
-      
     </>
   );
 }
