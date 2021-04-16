@@ -17,7 +17,6 @@ export default makeStyles((theme) => ({
   card: {
     width: "40%",
     height: "300px",
-    background: "yellow",
     margin: 20,
     borderRadius: 5,
     color: "#B4DCD6",
@@ -56,7 +55,7 @@ export default makeStyles((theme) => ({
   containerCard: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
     padding: 40,
     background: "#E8F4F2",
     height: "100%",
@@ -65,8 +64,8 @@ export default makeStyles((theme) => ({
     marginTop: "auto",
     width: 90,
     height: 90,
-    marginRight: 100,
-    borderRadius: 50
+    marginLeft: 200,
+    borderRadius: 50,
   },
   nameUser: {
     marginTop: "auto",
@@ -74,7 +73,12 @@ export default makeStyles((theme) => ({
     height: 90,
     marginRight: 30,
   },
-  iconoEdit:{
-    color:"#B4DCD6",
-  }
+  iconoEdit: {
+    color: "#B4DCD6",
+    marginRight: 150,
+
+  },
+  correoSpace: {
+    padding: "auto",
+  },
 }));
