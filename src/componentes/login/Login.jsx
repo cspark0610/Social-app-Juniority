@@ -38,6 +38,10 @@ const Login = () => {
             avatar: result.additionalUserInfo.profile.avatar_url,
             follow: [],
             followers: [],
+            experience: [],
+            education: [],
+            location: "No info",
+            position: "No info",
             userType: "user",
           };
         } else {
@@ -48,6 +52,10 @@ const Login = () => {
             avatar: result.additionalUserInfo.profile.picture,
             follow: [],
             followers: [],
+            experience: [],
+            education: [],
+            location: "No info",
+            position: "No info",
             userType: "user",
           };
         }

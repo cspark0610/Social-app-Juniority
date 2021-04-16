@@ -6,17 +6,20 @@ import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import { db, auth } from '../../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import IconButton from "@material-ui/core/IconButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFollow } from "../utils/followSystem.js";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { setLocationUrl } from "../../store/locationUrl.js";
 
 const Widget = () => {
-  
+  const history = useHistory();
   const classes = useStyles();
   const [ users, setUsers ]= useState([]);
   const [ userLogueado ] = useAuthState(auth);
   const currentUser = useSelector(state => state.currentUser);
-  
+  const dispatch = useDispatch();
+  const locationUrl = useSelector(state => state.locationUrl);
+
   useEffect(()=>{
     db.collection('user')
     .onSnapshot(shot =>{
@@ -42,6 +45,13 @@ const Widget = () => {
       addFollow(user.data(), currentUser)
     })
   }
+
+  const userClick = (e, id) => {
+    e.preventDefault();
+    console.log('PSEEEE')
+    history.push(`/profile/${id}`);
+    dispatch(setLocationUrl(!locationUrl));
+  }
   
   return (
     <div className={classes.body}>
@@ -55,7 +65,7 @@ const Widget = () => {
             <Avatar>{usersFiltered[randomIdx1]?.data?.fullName.charAt(0).toUpperCase()}</Avatar> 
           </div>
           <div className={classes.people_right}>
-            <Typography><Link to={ `/profile/${usersFiltered[randomIdx1]?.id}` }>{usersFiltered[randomIdx1]?.data?.fullName} </Link></Typography>
+            <Typography><button onClick={e => userClick(e, usersFiltered[randomIdx1]?.id)} >{usersFiltered[randomIdx1]?.data?.fullName} </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx1]?.data?.email}
             </p>
@@ -73,8 +83,8 @@ const Widget = () => {
             <Avatar>{usersFiltered[randomIdx2]?.data?.fullName.charAt(0).toUpperCase()} </Avatar>
           </div>
           <div className={classes.people_right}>
-            <Typography><Link to={ `/profile/${usersFiltered[randomIdx2]?.id}` }>{usersFiltered[randomIdx2]?.data?.fullName}</Link>
-              </Typography>
+            <Typography>
+            <button onClick={e => userClick(e, usersFiltered[randomIdx2]?.id)} >{usersFiltered[randomIdx2]?.data?.fullName} </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx2]?.data?.email}
             </p>
@@ -93,9 +103,9 @@ const Widget = () => {
           </div>
           <div className={classes.people_right}>
             <Typography>
-            <Link to={ `/profile/${usersFiltered[randomIdx3]?.id}` }>
+            <button onClick={e =>  userClick(e, usersFiltered[randomIdx3]?.id) }>
               {usersFiltered[randomIdx3]?.data?.fullName}
-              </Link></Typography>
+              </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx3]?.data?.email}
             </p>
@@ -114,9 +124,9 @@ const Widget = () => {
           </div>
           <div className={classes.people_right}>
             <Typography>
-            <Link to={ `/profile/${usersFiltered[randomIdx4]?.id}` }>
+            <button onClick={e => userClick(e, usersFiltered[randomIdx4]?.id) }>
               {usersFiltered[randomIdx4]?.data?.fullName}
-              </Link></Typography>
+              </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
               {usersFiltered[randomIdx4]?.data?.email}
             </p>

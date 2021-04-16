@@ -8,6 +8,7 @@
 
 .personal_info_sub_container {
     margin: 1em;
+    width: 100%;
 }
 
 .personal_info_p {
@@ -40,6 +41,7 @@
 .personal_info_p_no_info {
     color: #808080;
     margin-top: 1em;
+    text-align: center;
 }
 
 .personal_info_experience_container {

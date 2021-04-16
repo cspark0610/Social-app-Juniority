@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
 import "./style.css";
 
 export const PersonalInfo = ({ user }) => {
   const [localUser, setLocalUser] = useState();
+  const locationUrl = useSelector(state => state.locationUrl)
 
   useEffect(async () => {
+    console.log(user)
     await db
       .collection("user")
       .where("id", "==", user.id)
@@ -15,6 +18,7 @@ export const PersonalInfo = ({ user }) => {
         });
       });
   }, []);
+
   return (
     <div className="personal_info_container">
       {localUser && (
@@ -22,7 +26,13 @@ export const PersonalInfo = ({ user }) => {
           <div>
             <h3>{`About ${localUser.fullName}`}</h3>
             <p className="personal_info_p personal_info_about_me">
-              {localUser.aboutMe}
+              {localUser.aboutMe ? (
+                localUser.aboutMe
+              ) : (
+                <div className="personal_info_exp_container">
+                  <p className="personal_info_p_no_info">No info provided</p>
+                </div>
+              )}
             </p>
           </div>
           <div>
@@ -39,7 +49,9 @@ export const PersonalInfo = ({ user }) => {
                   );
                 })
               ) : (
-                <p className="personal_info_p_no_info">No info provided</p>
+                <div className="personal_info_exp_container">
+                  <p className="personal_info_p_no_info">No info provided</p>
+                </div>
               )}
             </div>
             <div className="personal_info_experience_container">
