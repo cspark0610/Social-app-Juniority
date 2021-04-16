@@ -6,15 +6,15 @@ import GraphViews from "../sidebarDer/GraphViews";
 import { Profile } from "../profile/perfil/Profile";
 import Jobs from "../sidebarIzq/Jobs";
 import { Grid } from "@material-ui/core";
-
 import { useHistory } from "react-router";
 import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
-
 import "./style.css";
 import { removeSelectedUserPosts } from "../../store/selectedUserPosts";
 import { setSelectedUser } from "../../store/selectedUser";
 import TransitionsModal from "../home/TransitionModal";
+
+
 
 const Home = () => {
   const history = useHistory();

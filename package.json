@@ -18,6 +18,7 @@
     "pretty-checkbox": "^3.0.3",
     "pretty-checkbox-react": "^3.1.0",
     "react": "^17.0.2",
+    "react-async-select": "^0.2.6",
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^3.0.3",
     "react-google-charts": "^3.0.15",
