@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import OfferJobsPost from "./OfferJobsPost.jsx";
 import TransitionsModal from "../../home/TransitionModal";
 
-const OfferJobs = () => {
+const OfferJobs = ({jobsOffers, setJobsOffers}) => {
   const [title, setTitle] = useState("");
   const [open, setOpen] = useState(false);
   const [openPostModal, setOpenPostModal] = React.useState(false);
@@ -15,7 +15,7 @@ const OfferJobs = () => {
   const handleClose = () => setOpen(false);
   const [input, setInput] = useState("");
   const [cvUrl, setCvUrl] = useState("");
-  const [jobsOffers, setJobsOffers] = useState([]);
+  /* const [jobsOffers, setJobsOffers] = useState([]); */
   const keyword = useSelector((state) => state.keyword);
   console.log(keyword);
 
