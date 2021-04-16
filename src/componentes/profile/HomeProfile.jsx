@@ -3,17 +3,16 @@ import { Grid } from "@material-ui/core";
 import { Profile } from "./perfil/Profile";
 import { Portfolio } from "./portfolio/Portfolio";
 import { PostProfile } from "./post/PostProfile";
-/* import { Widget } from "./widget/Widget"; */
+import  Widget  from "../sidebarDer/Widget";
 import { Banner } from "./banner/Banner";
 import Navbar from "../navbar/Navbar";
 import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
 import { useSelector } from "react-redux";
-
 import TransitionsModal from '../home/TransitionModal';
-import Widget from "../sidebarDer/Widget";
-
+import { useHistory } from "react-router-dom";
+import {PersonalInfo} from './personalInfo/personalInfo'
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
@@ -22,6 +21,8 @@ const HomeProfile = (props) => {
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState()
   const locationUrl = useSelector(state => state.locationUrl);
+  const currentUser = useSelector(state => state.currentUser);
+  const history = useHistory()
 
   const handleClose = () => {
     setOpen(false);
@@ -49,6 +50,8 @@ const HomeProfile = (props) => {
 
   return (
     <>
+    {!currentUser ? history.push('/register') : (
+      <>
       {selectedUser && (
         <>
           <Navbar />
@@ -73,6 +76,7 @@ const HomeProfile = (props) => {
               />
               <Grid item md={6}>
                 <PostProfile user={selectedUser} />
+                <PersonalInfo user={selectedUser}/>
                 <Publication handleOpen={handleOpen} setTitle={setTitle} setUsers={setUsers} selectedUser={selectedUser}/>
               </Grid>
               <Grid item md={3}>
@@ -86,6 +90,8 @@ const HomeProfile = (props) => {
           </div>
         </>
       )}
+      </>
+    )}
     </>
   );
 };
