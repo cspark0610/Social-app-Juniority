@@ -1,8 +1,9 @@
 .back {
   background: white;
-  border-radius: 1px;
+  border-radius: 4px;
   height: fit-content;
   padding: 25px 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
 }
 .button__jobs {
   display: flex;
@@ -16,8 +17,7 @@
 }
 .h3__skill {
   color: black !important;
-  text-align: initial !important;
-  padding-left:25px !important;
+  text-align: center !important;
   font-size: 15px !important;
 }
 .check__jobs{
@@ -29,8 +29,9 @@
     color: #65baaf !important;
 }
 .TextField__filter{
-  background: #65baaf !important;
-  opacity: 0.4;
+/*   background: #65baaf !important;
+  opacity: 0.4; */
+  padding:0 !important;
 
 }
 .aling__filter{
@@ -42,6 +43,35 @@
   padding: 0 !important;
 }
 .select__multiple{
-  width: 80% !important;
+  width: 100% !important;
   border: 1px solid #65BAAF !important;
+}
+.filter__refresh{
+  text-align: center !important;
+}
+.button__filter{
+  display: flex;
+  flex-direction: column;
+  background: #3cb4e5 !important;
+  color: white !important;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border: 1px solid #ddddddb7;
+  border-bottom: none;
+  font-size: 10px !important;
+  text-align: center !important;
+}
+.back__filters{
+  background: white;
+  border-radius: 4px;
+  height: fit-content;
+  padding: 5px 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+}
+.text__aling__filter{
+  text-align: center !important;
+}
+.h3__filters{
+  color: #3cb4e5 !important;
+  text-align: center !important;
 }

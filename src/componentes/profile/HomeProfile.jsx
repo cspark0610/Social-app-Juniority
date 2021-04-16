@@ -12,6 +12,7 @@ import { db } from "../../firebase/firebase";
 import { useSelector } from "react-redux";
 import TransitionsModal from "../home/TransitionModal";
 import { useHistory } from "react-router-dom";
+import { PersonalInfo } from "./personalInfo/personalInfo";
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
@@ -56,7 +57,7 @@ const HomeProfile = (props) => {
             <>
               <Navbar />
 
-              <Grid container display='flex' align='center'>
+              <Grid container display="flex" align="center">
                 <Grid item md={12}>
                   <Banner />
                 </Grid>
