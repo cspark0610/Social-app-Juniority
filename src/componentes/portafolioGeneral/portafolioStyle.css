@@ -1,0 +1,35 @@
+.body {
+    background: lightgray;
+ 
+}
+
+.container {
+    margin: auto;
+    padding: 40px 40px;
+    background: lightgray;
+    height: 100%;
+
+}
+
+.card-proyect {
+    flex-direction: row;
+}
+
+.portfolio_title {
+    text-align: left;
+    margin: 20px;
+    font-size: 30px;
+}
+
+.portfolio {
+    background: white;
+    position: sticky;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    height: fit-content;
+}
+
+.contenido {
+    display: flex;
+    
+ }
