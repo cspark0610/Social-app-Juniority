@@ -47,7 +47,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Location() {
+export default function FilterSkills({setJobsOffers}) {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -64,67 +64,66 @@ export default function Location() {
   }, [personName]);
 
   useEffect(() => {
-    db.collection("Location")
-      .orderBy("location", "asc")
+    db.collection("Skills")
+      .orderBy("skills", "desc")
       .onSnapshot((shot) => {
         const docs = [];
         shot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
         });
-        const filterLocation = docs.map((doc) => doc.location);
-        setNames(filterLocation);
+        const filterSkills = docs.map((doc) => doc.skills);
+        setNames(filterSkills);
       });
   }, []);
 
-/*   const clear = () => {
-    setPersonName([]);
-    window.location.reload();
-  }; */
-
-
   const clear = () => {
     setPersonName([]);
+    window.location.reload();
   };
+
+/*   const clear = () => {
+    setPersonName([]);
+  }; */
 
   return (
     <>
-      {names[0] && (
-        <div>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Location </InputLabel>
-            <Select
-              labelId="demo-mutiple-chip-label"
-              id="demo-mutiple-chip"
-              multiple
-              value={personName}
-              onChange={handleChange}
-              className="select__multiple"
-              input={<Input id="select-multiple-chip" />}
-              renderValue={(selected) => (
-                <div className={classes.chips}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} className={classes.chip} />
-                  ))}
-                </div>
-              )}
-              MenuProps={MenuProps}
-            >
-              {names[0].map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  <p>{name}</p>
-                </MenuItem>
+    { names[0] && 
+    <div>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-mutiple-chip-label">Skills</InputLabel>
+        <Select
+          labelId="demo-mutiple-chip-label"
+          id="demo-mutiple-chip"
+          multiple
+          value={personName}
+          onChange={handleChange}
+          className="select__multiple"
+          input={<Input id="select-multiple-chip" />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} className={classes.chip} />
               ))}
-            </Select>
-          </FormControl>
-          <Button className="button__jobs" onClick={clear}>
-            Clear
-          </Button>
-        </div>
-      )}
+            </div>
+          )}
+          MenuProps={MenuProps}
+        >
+          {names[0].map((name) => (
+            <MenuItem
+              key={name}
+              value={name}
+              style={getStyles(name, personName, theme)}
+            >
+              <p>{name}</p>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <Button className="button__jobs" onClick={clear}>
+        Clear
+      </Button>
+    </div>
+    }
     </>
   );
 }

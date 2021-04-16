@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from '@material-ui/core'
 import Navbar from "../navbar/Navbar";
 import "./style.css";
@@ -10,6 +10,9 @@ import MostViews from "./widget/MostViews";
 
 
 const HomeJobs = () => {
+
+  const [jobsOffers, setJobsOffers] = useState([]);
+
     return (
       <>
       <Navbar/>
@@ -23,12 +26,12 @@ const HomeJobs = () => {
         
         <Grid container display="flex" align="center" spacing={3}>
           <Grid item md={3}>
-            <Filter/>
+            <Filter jobsOffers={jobsOffers} setJobsOffers={setJobsOffers}/>
           </Grid>
 
           <Grid item md={6}>
             <FormJobs/>
-            <OfferJobs/>
+            <OfferJobs jobsOffers={jobsOffers} setJobsOffers={setJobsOffers}/>
           </Grid>
 
           <Grid item md={3} className="padding">

@@ -47,7 +47,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Location() {
+export default function Position() {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -64,15 +64,15 @@ export default function Location() {
   }, [personName]);
 
   useEffect(() => {
-    db.collection("Location")
-      .orderBy("location", "asc")
+    db.collection("Position")
+      .orderBy("position", "desc")
       .onSnapshot((shot) => {
         const docs = [];
         shot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
         });
-        const filterLocation = docs.map((doc) => doc.location);
-        setNames(filterLocation);
+        const filterPosition = docs.map((doc) => doc.position);
+        setNames(filterPosition);
       });
   }, []);
 
@@ -81,17 +81,17 @@ export default function Location() {
     window.location.reload();
   }; */
 
-
   const clear = () => {
     setPersonName([]);
   };
+
 
   return (
     <>
       {names[0] && (
         <div>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Location </InputLabel>
+            <InputLabel id="demo-mutiple-chip-label">Position</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"

@@ -47,7 +47,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Location() {
+export default function Availability() {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -64,24 +64,23 @@ export default function Location() {
   }, [personName]);
 
   useEffect(() => {
-    db.collection("Location")
-      .orderBy("location", "asc")
+    db.collection("Availability")
+      .orderBy("availability", "desc")
       .onSnapshot((shot) => {
         const docs = [];
         shot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
         });
-        const filterLocation = docs.map((doc) => doc.location);
-        setNames(filterLocation);
+        const filterAvailability = docs.map((doc) => doc.availability);
+        setNames(filterAvailability);
       });
   }, []);
 
 /*   const clear = () => {
-    setPersonName([]);
     window.location.reload();
-  }; */
-
-
+    setPersonName([]);
+  };
+ */
   const clear = () => {
     setPersonName([]);
   };
@@ -91,7 +90,7 @@ export default function Location() {
       {names[0] && (
         <div>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Location </InputLabel>
+            <InputLabel id="demo-mutiple-chip-label">Availability</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"

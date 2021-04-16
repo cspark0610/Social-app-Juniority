@@ -30,15 +30,15 @@ const InputMessage = () => {
   const [imageUrl, setImageUrl] = useState();
   const [open, setOpen] = React.useState(false);
   const [userLikes, setUserLikes] = useState([]);
+  const [title, setTitle] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
+  const keynavbar = useSelector((state) => state.keynavbar);
 
   const classes = useStyles();
   const inputClasses = useInputStyles();
   const avatarClasses = useAvatarStyles();
 
   const handleSubmit = (e) => {
-    //https://medium.com/firebase-developers/the-secrets-of-firestore-fieldvalue-servertimestamp-revealed-29dd7a38a82b
     e.preventDefault();
     db.collection("posts")
       .add({
@@ -69,18 +69,34 @@ const InputMessage = () => {
   };
 
   useEffect(() => {
-    //https://firebase.google.com/docs/firestore/query-data/listen
     db.collection("posts")
       .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
+      .onSnapshot((shot) => {
+        const docs = [];
+        shot.forEach((doc) => {
+          docs.push({ ...doc.data(), id: doc.id });
+        });
+        setPosts(docs);
       });
   }, []);
+  useEffect(() => {
+    db.collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((shot) => {
+        const docs = [];
+        shot.forEach((doc) => {
+          docs.push({ ...doc.data(), id: doc.id });
+        });
+        const filtered = docs.filter(
+          (doc) =>
+            doc.description.toLowerCase().indexOf(keynavbar.toLowerCase()) >
+              -1 ||
+            doc.message.toLowerCase().indexOf(keynavbar.toLowerCase()) > -1 ||
+            doc.name.toLowerCase().indexOf(keynavbar.toLowerCase()) > -1
+        );
+        setPosts(filtered);
+      });
+  }, [keynavbar]);
 
   const onFileChange = async (e) => {
     const file = e.target.files[0];
@@ -167,14 +183,11 @@ const InputMessage = () => {
         open={open}
         handleClose={handleClose}
         users={userLikes}
-        title="Likes"
+        title={title}
       />
       <CarroselJobs />
       {posts.map(
-        ({
-          id,
-          data: { likes, name, message, userId, photo, postImage, timestamp },
-        }) => (
+        ({ id, likes, name, message, userId, photo, postImage, timestamp }) => (
           <div
             className="max-w-full shadow-xl my-3.5 "
             style={{ background: "white", borderRadius: "10px" }}
@@ -190,7 +203,8 @@ const InputMessage = () => {
               postImage={postImage}
               timestamp={timestamp}
               likes={likes}
-              setUserLikes={setUserLikes}
+              setUsers={setUserLikes}
+              setTitle={setTitle}
             />
           </div>
         )

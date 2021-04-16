@@ -1,29 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
-import Chip from '@material-ui/core/Chip';
+import React, { useEffect, useState } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import { db } from "../../../firebase/firebase";
-import { useDispatch } from "react-redux";
-import Button from "@material-ui/core/Button";
 import { setFilter } from "../../../store/filter";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import Button from "@material-ui/core/Button";
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
-    minWidth: "80%",
-    maxWidth: "80%",
+    width: "90%",
   },
   chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   chip: {
     margin: 2,
@@ -44,7 +38,6 @@ const MenuProps = {
   },
 };
 
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -55,76 +48,82 @@ function getStyles(name, personName, theme) {
 }
 
 export default function JobType() {
-
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
   const [personName, setPersonName] = useState([]);
   const [names, setNames] = useState([]);
-  const filter = useSelector(state => state.filter);
-
-
-
+  const filter = useSelector((state) => state.filter);
 
   const handleChange = (event) => {
     setPersonName(event.target.value);
   };
 
+  useEffect(() => {
+    dispatch(setFilter({ ...filter, position: personName }));
+  }, [personName]);
 
+  useEffect(() => {
+    db.collection("JobType")
+      .orderBy("jobType", "desc")
+      .onSnapshot((shot) => {
+        const docs = [];
+        shot.forEach((doc) => {
+          docs.push({ ...doc.data(), id: doc.id });
+        });
+        const filterJobsType = docs.map((doc) => doc.jobType);
+        setNames(filterJobsType);
+      });
+  }, []);
 
+/*   const clear = () => {
+    setPersonName([]);
+    window.location.reload();
+  }; */
 
-useEffect(() => {
-  dispatch(setFilter({...filter, position: personName}))
-}, [personName])
-
-
-
-/*   useEffect(()=>{
-    dispatch(setJobType(jobQuery))
-  },[jobQuery])
- */
-
-  useEffect(()=>{
-    db.collection('jobs').orderBy('timestamp', 'desc')
-    .onSnapshot(shot =>{
-      const docs=[];
-      shot.forEach((doc)=>{
-        docs.push({...doc.data(),id: doc.id})
-      })
-      const filterJobsType = docs.map(doc => doc.position)
-/*       console.log("filterJobsType",filterJobsType) */
-      setNames(filterJobsType)
-    })
-},[]);
-
-
+  const clear = () => {
+    setPersonName([]);
+  };
 
   return (
-    <div>
-      {/* {console.log("names",names)} */}
-      
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-mutiple-chip-label">Job Type</InputLabel>
-        <Select
-          labelId="demo-mutiple-chip-label"
-          id="demo-mutiple-chip"
-          multiple
-          value={personName}
-          onChange={handleChange}
-          className="select__multiple"
-          input={<Input id="select-multiple-chip" />}
-          MenuProps={MenuProps}
-        >
-          {names.map((name) => (
-            <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <>
+      {names[0] && (
+        <div>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-mutiple-chip-label">Job Type</InputLabel>
+            <Select
+              labelId="demo-mutiple-chip-label"
+              id="demo-mutiple-chip"
+              multiple
+              value={personName}
+              onChange={handleChange}
+              className="select__multiple"
+              input={<Input id="select-multiple-chip" />}
+              renderValue={(selected) => (
+                <div className={classes.chips}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} className={classes.chip} />
+                  ))}
+                </div>
+              )}
+              MenuProps={MenuProps}
+            >
+              {names[0].map((name) => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, personName, theme)}
+                >
+                  <p>{name}</p>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Button className="button__jobs" onClick={clear}>
+            Clear
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
-
-
-

@@ -47,7 +47,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function Location() {
+export default function PayRate() {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -64,15 +64,15 @@ export default function Location() {
   }, [personName]);
 
   useEffect(() => {
-    db.collection("Location")
-      .orderBy("location", "asc")
+    db.collection("PayRate")
+      .orderBy("payRate", "desc")
       .onSnapshot((shot) => {
         const docs = [];
         shot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
         });
-        const filterLocation = docs.map((doc) => doc.location);
-        setNames(filterLocation);
+        const filterPayRate = docs.map((doc) => doc.payRate);
+        setNames(filterPayRate);
       });
   }, []);
 
@@ -81,17 +81,17 @@ export default function Location() {
     window.location.reload();
   }; */
 
-
   const clear = () => {
     setPersonName([]);
   };
+
 
   return (
     <>
       {names[0] && (
         <div>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Location </InputLabel>
+            <InputLabel id="demo-mutiple-chip-label">Pay Rate</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"

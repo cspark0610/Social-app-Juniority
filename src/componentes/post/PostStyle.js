@@ -28,7 +28,7 @@ export default makeStyles({
   },
   buttons: {
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     marginBottom: "15px",
   },
   containerComment: {
@@ -40,7 +40,7 @@ export default makeStyles({
   containerCommentText: {
     textAlign: "start",
     backgroundColor: "#E3EFF1",
-    borderRadius: "10px",
+    borderRadius: "5px",
     marginLeft: "2%",
     fontSize: "85%",
     marginBottom: "3%",
