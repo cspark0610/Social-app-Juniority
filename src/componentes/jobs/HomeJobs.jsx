@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
 import Navbar from "../navbar/Navbar";
 import "./style.css";
@@ -11,8 +11,10 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const HomeJobs = () => {
+  const [jobsOffers, setJobsOffers] = useState()
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
+ 
   return (
     <>
       {!currentUser ? (
@@ -30,12 +32,12 @@ const HomeJobs = () => {
 
             <Grid container display="flex" align="center" spacing={3}>
               <Grid item md={3}>
-                <Filter />
+                <Filter jobsOffers={jobsOffers} setJobsOffers={setJobsOffers}/>
               </Grid>
 
               <Grid item md={6}>
                 <FormJobs />
-                <OfferJobs />
+                <OfferJobs jobsOffers={jobsOffers} setJobsOffers={setJobsOffers}/>
               </Grid>
 
               <Grid item md={3} className="padding">
