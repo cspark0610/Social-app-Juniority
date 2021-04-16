@@ -50,7 +50,7 @@ export const Publication = ({handleOpen, setUsers, setTitle, selectedUser }) => 
           );
         })
       ) : (
-        <p>{`${selectedUser.fullName} no a relizado ningun post`}</p>
+        <p className="p_no_post">{`${selectedUser.fullName} no a relizado ningun post`}</p>
       )}
     </>
   );

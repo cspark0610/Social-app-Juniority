@@ -59,7 +59,8 @@ const Register = () => {
             email,
             follow: [],
             followers: [],
-            experience:[],
+            experience: [],
+            education: [],
             location: "No info",
             position: "No info",
             avatar:

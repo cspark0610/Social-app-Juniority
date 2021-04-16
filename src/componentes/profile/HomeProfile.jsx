@@ -12,6 +12,7 @@ import { db } from "../../firebase/firebase";
 import { useSelector } from "react-redux";
 import TransitionsModal from "../home/TransitionModal";
 import { useHistory } from "react-router-dom";
+import { PersonalInfo } from "./personalInfo/personalInfo";
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
@@ -81,6 +82,7 @@ const HomeProfile = (props) => {
                   />
                   <Grid item md={6}>
                     <PostProfile user={selectedUser} />
+                    <PersonalInfo user={selectedUser} />
                     <Publication
                       handleOpen={handleOpen}
                       setTitle={setTitle}
@@ -90,7 +92,7 @@ const HomeProfile = (props) => {
                   </Grid>
                   <Grid item md={3}>
                     <Widget />
-                   </Grid>
+                  </Grid>
                 </Grid>
               </div>
             </>

@@ -14,7 +14,6 @@ import HomeJobs from "./componentes/jobs/HomeJobs";
 import { Configuration } from "./componentes/profile/configuration/Configuration";
 import Connections from "./componentes/connections/Connections";
 import Courses from "./componentes/courses/Courses";
-import { Portfolio } from "./componentes/profile/portfolio/Portfolio";
 import PortafolioGeneral from "./componentes/portafolioGeneral/PortafolioGeneral";
 
 function App() {
@@ -42,8 +41,7 @@ function App() {
         <Route path='/register' component={Register} />
         <Route path='/password-recovery' component={PasswordRecovery} />
         <Route path='/jobs' component={HomeJobs} />
-        <Route path='/connections' component={Connections} />
-
+        <Route path="/connections" render={() => <Connections user={currentUser}/>} />
         <Route path='/courses' component={Courses} />
         <Route path='/portfolio' component={PortafolioGeneral} />
 

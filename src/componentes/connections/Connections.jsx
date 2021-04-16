@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "./connectionStyles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,14 +12,27 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
+import { db } from "../../firebase/firebase";
+import { removeFollower, unFollow } from "../utils/followSystem";
 
 // ver linea 59 del array para mapeaar
 
-const Connections = () => {
+const Connections = ({ user }) => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([1]);
+  const [currentUser, setCurrentUser] = useState();
 
-  const handleToggle = (value) => () => {
+  useEffect(() => {
+    db.collection("user")
+      .where("id", "==", user.id)
+      .onSnapshot((snapshot) => {
+        snapshot.forEach((doc) => {
+          setCurrentUser(doc.data());
+        });
+      });
+  }, []);
+
+  const handleToggle = (value) => async () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
 
@@ -31,93 +44,150 @@ const Connections = () => {
 
     setChecked(newChecked);
   };
+
+  const clickHandler = (e, user, order) => {
+    e.preventDefault();
+
+    if (order === "UNFOLLOW") {
+      db.collection("user")
+        .doc(user.id)
+        .get()
+        .then((doc) => {
+          unFollow(doc.data(), currentUser);
+        });
+    } else {
+      db.collection("user")
+        .doc(user.id)
+        .get()
+        .then((doc) => {
+          console.log(doc);
+          removeFollower(doc.data(), currentUser);
+        });
+    }
+  };
+
   return (
     <>
-      <Navbar />
-      <div className={classes.main}>
-        <div className={classes.containerCard}>
-          <img src='https://uxwing.com/wp-content/themes/uxwing/download/12-people-gesture/user-profile.png' width='50px' alt='mi avatar' className={classes.imgCard} />
+      {currentUser && (
+        <>
+          <Navbar />
+          <div className={classes.main}>
+            <div className={classes.containerCard}>
+              <img
+                src={currentUser.avatar}
+                width="50px"
+                alt="mi avatar"
+                className={classes.imgCard}
+              />
 
-          <div className={classes.nameUser}>
-            <h1> Pätricio Fernandez </h1> <br />
-            <h7> pato.15125 </h7>
-          </div>
-          <div className={classes.nameUser}>
-            <h1>
-              Followers <b>646</b>
-            </h1> 
-            <br />
-            <h7>
-          
-              Following <b>353</b>
-            </h7>
-          </div>
-          <Link to='/profile/configuration'>
-            <IconButton aria-label='delete' className={classes.margin}>
-              <EditIcon className={classes.iconoEdit} fontSize='large' />
-            </IconButton>
-          </Link>
-        </div>
-        <div className={classes.container}>
-          <div className={classes.subContainer}>
-            <div className={classes.card}>
-              <div className={classes.titleCard}>
-                <div className={classes.titleMain}>
-                  <b>Followers</b>
+              <div className={classes.nameUser}>
+                <div>
+                  <h1 className={classes.nameSpace}> {currentUser.fullName} </h1> <br />
+                  <h7 className={classes.correoSpace}> {currentUser.email} </h7>
                 </div>
-                <List dense className={classes.root}>
-                  {[0, 1, 2, 3, 4, 5, 6, 7].map((value) => {
-                    const labelId = `checkbox-list-secondary-label-${value}`;
-                    return (
-                      <ListItem key={value} button>
-                        <ListItemAvatar>
-                          <Avatar src={`/static/images/avatar/${value + 1}.jpg`} />
-                        </ListItemAvatar>
-                        <div className={classes.nameProfile}>Luis Fernandez</div>
-                        <ListItemText className={classes.nameText} id={labelId} />
-
-                        <ListItemSecondaryAction>
-                          <Button variant='contained' className={classes.delButton} startIcon={<DeleteIcon />} size='small'>
-                            Remove
-                          </Button>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    );
-                  })}
-                </List>
               </div>
-            </div>
-            <div className={classes.card}>
-              <div className={classes.titleCard}>
-                <div className={classes.titleMain}>
+              <div className={classes.nameUser}>
+                <h1>
+                  Followers <b>{currentUser.followers.length}</b>
+                </h1>{" "}
+                <br />
+                <h7>
                   {" "}
-                  <b>Following</b>
-                </div>
-                <List dense className={classes.root}>
-                  {[0, 1, 2, 3, 4, 5, 6, 7].map((value) => {
-                    const labelId = `checkbox-list-secondary-label-${value}`;
-                    return (
-                      <ListItem key={value} button>
-                        <ListItemAvatar>
-                          <Avatar src={`/static/images/avatar/${value + 1}.jpg`} />
-                        </ListItemAvatar>
-                        <div className={classes.nameProfile}>aaaaaaaaaaaaaaa</div>
-                        <ListItemText className={classes.nameText} id={labelId} />
+                  Following <b>{currentUser.follow.length}</b>
+                </h7>
+              </div>
+              <Link to="/profile/configuration">
+                <IconButton aria-label="delete" className={classes.margin}>
+                  <EditIcon className={classes.iconoEdit} fontSize="large" />
+                </IconButton>
+              </Link>
+            </div>
+            <div className={classes.container}>
+              <div className={classes.subContainer}>
+                <div className={classes.card}>
+                  <div className={classes.titleCard}>
+                    <div className={classes.titleMain}>
+                      <b>Followers</b>
+                    </div>
+                    <List dense className={classes.root}>
+                      {currentUser.followers.map((value) => {
+                        const labelId = `checkbox-list-secondary-label-${value}`;
+                        return (
+                          <ListItem key={value} button>
+                            <ListItemAvatar>
+                              <Avatar src={value.avatar} />
+                            </ListItemAvatar>
+                            <div className={classes.nameProfile}>
+                              {value.fullName}
+                            </div>
+                            <ListItemText
+                              className={classes.nameText}
+                              id={labelId}
+                            />
 
-                        <ListItemSecondaryAction>
-                          <Button variant='contained' className={classes.delButton} size='small'>
-                            Following
-                          </Button>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                            <ListItemSecondaryAction>
+                              <Button
+                                onClick={(e) =>
+                                  clickHandler(e, value, "REMOVE_FOLLOWER")
+                                }
+                                variant="contained"
+                                className={classes.delButton}
+                                startIcon={<DeleteIcon />}
+                                size="small"
+                              >
+                                Remove
+                              </Button>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        );
+                      })}
+                    </List>
+                  </div>
+                </div>
+                <div className={classes.card}>
+                  <div className={classes.titleCard}>
+                    <div className={classes.titleMain}>
+                      {" "}
+                      <b>Following</b>
+                    </div>
+                    <List dense className={classes.root}>
+                      {currentUser.follow.map((value) => {
+                        const labelId = `checkbox-list-secondary-label-${value}`;
+                        return (
+                          <ListItem key={value} button>
+                            <ListItemAvatar>
+                              <Avatar src={value.avatar} />
+                            </ListItemAvatar>
+                            <div className={classes.nameProfile}>
+                              {value.fullName}
+                            </div>
+                            <ListItemText
+                              className={classes.nameText}
+                              id={labelId}
+                            />
+                            <ListItemSecondaryAction>
+                              <Button
+                                onClick={(e) =>
+                                  clickHandler(e, value, "UNFOLLOW")
+                                }
+                                variant="contained"
+                                className={classes.delButton}
+                                size="small"
+                              >
+                                UNFOLLOW
+                              </Button>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        );
+                      })}
+                    </List>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };
