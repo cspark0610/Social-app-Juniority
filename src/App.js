@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Register from "./componentes/register/Register";
 import Home from "./componentes/home/Home";
 import { useSelector, useDispatch } from "react-redux";
-//import { login, logout } from "./store/userSlice.js";
+
 //import { auth } from "./firebase/firebase.js";
 import PasswordRecovery from "./componentes/passwordRecovery/PaswordRecovery";
 import { setCurrentUser } from "./store/currentUser";
@@ -14,6 +14,7 @@ import HomeJobs from "./componentes/jobs/HomeJobs";
 import { Configuration } from "./componentes/profile/configuration/Configuration";
 import Connections from "./componentes/connections/Connections";
 import Courses from "./componentes/courses/Courses";
+import HomeChat from "./componentes/chat/HomeChat";
 
 function App() {
   const currentUser = useSelector((state) => state.currentUser);
@@ -41,6 +42,8 @@ function App() {
         <Route path='/password-recovery' component={PasswordRecovery} />
         <Route path='/jobs' component={HomeJobs} />
         <Route path='/connections' component={Connections} />
+        <Route path='/chat/:roomId' render={({ match }) => <HomeChat match={match} />}/>
+        {/* <Route path='/chat' component={HomeChat}/> */}
 
         <Route path='/courses' component={Courses} />
       </Switch>

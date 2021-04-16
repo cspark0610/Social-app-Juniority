@@ -70,9 +70,10 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
     setUsers(follows);
     handleOpen();
   };
-  const fullNameArr = (currentUser.fullName.trim()).split(" ");
-  const fullNameUpperArr = fullNameArr.map(item=> item.charAt(0).toUpperCase()+item.slice(1));
-  const fullNameStr = fullNameUpperArr.join(" ");
+
+  // const fullNameArr = (currentUser.fullName.trim()).split(" ");
+  // const fullNameUpperArr = fullNameArr.map(item=> item.charAt(0).toUpperCase()+item.slice(1));
+  // const fullNameStr = fullNameUpperArr.join(" ");
 
   return (
     <div className='back'>

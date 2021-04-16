@@ -12,8 +12,8 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
 export const PostProfile = ({ user }) => {
-  const currentUser = useSelector((state) => state.currentUser);
-
+  const currentUser = useSelector((state) => state.currentUser);//logueado
+  
   return (
     <>
     {user && (
@@ -41,9 +41,8 @@ export const PostProfile = ({ user }) => {
           </Button>
           </Link>
         ) : (
-        <Button className="button__profile__follow">
-        <MailOutlineIcon className="message__post"/> Message
-        </Button>
+        <Link to={`/chat/${user.id}`}><Button className="button__profile__follow"><MailOutlineIcon className="message__post"/> Message
+        </Button></Link>
         )}
         </Grid>
       </Grid>

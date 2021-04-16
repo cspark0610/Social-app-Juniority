@@ -5,6 +5,7 @@ import { selectedUserReducer } from "./selectedUser";
 import { selectedUserPostsReducer } from "./selectedUserPosts";
 import { keywordReducer } from "./keyword";
 import { keynavbarReducer } from "./keywordNavbar";
+import { targetEmailReducer } from "./targetEmail";
 
 export default configureStore({
     reducer:{
@@ -13,6 +14,7 @@ export default configureStore({
         selectedUserPosts: selectedUserPostsReducer,
         keyword: keywordReducer,
         keynavbar:keynavbarReducer,
-        locationUrl: locationUrlReducer
+        locationUrl: locationUrlReducer,
+        targetEmail: targetEmailReducer,
     }
 });
