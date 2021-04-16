@@ -56,11 +56,13 @@ const Connections = ({ user }) => {
           unFollow(doc.data(), currentUser);
         });
     } else {
-      db.collection('user').doc(user.id).get()
-      .then(doc => {
-        console.log(doc)
-        removeFollower(doc.data(), currentUser);
-      });
+      db.collection("user")
+        .doc(user.id)
+        .get()
+        .then((doc) => {
+          console.log(doc);
+          removeFollower(doc.data(), currentUser);
+        });
     }
   };
 
@@ -79,8 +81,10 @@ const Connections = ({ user }) => {
               />
 
               <div className={classes.nameUser}>
-                <h1> {currentUser.fullName} </h1> <br />
-                <h7> {currentUser.email} </h7>
+                <div>
+                  <h1 className={classes.nameSpace}> {currentUser.fullName} </h1> <br />
+                  <h7 className={classes.correoSpace}> {currentUser.email} </h7>
+                </div>
               </div>
               <div className={classes.nameUser}>
                 <h1>
@@ -123,7 +127,9 @@ const Connections = ({ user }) => {
 
                             <ListItemSecondaryAction>
                               <Button
-                                onClick={(e) => clickHandler(e, value, 'REMOVE_FOLLOWER')}
+                                onClick={(e) =>
+                                  clickHandler(e, value, "REMOVE_FOLLOWER")
+                                }
                                 variant="contained"
                                 className={classes.delButton}
                                 startIcon={<DeleteIcon />}
@@ -161,7 +167,9 @@ const Connections = ({ user }) => {
                             />
                             <ListItemSecondaryAction>
                               <Button
-                                onClick={(e) => clickHandler(e, value, 'UNFOLLOW')}
+                                onClick={(e) =>
+                                  clickHandler(e, value, "UNFOLLOW")
+                                }
                                 variant="contained"
                                 className={classes.delButton}
                                 size="small"
@@ -174,7 +182,7 @@ const Connections = ({ user }) => {
                       })}
                     </List>
                   </div>
-                </div>   
+                </div>
               </div>
             </div>
           </div>

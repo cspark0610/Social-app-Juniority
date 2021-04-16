@@ -1,31 +1,23 @@
-import React from 'react';
-import { Grid } from '@material-ui/core';
+import React from "react";
+import { Grid } from "@material-ui/core";
 import "./styles.css";
 
-export const Portfolio = () => {
-    return (
-        <div className="portfolio">
-            <h1 className="portfolio_title">Portfolio</h1>
-            <hr className="line__profile__widget"/>
-        <Grid container >
-        <Grid item md={6} className="text__aling__left text__aling">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"alt=''/>
-        </Grid>
-        <Grid item md={6} className="text__aling__right">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"alt=''/>
-        </Grid>
-      </Grid>
-      <div>
-      <Grid container >
-        <Grid item md={6} className="text__aling__left text__aling">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg"alt=''/>
-        </Grid>
-        <Grid item md={6} className="text__aling__right">
-        <img className="porfolio__img" src="https://bunkerdb.com/blog/wp-content/uploads/2020/07/Low-code-No-code.jpg" alt=''/>
-        </Grid>
-      </Grid>
+import Proyect from "./Proyect";
 
-      </div>
-        </div>
-    )
-}
+
+export const Portfolio = () => {
+
+  return (
+    <div className="container1">
+      <div className="portfolio1">
+        <h1 className="portfolio_title1"><b>Portfolio</b></h1>
+        <hr className="line__profile__widget1" />
+                <Proyect />
+                <Proyect />
+
+                <Proyect />
+
+       </div>
+    </div>
+  );
+};
