@@ -21,7 +21,7 @@ const WidgetNotifications = () => {
       setNotificationMessages(filtered);
     })
   },[]);
-  console.log('NOTIFICATION MESSAGES', notificationMessages);
+  //console.log('NOTIFICATION MESSAGES', notificationMessages);
 
   return (
     <>
