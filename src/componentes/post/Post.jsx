@@ -12,23 +12,43 @@ import FavoriteOutlinedIcon from "@material-ui/icons/FavoriteOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
 import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
+import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+
 import ReactPlayer from "react-player";
+import CreateIcon from "@material-ui/icons/Create";
+//import { useAvatarStyles, useInputStyles } from "./InputMessageStyle.js";
 
 const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
   const classes = useStyles();
+  
   const inputClasses = inputStyles();
   const date = new Date(timestamp?.toDate()).toUTCString();
   const currentUser = useSelector((state) => state.currentUser);
   const [comment, setComment] = useState(false);
   const [data, setData] = useState([]);
   const [input, setInput] = useState("");
+  const [inputCode, setInputCode] = useState("");
   const [inUse, setInUse] = useState(FavoriteBorderOutlinedIcon);
   const [lastKey, setLastKey] = useState("En un comienzo");
   const [viewMore, setViewMore] = useState(true);
+  const [show, setShow] = useState(false);
+
+  const createIconStyle2 = {
+    marginLeft: "10px",
+    position: "relative",
+    top: "1.5%",
+  };
+  const inputStyle = {
+    border: "none",
+    flex: "1",
+    marginLeft: "10px",
+    outlineWidth: "0",
+    fontWeight: "600",
+  };
 
   const handleComment = () => {
     db.collection("comments")
@@ -48,14 +68,20 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
       });
     setComment(true);
   };
+  const handleCommentCode =() => {
+    setShow(!show);
+    handleComment();
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     setInput("");
+    setInputCode("");
     db.collection("comments")
       .add({
         postId: id,
         userId: currentUser.id,
         text: input,
+        textCode: inputCode,
         userName: currentUser.fullName,
         photo: currentUser.avatar,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -188,22 +214,20 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
       ) : null}
       <div className={classes.buttons}>
         <span onClick={(e) => handleLikes(e)}>
-          <InputOption
-            Icon={inUse}
-            color='#E60026'
+          <InputOption Icon={inUse} color='#E60026'
             title={
               <div>
-                {" "}
-                Likes{" "}
-                <span onClick={openLikes} className={`${classes.likes} zse`}>
-                  {likes || 0}
-                </span>
+                Likes
+                <span onClick={openLikes} className={`${classes.likes} zse`}>{likes || 0}</span>
               </div>
             }
           />
         </span>
         <span onClick={handleComment}>
           <InputOption Icon={ChatBubbleOutlineOutlinedIcon} title='Comment' color='#ADD8E6' />
+        </span>
+        <span onClick={handleCommentCode}>
+          <InputOption Icon={SaveOutlinedIcon} title='Respond with code' color='#ADD8E6' />
         </span>
         <InputOption Icon={ShareOutlinedIcon} title='Share' />
       </div>
@@ -221,6 +245,21 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
               </form>
             </div>
           </Card>
+
+        {/*card para hacer un comment de codigo*/}
+        <Card className={show ? classes.container : classes.noShow}>
+          <div className={classes.container_input}>
+         
+            <form onSubmit={handleSubmit} style={{ display: "flex", width: "90%" }}>
+              <CreateIcon style={createIconStyle2} />
+              <textarea rows='4' cols='50' placeholder='Write your Code...' style={inputStyle} value={inputCode} type='text' onChange={(e) => setInputCode(e.target.value)} />
+              <button disabled={inputCode ? false : true} type='submit' onClick={handleSubmit}>
+                <SendOutlinedIcon style={{ color: "#ADD8E6",position:'relative',bottom:'15%'}} />
+              </button>
+            </form>
+          </div>
+        </Card>
+
           {data.length > 0 ? (
             <>
               {data.map((comment) => (
@@ -232,6 +271,14 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
                     </a>
                     <br />
                     {comment.data.text}
+                    <br/>
+                    {comment.data.textCode? (
+                      <div className={classes.message}>
+                      <SyntaxHighlighter language='javascript' style={docco} showLineNumbers={true} wrapLines={true}>
+                        {comment.data.textCode}
+                      </SyntaxHighlighter>
+                    </div>
+                    ):null}
                   </div>
                 </div>
               ))}

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { db } from "../../firebase/firebase";
-import firebase from "firebase";
-import { useSelector } from "react-redux";
+
 import SingleCourse from "./SingleCourse";
 
 const OfferCourses = ({ setCoursesOffers, coursesOffers, setAllCourses }) => {

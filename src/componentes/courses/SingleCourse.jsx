@@ -1,22 +1,9 @@
 import React, { useEffect, useState } from "react";
 import firebase from "firebase";
-import {
-  Breadcrumbs,
-  Grid,
-  Chip,
-  Card,
-  Avatar,
-  Typography,
-} from "@material-ui/core";
+import { Breadcrumbs, Grid, Chip, Card, Avatar, Typography } from "@material-ui/core";
 import { emphasize, withStyles } from "@material-ui/core/styles";
 
-import {
-  FavoriteBorder,
-  ChatBubbleOutlineOutlined,
-  ShareOutlined,
-  Favorite,
-  SendOutlined,
-} from "@material-ui/icons";
+import { FavoriteBorder, ChatBubbleOutlineOutlined, ShareOutlined, Favorite, SendOutlined } from "@material-ui/icons";
 import logo from "../assets/juniority.svg";
 import { InputIcon } from "../profile/post/InputIcon";
 import { useSelector } from "react-redux";
@@ -62,9 +49,7 @@ const OfferJobsPost = ({ courseOffer }) => {
       if (inUse === FavoriteBorder) {
         const batch = db.batch();
         const courseReference = db.collection("courses").doc(courseOffer.id);
-        const likeReference = db
-          .collection("coursesLikes")
-          .doc(`${courseOffer.id}_${currentUser.id}`);
+        const likeReference = db.collection("coursesLikes").doc(`${courseOffer.id}_${currentUser.id}`);
 
         batch.update(courseReference, {
           likes: firebase.firestore.FieldValue.increment(1),
@@ -80,9 +65,7 @@ const OfferJobsPost = ({ courseOffer }) => {
       } else {
         const otherBatch = db.batch();
         const courseReference = db.collection("courses").doc(courseOffer.id);
-        const likeReference = db
-          .collection("coursesLikes")
-          .doc(`${courseOffer.id}_${currentUser.id}`);
+        const likeReference = db.collection("coursesLikes").doc(`${courseOffer.id}_${currentUser.id}`);
 
         otherBatch.update(courseReference, {
           likes: firebase.firestore.FieldValue.increment(-1),
@@ -180,51 +163,36 @@ const OfferJobsPost = ({ courseOffer }) => {
   return (
     <>
       {courseOffer && (
-        <div
-          className="job__container"
-          style={{ backgroundColor: "white" }}
-          key={courseOffer.id}
-        >
+        <div className='job__container' style={{ backgroundColor: "white" }} key={courseOffer.id}>
           <Grid container>
             <Grid item md={2}>
-              <a href={`${courseOffer.link}`} target="_blank" rel="noreferrer">
-                <img
-                  src={logo}
-                  className="logo"
-                  alt="Logo Juniority"
-                  width="60%"
-                  height="60%"
-                />
+              <a href={`${courseOffer.link}`} target='_blank' rel='noreferrer'>
+                <img src={logo} className='logo' alt='Logo Juniority' width='60%' height='60%' />
               </a>
             </Grid>
-            <Grid item md={6} className="text__job__left text__job">
-              <a href={`${courseOffer.link}`} target="_blank" rel="noreferrer">
+            <Grid item md={6} className='text__job__left text__job'>
+              <a href={`${courseOffer.link}`} target='_blank' rel='noreferrer'>
                 <h2>{courseOffer.name}</h2>
               </a>
               <p>Juniority</p>
             </Grid>
           </Grid>
-          <hr className="line__profile__widget" />
-          <div className="salary_availability">
+          <hr className='line__profile__widget' />
+          <div className='salary_availability'>
             <p> {courseOffer.hours} </p>
           </div>
-          <div className="description">
+          <div className='description'>
             <p>{courseOffer.description}</p>
           </div>
-          <div className="skills">
-            <Breadcrumbs aria-label="breadcrumb">
-              {courseOffer.technologies.split(" ") &&
-                courseOffer.technologies
-                  .split(" ")
-                  .map((skill) => <StyledBreadcrumb label={skill} />)}
-            </Breadcrumbs>
+          <div className='skills'>
+            <Breadcrumbs aria-label='breadcrumb'>{courseOffer.technologies.split(" ") && courseOffer.technologies.split(" ").map((skill) => <StyledBreadcrumb label={skill} />)}</Breadcrumbs>
           </div>
-          <hr className="line__profile__widget" />
-          <div className="job__buttom" style={{ display: "flex" }}>
+          <hr className='line__profile__widget' />
+          <div className='job__buttom' style={{ display: "flex" }}>
             <span onClick={handleLike}>
               <InputIcon
                 Icon={inUse}
-                color="red"
+                color='red'
                 title={
                   <div onClick={openLikes} className={`${classes.likes} zse`}>
                     {courseOffer.likes || 0}
@@ -233,27 +201,21 @@ const OfferJobsPost = ({ courseOffer }) => {
               />
             </span>
             <span onClick={handleOpenComment}>
-              <InputIcon Icon={ChatBubbleOutlineOutlined} color="black" />
+              <InputIcon Icon={ChatBubbleOutlineOutlined} color='black' />
             </span>
-            <InputIcon Icon={ShareOutlined} title="2" color="black" />
+            <InputIcon Icon={ShareOutlined} title='2' color='black' />
           </div>
-          <hr className="line__profile__widget" />
+          <hr className='line__profile__widget' />
 
           {openComment && (
-            <div
-              className="max-w-full shadow-xl my-3.5 "
-              style={{ background: "white", borderRadius: "10px" }}
-            >
+            <div className='max-w-full shadow-xl my-3.5 ' style={{ background: "white", borderRadius: "10px" }}>
               <Card className={inputClasses.container}>
                 <div className={inputClasses.container_input}>
                   <Avatar src={currentUser.avatar} />
-                  <form
-                    style={{ display: "flex", width: "100%" }}
-                    onSubmit={handleSubmitComment}
-                  >
+                  <form style={{ display: "flex", width: "100%" }} onSubmit={handleSubmitComment}>
                     <input
-                      placeholder="Write a comment"
-                      type="text"
+                      placeholder='Write a comment'
+                      type='text'
                       value={commentInput}
                       onChange={(e) => setCommentInput(e.target.value)}
                       style={{
@@ -265,7 +227,7 @@ const OfferJobsPost = ({ courseOffer }) => {
                         fontSize: "74%",
                       }}
                     />
-                    <button type="submit">
+                    <button type='submit'>
                       <SendOutlined style={{ color: "#ADD8E6" }} />
                     </button>
                   </form>
@@ -277,10 +239,7 @@ const OfferJobsPost = ({ courseOffer }) => {
                     <div className={classes.containerComment} key={comment.id}>
                       <Avatar src={comment.data.photo} />
                       <div className={classes.containerCommentText}>
-                        <a
-                          href={`/profile/${comment.data.userId}`}
-                          className={classes.titleComment}
-                        >
+                        <a href={`/profile/${comment.data.userId}`} className={classes.titleComment}>
                           {comment.data.userName}
                         </a>
                         <br />
@@ -289,12 +248,7 @@ const OfferJobsPost = ({ courseOffer }) => {
                     </div>
                   ))}
                   {viewMore && (
-                    <Typography
-                      color="primary"
-                      variant="caption"
-                      className={classes.likes}
-                      onClick={seeMore}
-                    >
+                    <Typography color='primary' variant='caption' className={classes.likes} onClick={seeMore}>
                       ver mas ...
                     </Typography>
                   )}
@@ -304,12 +258,7 @@ const OfferJobsPost = ({ courseOffer }) => {
           )}
         </div>
       )}
-      <TransitionsModal
-        open={open}
-        handleClose={handleClose}
-        users={users}
-        title="likes"
-      />
+      <TransitionsModal open={open} handleClose={handleClose} users={users} title='likes' />
     </>
   );
 };
