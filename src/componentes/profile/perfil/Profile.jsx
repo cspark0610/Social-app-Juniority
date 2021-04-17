@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { addFollow, unFollow } from "../../utils/followSystem";
 import { db } from "../../../firebase/firebase";
 
+
 export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
   const currentUser = useSelector((state) => state.currentUser);
   const [localUser, setLocalUser] = useState();

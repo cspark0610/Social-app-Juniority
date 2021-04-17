@@ -17,7 +17,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 import ReactPlayer from "react-player";
 import CreateIcon from "@material-ui/icons/Create";
 import { useAvatarStyles, useInputStyles } from "./InputMessageStyle.js";

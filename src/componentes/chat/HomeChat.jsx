@@ -6,9 +6,10 @@ import "./homeChat.css"
 
 const HomeChat = (props) => {
     const userId = props.match.params.roomId;
-    console.log(userId);
+    //console.log(userId);
 
     const [selectedUser, setSelectedUser] = useState();
+    //seteo al selectedUser como el usuario con quien yo quiero chatear
 
     useEffect(() => {
         db.collection("user")
@@ -23,7 +24,7 @@ const HomeChat = (props) => {
         <div className='home'>
             <SidebarChat selectedUser={selectedUser}/>
             <div className='chatContainer'>
-                <ChatScreen selectedUser={selectedUser}/>
+            <ChatScreen selectedUser={selectedUser}/>
             </div>
         </div>
     )

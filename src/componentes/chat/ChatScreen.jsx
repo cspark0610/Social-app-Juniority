@@ -8,55 +8,59 @@ import { db } from '../../firebase/firebase'
 import "./chatStyle.css";
 import { useSelector } from "react-redux";
 import firebase from "firebase";
-import Message from './Message';
 
-import moment from 'moment';
+//import {useParams} from 'react-router-dom'
 
-function ChatScreen({selectedUser}) {
-    
+
+function ChatScreen( {selectedUser} ) {
+    //const {roomId} = useParams();
     const currentUser = useSelector((state) => state.currentUser);//usuario logueado
     const targetEmail = useSelector((state) => state.targetEmail);
     const [input, setInput] =useState("");
     const [messages, setMessages] = useState([])
     
-    console.log('SELECTEDUSER',selectedUser.email);
+    // console.log('roomId',roomId); // id del selectedUSer es el roomId
+     console.log('currentUSer',currentUser); // id del selectedUSer es el roomId
+     console.log('selectedUser',selectedUser); // id del selectedUSer es el roomId
+
+    //console.log('targetEmaikl', targetEmail);
+    let roomId = `${currentUser.id}${selectedUser.id}`
 
     const sendMessage = (e) => {
         e.preventDefault();
-        db.collection('user').doc(currentUser.id).set({
-            lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
-        },{merge:true})
-        db.collection('chatsMessages')
+        
+        db.collection('rooms').doc(roomId).collection('messages')
         .add({
             content:input,
+            name:currentUser.fullName,
             fromUser: currentUser.email,
             toUser: targetEmail,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
         setInput("");
     }
-    const showMessages = () => {
-       // const messages = db.collection('chatsMessages').where('toUser','==', selectedUser.email)
-        console.log('MESSSAGES',messages);
 
-        return (
-            <>
-            <Message/>
-            <Message/>
-            <Message/>
-            <Message/>
-            </>
-        )
+  useEffect(() => {
+    if (currentUser.id && selectedUser.id) {
+
+      db.collection("rooms")
+        .doc(roomId)
+        .collection("messages")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) =>
+          setMessages(snapshot.docs.map((doc) => doc.data()))
+        );
     }
-
-
+  }, [roomId]);
+   
+  //console.log('MESSAGES', messages);
     return (
         <div className='container'>
             <div className='header'>
-                <Avatar className='avatar' src={`https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg`} />
+                <Avatar className='avatar' src={currentUser.avatar} />
                <div className='headerInfo'>
-                    <h3>{`Chat with ${targetEmail.split('@')[0]}`}</h3>
-                    <p>last seen</p>
+                    <h3>{`Chat  ${targetEmail.split('@')[0]}`}</h3>
+                    <p>last seen {new Date(messages[messages.length-1]?.timestamp?.toDate()).toUTCString()}</p>
                </div>
                 <div className='headerIcons'>
                     <IconButton> <SearchOutlined /> </IconButton>
@@ -65,7 +69,17 @@ function ChatScreen({selectedUser}) {
                 </div>
             </div>
             <div className='messageContainer'>
-                {showMessages()}
+                {messages.map((message) => (
+                <p className={`chat__message ${message.name === currentUser.fullName && "chat__reciever"}`}>
+                    <span className="chat__name">
+                        {message.name}
+                    </span>
+                        {message.content}
+                    <span className="chat__timestamp">
+                        {new Date(message.timestamp?.toDate()).toUTCString()}
+                    </span>
+                </p>
+                ))}    
             </div>
             <form onSubmit={sendMessage}>
             <div className='inputContainer'>

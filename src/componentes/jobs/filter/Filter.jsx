@@ -65,7 +65,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className='back'>
         <h3 className='h3__skill'>Position</h3>
-        <Position />
+        <Position setJobsOffers={setJobsOffers}/>
         <Button className='button__jobs' onClick={handleClickPosition}>
           Search
         </Button>
@@ -73,7 +73,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className='back'>
         <h3 className='h3__skill'>Skills</h3>
-        <FilterSkills />
+        <FilterSkills setJobsOffers={setJobsOffers}/>
         <Button className='button__jobs' onClick={handleClickSkills}>
           Search
         </Button>
@@ -81,7 +81,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className='back'>
         <h3 className='h3__skill'>Availability</h3>
-        <Availability />
+        <Availability setJobsOffers={setJobsOffers}/>
         <Button className='button__jobs' onClick={handleClickAvailability}>
           Search
         </Button>
@@ -89,7 +89,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className='back'>
         <h3 className='h3__skill'>Job Type</h3>
-        <JobType className='select__multiple' />
+        <JobType className='select__multiple' setJobsOffers={setJobsOffers}/>
         <Button className='button__jobs' onClick={handleClickJobType}>
           Search
         </Button>
@@ -97,7 +97,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className='back'>
         <h3 className='h3__skill'>Pay Rate / Hr ($)</h3>
-        <PayRate />
+        <PayRate setJobsOffers={setJobsOffers}/>
         <Button className='button__jobs' onClick={handleClickPayRate}>
           Search
         </Button>
@@ -105,7 +105,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className='back'>
         <h3 className='h3__skill'>Location</h3>
-        <Location className='select__multiple' />
+        <Location className='select__multiple' setJobsOffers={setJobsOffers}/>
         <Button className='button__jobs' onClick={handleClickLocation}>
           Search
         </Button>
