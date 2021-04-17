@@ -13,9 +13,7 @@ import { useParams } from 'react-router-dom'
 
 function ChatScreen( {selectedUser} ) {
     const {roomId} = useParams();
-    
     const currentUser = useSelector((state) => state.currentUser);//usuario logueado
-    const targetEmail = useSelector((state) => state.targetEmail);
     const [input, setInput] =useState("");
     const [messages, setMessages] = useState([])
   
@@ -62,6 +60,7 @@ function ChatScreen( {selectedUser} ) {
         }
     }, [roomId]);
     
+    //{targetEmail.split('@')[0]}
     //console.log('MESSAGES', messages);
     //console.log('MESSAGES length', messages.length);
     return (
@@ -69,7 +68,7 @@ function ChatScreen( {selectedUser} ) {
             <div className='header'>
                 <Avatar className='avatar' src={currentUser.avatar} />
                <div className='headerInfo'>
-                    <h3>{`Chat with ${targetEmail.split('@')[0]}`}</h3>
+                    <h3 className='uppercase'>{`ChatRoom of ${currentUser.fullName}`}</h3>
                     <p>last seen {new Date(messages[messages.length-1]?.timestamp?.toDate()).toUTCString()}</p>
                </div>
                 <div className='headerIcons'>
@@ -82,7 +81,7 @@ function ChatScreen( {selectedUser} ) {
                 {messages.map((message) => (
                 <p className={`chat__message ${message.senderName === currentUser.fullName && "chat__reciever"}`}>
                     <span className="chat__name">
-                        {message.name}
+                        {message.senderName}
                     </span>
                         {message.content}
                     <span className="chat__timestamp">

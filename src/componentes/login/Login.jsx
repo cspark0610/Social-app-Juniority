@@ -5,13 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useFirebaseApp } from "reactfire";
 import useStyles from "./styles";
 
-import {
-  auth,
-  db,
-  providerFacebook,
-  providerGoogle,
-  providerGithub,
-} from "../../firebase/firebase";
+import { auth, db, providerFacebook, providerGoogle, providerGithub } from "../../firebase/firebase";
 import { setCurrentUser } from "../../store/currentUser";
 import Alert from "@material-ui/lab/Alert";
 
@@ -30,7 +24,7 @@ const Login = () => {
       .signInWithPopup(method)
       .then((result) => {
         if (result.additionalUserInfo.providerId === "github.com") {
-          console.log(result.user.email);
+          //console.log(result.user.email);
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,
@@ -103,34 +97,10 @@ const Login = () => {
           marginBottom: "2rem",
         }}
       >
-        <span
-          style={{ borderBottom: "solid 1px #3cb4e5", paddingBottom: "1%" }}
-        >
-          Log in
-        </span>
+        <span style={{ borderBottom: "solid 1px #3cb4e5", paddingBottom: "1%" }}>Log in</span>
       </Typography>
-      <TextField
-        className={classes.textField}
-        id="outlined-search"
-        label="Email"
-        type="search"
-        variant="outlined"
-        placeholder="example@gmail.com"
-        size="small"
-        onChange={handleChange("email")}
-        value={email}
-      />
-      <TextField
-        className={classes.textField}
-        id="outlined-password-input"
-        label="Password"
-        type="password"
-        variant="outlined"
-        placeholder="Password"
-        size="small"
-        onChange={handleChange("password1")}
-        value={password1}
-      />
+      <TextField className={classes.textField} id='outlined-search' label='Email' type='search' variant='outlined' placeholder='example@gmail.com' size='small' onChange={handleChange("email")} value={email} />
+      <TextField className={classes.textField} id='outlined-password-input' label='Password' type='password' variant='outlined' placeholder='Password' size='small' onChange={handleChange("password1")} value={password1} />
       <Typography
         style={{
           textAlign: "end",
@@ -140,7 +110,7 @@ const Login = () => {
           marginTop: "6%",
         }}
       >
-        <a href="/password-recovery">Forgot Password?</a>
+        <a href='/password-recovery'>Forgot Password?</a>
       </Typography>
       <Typography
         style={{
@@ -150,28 +120,19 @@ const Login = () => {
           marginTop: "3%",
         }}
       >
-        <Button type="submit" color="primary" variant="contained">
-          <i className="fas fa-sign-in-alt fa 1x w-6-ml-2" />
-          <span className="ml-3">LOG IN </span>
+        <Button type='submit' color='primary' variant='contained'>
+          <i className='fas fa-sign-in-alt fa 1x w-6-ml-2' />
+          <span className='ml-3'>LOG IN </span>
         </Button>
       </Typography>
 
       <div style={{ marginTop: "2rem" }}>
-        {messageError && <Alert severity="error">{messageError}</Alert>}
-        <Typography variant="caption" align="center">
+        {messageError && <Alert severity='error'>{messageError}</Alert>}
+        <Typography variant='caption' align='center'>
           Or login with a social media
-          <i
-            onClick={() => socialLogIn(providerGoogle)}
-            className="fab fa-google w-10"
-          />
-          <i
-            onClick={() => socialLogIn(providerFacebook)}
-            className="fab fa-facebook w-10-my-2"
-          />
-          <i
-            onClick={() => socialLogIn(providerGithub)}
-            className="fab fa-github w-10"
-          />
+          <i onClick={() => socialLogIn(providerGoogle)} className='fab fa-google w-10' />
+          <i onClick={() => socialLogIn(providerFacebook)} className='fab fa-facebook w-10-my-2' />
+          <i onClick={() => socialLogIn(providerGithub)} className='fab fa-github w-10' />
         </Typography>
       </div>
     </form>

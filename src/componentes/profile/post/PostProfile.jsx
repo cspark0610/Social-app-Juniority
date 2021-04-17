@@ -24,7 +24,7 @@ export const PostProfile = ({ user }) => {
 
   return (
     <>
-    {/* {console.log('userrrrrr',user['email'])} */}
+   
     {user && (
 
     <div className="feed__containerInput">
@@ -47,7 +47,6 @@ export const PostProfile = ({ user }) => {
         {user.id === currentUser.id ? (
           <>
           <Link to='/profile/configuration'><Button className="button__profile__follow"style={{marginRight:'1px'}}>Profile Update</Button></Link>
-          {/* <Link to={`/chat/${currentUser.id}${user.id}`}><Button className="button__profile__follow"style={{marginLeft:'1px'}}>Chat Room</Button></Link> */}
           </>
         ) : (
         <Link to={`/chat/${currentUser.id}${user.id}`}>
