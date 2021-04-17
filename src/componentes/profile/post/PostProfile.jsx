@@ -6,7 +6,7 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import ArtTrackIcon from "@material-ui/icons/ArtTrack";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+
 import { InputIcon } from "./InputIcon";
 import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,8 +17,6 @@ import { setTargetEmail } from "../../../store/targetEmail";
 export const PostProfile = ({ user }) => {
   const currentUser = useSelector((state) => state.currentUser);//logueado
   const dispatch = useDispatch();
-
-  console.log(currentUser.id);
 
   const handleClick = () => {
     dispatch(setTargetEmail(user['email']))
@@ -49,12 +47,13 @@ export const PostProfile = ({ user }) => {
         {user.id === currentUser.id ? (
           <>
           <Link to='/profile/configuration'><Button className="button__profile__follow"style={{marginRight:'1px'}}>Profile Update</Button></Link>
-          <Link to={`/chat/${currentUser.id}`}><Button className="button__profile__follow"style={{marginLeft:'1px'}}>Chat Room</Button></Link>
+          {/* <Link to={`/chat/${currentUser.id}${user.id}`}><Button className="button__profile__follow"style={{marginLeft:'1px'}}>Chat Room</Button></Link> */}
           </>
         ) : (
-        <Link to={`/chat/${user.id}`}>
+        <Link to={`/chat/${currentUser.id}${user.id}`}>
           <Button className="button__profile__follow" onClick={handleClick}>
-          <MailOutlineIcon className="message__post"/> Message</Button></Link>
+          <MailOutlineIcon className="message__post"/> Chat Message </Button>
+        </Link>
         )}
         </Grid>
       </Grid>

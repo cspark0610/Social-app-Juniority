@@ -5,9 +5,6 @@ export const setFollowersSelectedUser = createAction(
   "SET_FOLLOW_SELECTED_USER"
 );
 
-export const selectedUserReducer = createReducer(
-  {},
-  {
-    [setSelectedUser]: (state, action) => action.payload,
-  }
-);
+export const selectedUserReducer = createReducer({},{
+  [setSelectedUser]: (state, action) => action.payload,
+});

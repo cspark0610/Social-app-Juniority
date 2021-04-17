@@ -20,12 +20,11 @@ import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 import ReactPlayer from "react-player";
 import CreateIcon from "@material-ui/icons/Create";
-import { useAvatarStyles, useInputStyles } from "./InputMessageStyle.js";
+//import { useAvatarStyles, useInputStyles } from "./InputMessageStyle.js";
 
 const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
   const classes = useStyles();
-  const avatarClasses = useAvatarStyles();
-
+  
   const inputClasses = inputStyles();
   const date = new Date(timestamp?.toDate()).toUTCString();
   const currentUser = useSelector((state) => state.currentUser);

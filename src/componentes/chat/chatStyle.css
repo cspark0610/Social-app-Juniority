@@ -48,7 +48,7 @@
 .messageContainer{
     padding:30px;
     background-color: #e5ded8;
-    height:570px !important;
+    height:100%!important;
 }
 
 .inputContainer {

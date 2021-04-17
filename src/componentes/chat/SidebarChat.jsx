@@ -12,7 +12,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import './sidebarChat.css'
 
 
-function SidebarChat( {selectedUser }) {
+function SidebarChat( ) {
     const currentUser = useSelector((state) => state.currentUser);//usuario logueado
     const [allUsers,setAllUsers] = useState([]);
    
@@ -23,7 +23,8 @@ function SidebarChat( {selectedUser }) {
             shot.forEach((doc) => {
               docs.push({ ...doc.data(), id: doc.id });
             });
-            setAllUsers(docs);
+            const filtered = docs.filter(doc => doc.email !== currentUser.email)
+            setAllUsers(filtered);
           });
     }, []);
   
@@ -31,7 +32,7 @@ function SidebarChat( {selectedUser }) {
     
     return (
         <div>
-            {/* {console.log(allUsers)} */}
+           
             <div className='headerSidebar'>
                 <Link to={`/profile/${currentUser.id}`}>
                     <Avatar className='avatar'style={{marginLeft:'20px'}}><KeyboardBackspaceIcon /></Avatar>
@@ -47,7 +48,7 @@ function SidebarChat( {selectedUser }) {
                 <input className='inputSearch' placeholder='Search chats...'/>
             </div>
             <div className='sidebarContainerBtn'>
-                <button className='sidebarBtn'>start a new chat</button>
+                <button className='sidebarBtn'>list of all users</button>
             </div>
             {allUsers && allUsers.map((user)=>(
                 <div className='userContainer' key={user.id}>

@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect } from "react";
 
 import { Avatar, IconButton } from "@material-ui/core";
 import { AttachFile, MoreVert, SearchOutlined } from "@material-ui/icons";
@@ -8,58 +8,68 @@ import { db } from '../../firebase/firebase'
 import "./chatStyle.css";
 import { useSelector } from "react-redux";
 import firebase from "firebase";
-
-//import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 
 function ChatScreen( {selectedUser} ) {
-    //const {roomId} = useParams();
+    const {roomId} = useParams();
+    
     const currentUser = useSelector((state) => state.currentUser);//usuario logueado
     const targetEmail = useSelector((state) => state.targetEmail);
     const [input, setInput] =useState("");
     const [messages, setMessages] = useState([])
+  
     
-    // console.log('roomId',roomId); // id del selectedUSer es el roomId
-     console.log('currentUSer',currentUser); // id del selectedUSer es el roomId
-     console.log('selectedUser',selectedUser); // id del selectedUSer es el roomId
-
-    //console.log('targetEmaikl', targetEmail);
-    let roomId = `${currentUser.id}${selectedUser.id}`
-
     const sendMessage = (e) => {
         e.preventDefault();
         
         db.collection('rooms').doc(roomId).collection('messages')
         .add({
-            content:input,
-            name:currentUser.fullName,
-            fromUser: currentUser.email,
-            toUser: targetEmail,
+            roomId : roomId,
+            content: input,
+            senderName: currentUser.fullName,
+            receiverUserId: selectedUser.id,
+            senderUserId: currentUser.id,
+            fromUserEmail: currentUser.email,
+            toUserEmail: selectedUser.email,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
+        db.collection('user').doc(String(selectedUser.id)).collection('notificationMessages')
+        .add({
+            roomId : roomId,
+            content: input,
+            senderName: currentUser.fullName,
+            receiverUserId: selectedUser.id,
+            senderUserId: currentUser.id,
+            fromUserEmail: currentUser.email,
+            toUserEmail: selectedUser.email,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+       
         setInput("");
     }
 
-  useEffect(() => {
-    if (currentUser.id && selectedUser.id) {
+    useEffect(() => {
+        if ( roomId ) {
 
-      db.collection("rooms")
-        .doc(roomId)
-        .collection("messages")
-        .orderBy("timestamp", "asc")
-        .onSnapshot((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => doc.data()))
-        );
-    }
-  }, [roomId]);
-   
-  //console.log('MESSAGES', messages);
+        db.collection("rooms")
+            .doc(roomId)
+            .collection("messages")
+            .orderBy("timestamp", "asc")
+            .onSnapshot((snapshot) =>
+            setMessages(snapshot.docs.map((doc) => doc.data()))
+            );
+        }
+    }, [roomId]);
+    
+    //console.log('MESSAGES', messages);
+    //console.log('MESSAGES length', messages.length);
     return (
         <div className='container'>
             <div className='header'>
                 <Avatar className='avatar' src={currentUser.avatar} />
                <div className='headerInfo'>
-                    <h3>{`Chat  ${targetEmail.split('@')[0]}`}</h3>
+                    <h3>{`Chat with ${targetEmail.split('@')[0]}`}</h3>
                     <p>last seen {new Date(messages[messages.length-1]?.timestamp?.toDate()).toUTCString()}</p>
                </div>
                 <div className='headerIcons'>
@@ -70,13 +80,13 @@ function ChatScreen( {selectedUser} ) {
             </div>
             <div className='messageContainer'>
                 {messages.map((message) => (
-                <p className={`chat__message ${message.name === currentUser.fullName && "chat__reciever"}`}>
+                <p className={`chat__message ${message.senderName === currentUser.fullName && "chat__reciever"}`}>
                     <span className="chat__name">
                         {message.name}
                     </span>
                         {message.content}
                     <span className="chat__timestamp">
-                        {new Date(message.timestamp?.toDate()).toUTCString()}
+                        {new Date(message.timestamp?.toDate()).toLocaleTimeString('en-Us')}
                     </span>
                 </p>
                 ))}    

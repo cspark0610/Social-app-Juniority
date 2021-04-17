@@ -12,7 +12,8 @@ import { db } from "../../firebase/firebase";
 import { useSelector } from "react-redux";
 import TransitionsModal from "../home/TransitionModal";
 import { useHistory } from "react-router-dom";
-import { PersonalInfo } from "./personalInfo/personalInfo";
+import WidgetNotifications from './widgetnotifications/WidgetNotifications';
+
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
@@ -74,7 +75,10 @@ const HomeProfile = (props) => {
                     <Publication handleOpen={handleOpen} setTitle={setTitle} setUsers={setUsers} selectedUser={selectedUser} />
                   </Grid>
                   <Grid item md={3}>
-                    <Widget />
+                    <div>
+                      <Widget />
+                      <WidgetNotifications />
+                    </div>
                   </Grid>
                 </Grid>
               </div>
