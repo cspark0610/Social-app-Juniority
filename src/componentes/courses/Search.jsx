@@ -43,33 +43,19 @@ export default function Search({ setCoursesOffers, allCourses }) {
   const handleSearch = (e) => {
     e.preventDefault();
     const filtered = allCourses.filter(
-      (doc) =>
-        doc.name.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-        doc.description.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-        doc.technologies.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-        doc.link.toLowerCase().indexOf(query.toLowerCase()) > -1
+      (doc) => doc.name.toLowerCase().indexOf(query.toLowerCase()) > -1 || doc.description.toLowerCase().indexOf(query.toLowerCase()) > -1 || doc.technologies.toLowerCase().indexOf(query.toLowerCase()) > -1 || doc.link.toLowerCase().indexOf(query.toLowerCase()) > -1
     );
     setCoursesOffers(filtered);
   };
 
   return (
-    <Paper component="form" className={classes.root} onSubmit={handleSearch}>
-      <InputBase
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className={classes.input}
-        placeholder="Search keywords..."
-        inputProps={{ "aria-label": "search keywords" }}
-      />
-      <IconButton
-        type="submit"
-        className={classes.iconButton}
-        aria-label="search"
-      >
+    <Paper component='form' className={classes.root} onSubmit={handleSearch}>
+      <InputBase value={query} onChange={(e) => setQuery(e.target.value)} className={classes.input} placeholder='Search keywords...' inputProps={{ "aria-label": "search keywords" }} />
+      <IconButton type='submit' className={classes.iconButton} aria-label='search'>
         {query.length > 0 ? <HighlightOffIcon onClick={handleClick} /> : null}
       </IconButton>
-      <Divider className={classes.divider} orientation="vertical" />
-      <Button className="button__profile__follow">Search</Button>
+      <Divider className={classes.divider} orientation='vertical' />
+      <Button className='button__profile__follow'>Search</Button>
     </Paper>
   );
 }

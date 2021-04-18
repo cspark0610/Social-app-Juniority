@@ -1,32 +1,31 @@
-.container{
+.chatContainer{
+    
     display:flex;
     flex-direction: column;
 }
-.header{
+.chatHeader{
+    display:flex;
     position:'sticky';
     background-color: whitesmoke;
     z-index:100;
     top:0;
-    display:flex;
-   
     padding: 10px;
     height:80px;
     align-items: center;
     border-bottom: 1px solid #3cb4e5;
 }
-.headerInfo{
+.chatHeaderInfo{
     flex:1;
     margin-left: 15px;
 }
-.headerInfo > h3{
+.chatHeaderInfo > h3{
     margin-bottom: 1px;
 }
-.headerInfo > p{
+.chatHeaderInfo > p{
     color:gray;
     font-size: 12px;
 }
 .avatar{
-    
     margin:5px;
     margin-right: 5px;
 }
@@ -46,10 +45,12 @@
 }
 
 .messageContainer{
+    min-height:570px;
     padding:30px;
     background-color: #e5ded8;
-    height:90vh!important;
-    
+    overflow:scroll;
+    flex:1;
+
 }
 
 .inputContainer {

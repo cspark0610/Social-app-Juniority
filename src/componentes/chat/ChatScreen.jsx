@@ -61,10 +61,10 @@ function ChatScreen( {selectedUser} ) {
     }, [roomId]);
    
     return (
-        <div className='container'>
-            <div className='header'>
+        <div className='chatContainer'>
+            <div className='chatHeader'>
                 <Avatar className='avatar' src={currentUser.avatar} />
-               <div className='headerInfo'>
+               <div className='chatHeaderInfo'>
                     <h3 className='uppercase'>{`ChatRoom of ${currentUser.fullName}`}</h3>
                     <p>last seen {new Date(messages[messages.length-1]?.timestamp?.toDate()).toUTCString()}</p>
                </div>
