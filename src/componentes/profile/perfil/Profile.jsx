@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Avatar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import "./style.css";
-//import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { addFollow, unFollow } from "../../utils/followSystem";
 import { db } from "../../../firebase/firebase";
-
 
 export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -33,21 +31,25 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
   };
 
   useEffect(() => {
-    async function fetchData(){
-      await db.collection("user").where("id", "==", user.id)
-      .onSnapshot((snapshot) => {
-        snapshot.forEach((doc) => {
-          setLocalUser(doc.data());
+    async function fetchData() {
+      await db
+        .collection("user")
+        .where("id", "==", user.id)
+        .onSnapshot((snapshot) => {
+          snapshot.forEach((doc) => {
+            setLocalUser(doc.data());
+          });
         });
-      });
-    await db.collection("user").where("id", "==", currentUser.id)
-      .onSnapshot((snapshot) => {
-        snapshot.forEach((doc) => {
-          setActualUser(doc.data());
+      await db
+        .collection("user")
+        .where("id", "==", currentUser.id)
+        .onSnapshot((snapshot) => {
+          snapshot.forEach((doc) => {
+            setActualUser(doc.data());
+          });
         });
-      });
     }
-    fetchData();  
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -72,21 +74,17 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
     handleOpen();
   };
 
-  // const fullNameArr = (currentUser.fullName.trim()).split(" ");
-  // const fullNameUpperArr = fullNameArr.map(item=> item.charAt(0).toUpperCase()+item.slice(1));
-  // const fullNameStr = fullNameUpperArr.join(" ");
-
   return (
     <div className='back'>
       <div className='userProfile__top'>
-        {/*               <img src="https://www.colorhexa.com/3cb4e5.png" alt="" /> */}
+        {/* <img src="https://www.colorhexa.com/3cb4e5.png" alt="" /> */}
         <div className='avatar__circle'>
           <Avatar className='avatar__profile__post'>
             <img src={user.avatar} alt='avatar' />
           </Avatar>
         </div>
         <br />
-       
+
         {user.id === currentUser.id ? (
           <p>{currentUser.fullName}</p>
         ) : !isFollowing ? (
@@ -115,7 +113,9 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
         <br />
 
         <div>
-          <a href={user.portfolio} target='_blank' rel='noreferrer' className='link__profile'>{user.portfolio}</a>
+          <a href={user.portfolio} target='_blank' rel='noreferrer' className='link__profile'>
+            {user.portfolio}
+          </a>
         </div>
       </div>
     </div>
