@@ -121,6 +121,7 @@ const Navbar = () => {
       </MenuItem>
     </Menu>
   );
+  
 
   return (
     <div>
@@ -161,18 +162,19 @@ const Navbar = () => {
                 <div className="letrabutton">Connection</div>
               </IconButton>
             </Link>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="primary">
-                <MailIcon className="iconColor" />
-              </Badge>
-            </IconButton>
             {notificationMessages !=='' ? (
-              
-                <IconButton aria-label='messages notifications' color='inherit'>
-                  <Badge badgeContent={notificationMessages.length ? notificationMessages.length :0} color='secondary'>
-                    <NotificationsIcon className='iconColor' />
-                  </Badge>
-                </IconButton>
+              <IconButton aria-label='messages notifications' color='inherit'>
+                <Badge badgeContent={notificationMessages.length ? notificationMessages.length :0} color='secondary'>
+                  <MailIcon className='iconColor' />
+                </Badge>
+              </IconButton>
+            ) : null}
+            {currentUser.followers ? (
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={currentUser.followers.length ? currentUser.followers.length :0} color="primary">
+                  <NotificationsIcon className="iconColor" />
+                </Badge>
+              </IconButton>
             ) : null}
             
             <IconButton edge='end' aria-label='account of current user' aria-controls={menuId} aria-haspopup='true' onClick={handleProfileMenuOpen} color='inherit'>

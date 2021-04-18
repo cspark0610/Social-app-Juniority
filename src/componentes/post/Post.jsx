@@ -17,9 +17,9 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-
 import ReactPlayer from "react-player";
 import CreateIcon from "@material-ui/icons/Create";
+
 //import { useAvatarStyles, useInputStyles } from "./InputMessageStyle.js";
 
 const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
@@ -171,6 +171,7 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
         }
       });
   }, []);
+  //console.log('current user', currentUser);
 
   return (
     <div className={classes.post}>
@@ -179,7 +180,7 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
         <div className={classes.info}>
           <Link to={`/profile/${userId}`}>
             <h1 className='font-bold text-transform: uppercase'>{name}</h1>
-            <h4 className='text-gray-400'>Fullstack Developer</h4>
+            <h4 className='text-gray-400'>{`User`}</h4>
           </Link>
         </div>
         <p>{moment(date).fromNow()}</p>
@@ -246,7 +247,7 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
             </div>
           </Card>
 
-        {/*card para hacer un comment de codigo*/}
+       
         <Card className={show ? classes.container : classes.noShow}>
           <div className={classes.container_input}>
          
