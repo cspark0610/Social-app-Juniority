@@ -5,7 +5,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
-
 import { db } from '../../firebase/firebase'
 import { useSelector } from "react-redux";
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';

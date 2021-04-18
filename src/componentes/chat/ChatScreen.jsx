@@ -59,10 +59,7 @@ function ChatScreen( {selectedUser} ) {
             );
         }
     }, [roomId]);
-    
-    //{targetEmail.split('@')[0]}
-    //console.log('MESSAGES', messages);
-    //console.log('MESSAGES length', messages.length);
+   
     return (
         <div className='container'>
             <div className='header'>

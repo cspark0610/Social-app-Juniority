@@ -30,7 +30,7 @@ export const PostProfile = ({ user }) => {
     <div className="feed__containerInput">
       <Grid container >
         <Grid item md={6} className="text__aling__left text__aling">
-        <h3>{user.fullName}</h3>
+        <h3 className='uppercase'>{user.fullName}</h3>
         <p>{user.position}</p>
         <p>
           <LocationOnIcon />

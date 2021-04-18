@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-
+import DvrOutlinedIcon from '@material-ui/icons/DvrOutlined';
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/ChatBubbleOutline";
 import NotificationsIcon from "@material-ui/icons/NotificationsNone";
@@ -49,7 +49,6 @@ const Navbar = () => {
     })
   },[]);
 
-  //console.log('NOTIFICATION MESSAGES', notificationMessages);
 
   const handleClickNavbar = (e) => {
     e.preventDefault();
@@ -102,7 +101,7 @@ const Navbar = () => {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      {/* notificaciones icono */}
+      
       <MenuItem>
         <IconButton aria-label='show 11 new notifications'>
           <Badge badgeContent={11} color='secondary'>
@@ -144,6 +143,12 @@ const Navbar = () => {
 
         <div className='containerbuttonsNavbar '>
           <div className={classes.sectionDesktop}>
+            <Link to="/courses">
+              <IconButton>
+                <DvrOutlinedIcon className="ibutton" />
+                <div className="letrabutton">Courses</div>
+              </IconButton>
+            </Link>
             <Link to="/jobs">
               <IconButton>
                 <WorkOutlineIcon className="ibutton" />

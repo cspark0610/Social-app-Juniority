@@ -8,11 +8,8 @@ import { useLocation } from 'react-router-dom';
 const HomeChat = (props) => {
     
     const location = useLocation();
-    console.log('location', location.pathname.slice(-28));
-
     const [selectedUser, setSelectedUser] = useState();
-    //seteo al selectedUser como el usuario con quien yo quiero chatear
-
+  
     useEffect(() => {
         db.collection("user")
           .where("id", "==", location.pathname.slice(-28))
