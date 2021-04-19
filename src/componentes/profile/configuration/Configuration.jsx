@@ -35,6 +35,7 @@ export const Configuration = () => {
   const [showEducationForm, setShowEducationForm] = useState();
   const [educationDescription, setEducationDescription] = useState();
   const [openToWork, setOpenToWork] = useState(currentUser.isOpenToWork);
+  const [actualUser, setActualUser] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -47,6 +48,15 @@ export const Configuration = () => {
       setImageUrl(await fileRef.getDownloadURL());
     }
   };
+
+  useEffect(() => {
+    db.collection('user').where('id', '==', currentUser.id)
+    .onSnapshot(shot => {
+      shot.forEach(doc => {
+        setActualUser(doc.data());
+      });
+    });
+  }, []);
 
   useEffect(() => {
     setFullNameInput(currentUser.fullName);
@@ -64,7 +74,7 @@ export const Configuration = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    let updatedUser = { ...currentUser };
+    let updatedUser = { ...actualUser };
 
     updatedUser.fullName = fullNameInput;
     updatedUser.location = locationInput;
