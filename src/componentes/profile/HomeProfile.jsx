@@ -36,7 +36,7 @@ const HomeProfile = (props) => {
       setMessages(docs)
     })
   },[])
-  console.log('messages de notidficationMessasges', messages);  
+ 
   
   const handleClose = () => {
     setOpen(false);

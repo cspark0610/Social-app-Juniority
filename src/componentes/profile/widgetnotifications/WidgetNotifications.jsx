@@ -24,8 +24,7 @@ const WidgetNotifications = () => {
       })
     }
   },[]);
-  //console.log('busqueda messagges por roomId', messages);
-
+ 
   return (
     <>
       {messages.length>0 ? (
@@ -44,6 +43,7 @@ const WidgetNotifications = () => {
                     <div className={classes.people_right}>
                         <Typography><Link to={`/chat/${roomId}`}>{message.senderName}</Link></Typography>
                         <p style={{ color: "gray", fontSize: "11px" }}>{new Date(message.timestamp?.toDate()).toUTCString()}</p>
+                        <p style={{ color: "gray", fontSize: "11px" }}>{`roomId: ${roomId.slice(0,8)}`}</p>
                     </div>
                </div>
               ))}
