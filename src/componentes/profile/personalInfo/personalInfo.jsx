@@ -8,7 +8,6 @@ export const PersonalInfo = ({ user }) => {
   const locationUrl = useSelector(state => state.locationUrl)
 
   useEffect(async () => {
-    console.log(user)
     await db
       .collection("user")
       .where("id", "==", user.id)
@@ -18,6 +17,17 @@ export const PersonalInfo = ({ user }) => {
         });
       });
   }, []);
+
+  useEffect(async () => {
+    await db
+      .collection("user")
+      .where("id", "==", user.id)
+      .onSnapshot((snapshot) => {
+        snapshot.forEach((doc) => {
+          setLocalUser(doc.data());
+        });
+      });
+  }, [localUser]);
 
   return (
     <div className="personal_info_container">
