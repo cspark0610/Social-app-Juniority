@@ -13,13 +13,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setTargetEmail } from "../../../store/targetEmail";
 
+
 export const PostProfile = ({ user }) => {
   const currentUser = useSelector((state) => state.currentUser); //logueado
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(setTargetEmail(user["email"]));
-  };
+  const handleClick= () => {
+    dispatch(setTargetEmail(user['email']))
+  }
+
 
   return (
     <>

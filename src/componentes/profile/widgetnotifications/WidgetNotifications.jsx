@@ -9,23 +9,26 @@ import { Link } from "react-router-dom";
 
 const WidgetNotifications = () => {
   const classes = useStyles();
-  const currentUser = useSelector((state) => state.currentUser);
-  const [notificationMessages, setNotificationMessages] = useState([]);
+  const roomId = useSelector((state) => state.roomId);
+  const [messages, setMessages] = useState([]);
+
 
   useEffect(() => {
-    db.collection('user').doc(currentUser.id).collection('notificationMessages')
-    .onSnapshot(snapshot =>{
-      const docs = [];
-      snapshot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
-      const filtered = docs.filter(doc => doc.fromUserEmail !== doc.toUserEmail)
-      setNotificationMessages(filtered);
-    })
+    if(roomId){
+      db.collection('rooms').doc(roomId).collection('messages')
+      .onSnapshot(snapshot =>{
+        const docs = [];
+        snapshot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
+       
+        setMessages(docs);
+      })
+    }
   },[]);
-  //console.log('NOTIFICATION MESSAGES', notificationMessages);
+  //console.log('busqueda messagges por roomId', messages);
 
   return (
     <>
-      {notificationMessages.length>0 ? (
+      {messages.length>0 ? (
         <>
             <div className={classes.body}>
               <Paper className={classes.top}>
@@ -33,14 +36,14 @@ const WidgetNotifications = () => {
                     <h4><b>People who sent you messages</b></h4>
                   </div>
                 <hr />
-                {notificationMessages.map(not =>(
-                <div className={classes.people}  key={not.id}>
+                {messages.map(message =>(
+                <div className={classes.people}  key={message.id}>
                     <div className={classes.people_left}>
-                        <Avatar>{not.senderName.charAt(0)}</Avatar>
+                        <Avatar>{message.senderName.charAt(0)}</Avatar>
                     </div>
                     <div className={classes.people_right}>
-                        <Typography><Link to={`/chat/${not.roomId}`}>{not.senderName}</Link></Typography>
-                        <p style={{ color: "gray", fontSize: "11px" }}>{not.fromUserEmail}</p>
+                        <Typography><Link to={`/chat/${roomId}`}>{message.senderName}</Link></Typography>
+                        <p style={{ color: "gray", fontSize: "11px" }}>{new Date(message.timestamp?.toDate()).toUTCString()}</p>
                     </div>
                </div>
               ))}

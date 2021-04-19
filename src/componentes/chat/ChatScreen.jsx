@@ -6,14 +6,15 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import { db } from '../../firebase/firebase'
 import "./chatStyle.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import firebase from "firebase";
 import { useParams } from 'react-router-dom'
-
+import { setRoomId } from "../../store/roomid";
 
 function ChatScreen( {selectedUser} ) {
+    const dispatch = useDispatch();
     const {roomId} = useParams();
-    const currentUser = useSelector((state) => state.currentUser);//usuario logueado
+    const currentUser = useSelector((state) => state.currentUser);//usuario logueado q inicia el chat
     const [input, setInput] =useState("");
     const [messages, setMessages] = useState([])
   
@@ -43,10 +44,22 @@ function ChatScreen( {selectedUser} ) {
             toUserEmail: selectedUser.email,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
-       
+        db.collection('user').doc(String(currentUser.id)).collection('notificationMessages')
+        .add({
+            roomId : roomId,
+            content: input,
+            senderName: currentUser.fullName,
+            receiverUserId: selectedUser.id,
+            senderUserId: currentUser.id,
+            fromUserEmail: currentUser.email,
+            toUserEmail: selectedUser.email,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        dispatch(setRoomId(roomId))
         setInput("");
     }
-
+   
+    
     useEffect(() => {
         if ( roomId ) {
 
@@ -65,7 +78,9 @@ function ChatScreen( {selectedUser} ) {
             <div className='chatHeader'>
                 <Avatar className='avatar' src={currentUser.avatar} />
                <div className='chatHeaderInfo'>
-                    <h3 className='uppercase'>{`ChatRoom of ${currentUser.fullName}`}</h3>
+                    <h3 className='uppercase'>{`ChatRoom`}</h3>
+
+                    {roomId ? (<p>{`roomId: ${roomId}`}</p>) :null}
                     <p>last seen {new Date(messages[messages.length-1]?.timestamp?.toDate()).toUTCString()}</p>
                </div>
                 <div className='headerIcons'>
