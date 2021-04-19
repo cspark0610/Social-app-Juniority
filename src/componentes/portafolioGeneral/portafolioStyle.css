@@ -5,10 +5,10 @@
 
 .container {
     margin: auto;
-    padding: 40px 40px;
+    padding: 100px 40px;
     background: lightgray;
     height: 100%;
-
+    position: relative;
 }
 
 .card-proyect {

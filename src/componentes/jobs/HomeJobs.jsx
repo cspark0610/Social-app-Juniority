@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
 import Navbar from "../navbar/Navbar";
 import "./style.css";
@@ -14,6 +14,7 @@ const HomeJobs = () => {
   const [jobsOffers, setJobsOffers] = useState([]);
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
+ 
   return (
     <>
       {!currentUser ? (

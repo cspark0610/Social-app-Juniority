@@ -86,7 +86,9 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
         <br />
 
         {user.id === currentUser.id ? (
-          <p>{currentUser.fullName}</p>
+          <>
+          <p>{currentUser.fullName}</p> <p className='is_open_to_work_profile_p'>{currentUser.isOpenToWork ? '#OpenToWork' : '#NotOpenToWork'}</p>
+          </>
         ) : !isFollowing ? (
           <Button onClick={(e) => followHandler(e)} className='button__profile__follow'>
             Follow

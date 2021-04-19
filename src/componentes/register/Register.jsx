@@ -56,6 +56,7 @@ const Register = () => {
             education: [],
             location: "No info",
             position: "No info",
+            isOpenToWork: false,
             avatar: "https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg",
             userType: changeUser[0] === "primary" ? "user" : "company",
           };
