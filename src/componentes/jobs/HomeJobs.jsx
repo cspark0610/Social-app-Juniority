@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
-=======
-import React,{useState} from "react";
->>>>>>> 5ab4a7c541b0e59d00080aa9cb4b7e36e788ea10
 import { Grid } from "@material-ui/core";
 import Navbar from "../navbar/Navbar";
 import "./style.css";
