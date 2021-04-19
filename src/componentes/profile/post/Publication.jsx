@@ -6,7 +6,7 @@ import { db } from "../../../firebase/firebase";
 export const Publication = ({ handleOpen, setUsers, setTitle, selectedUser }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    db.collection("posts")
+    db.collection("posts").orderBy('timestamp','desc')
       .where("userId", "==", selectedUser.id)
       .onSnapshot((snapshot) => {
         setPosts(
