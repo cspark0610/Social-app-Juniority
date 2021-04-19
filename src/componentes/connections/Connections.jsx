@@ -15,7 +15,6 @@ import Navbar from "../navbar/Navbar";
 import { db } from "../../firebase/firebase";
 import { removeFollower, unFollow } from "../utils/followSystem";
 
-// ver linea 59 del array para mapeaar
 
 const Connections = ({ user }) => {
   const classes = useStyles();
@@ -73,12 +72,7 @@ const Connections = ({ user }) => {
           <Navbar />
           <div className={classes.main}>
             <div className={classes.containerCard}>
-              <img
-                src={currentUser.avatar}
-                width="50px"
-                alt="mi avatar"
-                className={classes.imgCard}
-              />
+              <img src={currentUser.avatar} width='50px' alt='mi avatar' className={classes.imgCard} />
 
               <div className={classes.nameUser}>
                 <div>
@@ -96,9 +90,9 @@ const Connections = ({ user }) => {
                   Following <b>{currentUser.follow.length}</b>
                 </h7>
               </div>
-              <Link to="/profile/configuration">
-                <IconButton aria-label="delete" className={classes.margin}>
-                  <EditIcon className={classes.iconoEdit} fontSize="large" />
+              <Link to='/profile/configuration'>
+                <IconButton aria-label='delete' className={classes.margin}>
+                  <EditIcon className={classes.iconoEdit} fontSize='large' />
                 </IconButton>
               </Link>
             </div>
@@ -117,24 +111,11 @@ const Connections = ({ user }) => {
                             <ListItemAvatar>
                               <Avatar src={value.avatar} />
                             </ListItemAvatar>
-                            <div className={classes.nameProfile}>
-                              {value.fullName}
-                            </div>
-                            <ListItemText
-                              className={classes.nameText}
-                              id={labelId}
-                            />
+                            <div className={classes.nameProfile}>{value.fullName}</div>
+                            <ListItemText className={classes.nameText} id={labelId} />
 
                             <ListItemSecondaryAction>
-                              <Button
-                                onClick={(e) =>
-                                  clickHandler(e, value, "REMOVE_FOLLOWER")
-                                }
-                                variant="contained"
-                                className={classes.delButton}
-                                startIcon={<DeleteIcon />}
-                                size="small"
-                              >
+                              <Button onClick={(e) => clickHandler(e, value, "REMOVE_FOLLOWER")} variant='contained' className={classes.delButton} startIcon={<DeleteIcon />} size='small'>
                                 Remove
                               </Button>
                             </ListItemSecondaryAction>
@@ -158,22 +139,10 @@ const Connections = ({ user }) => {
                             <ListItemAvatar>
                               <Avatar src={value.avatar} />
                             </ListItemAvatar>
-                            <div className={classes.nameProfile}>
-                              {value.fullName}
-                            </div>
-                            <ListItemText
-                              className={classes.nameText}
-                              id={labelId}
-                            />
+                            <div className={classes.nameProfile}>{value.fullName}</div>
+                            <ListItemText className={classes.nameText} id={labelId} />
                             <ListItemSecondaryAction>
-                              <Button
-                                onClick={(e) =>
-                                  clickHandler(e, value, "UNFOLLOW")
-                                }
-                                variant="contained"
-                                className={classes.delButton}
-                                size="small"
-                              >
+                              <Button onClick={(e) => clickHandler(e, value, "UNFOLLOW")} variant='contained' className={classes.delButton} size='small'>
                                 UNFOLLOW
                               </Button>
                             </ListItemSecondaryAction>

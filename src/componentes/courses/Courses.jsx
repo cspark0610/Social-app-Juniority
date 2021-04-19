@@ -23,37 +23,24 @@ const Courses = () => {
         <>
           <Navbar />
 
-          <div className="home__borderJob home__border">
-            <Grid
-              container
-              display="flex"
-              align="center"
-              spacing={3}
-              justify="center"
-            >
+          <div className='home__borderJob home__border'>
+            <Grid container display='flex' align='center' spacing={3} justify='center'>
               <Grid item md={6}>
-                <Search
-                  setCoursesOffers={setCoursesOffers}
-                  allCourses={allCourses}
-                />
+                <Search setCoursesOffers={setCoursesOffers} allCourses={allCourses} />
               </Grid>
             </Grid>
 
-            <Grid container display="flex" align="center" spacing={3}>
+            <Grid container display='flex' align='center' spacing={3}>
               <Grid item md={3}>
                 {/* <Filter /> */}
               </Grid>
 
               <Grid item md={6}>
                 <FormCourses />
-                <OfferCourses
-                  coursesOffers={coursesOffers}
-                  setCoursesOffers={setCoursesOffers}
-                  setAllCourses={setAllCourses}
-                />
+                <OfferCourses coursesOffers={coursesOffers} setCoursesOffers={setCoursesOffers} setAllCourses={setAllCourses} />
               </Grid>
 
-              <Grid item md={3} className="padding">
+              <Grid item md={3} className='padding'>
                 <Jobs type={"jobs"} title={"Jobs"} />
               </Grid>
             </Grid>

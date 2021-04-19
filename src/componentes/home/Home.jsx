@@ -20,10 +20,27 @@ const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
-
-  const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState();
+  const [posts, setPosts] = useState(); //aca 
+  const [users, setUsers] = useState([]); //aca 
+    
+  useEffect(() => {
+      db.collection('user').onSnapshot((shot)=>{
+        const docs = [];
+        shot.forEach(doc => docs.push({ ...doc.data(), id: doc.id}))
+        setUsers(docs);
+      })
+      db.collection("posts")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((shot) => {
+            const docs = [];
+            shot.forEach((doc) => {
+              docs.push({ ...doc.data(), id: doc.id });
+            });
+            setPosts(docs);
+          });
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -33,6 +50,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    
     if (currentUser) {
       db.collection("user")
         .where("id", "==", currentUser.id)
@@ -71,8 +89,10 @@ const Home = () => {
 
             <Grid item md={3} >
               <div>
-                <Widget/>
-                <GraphViews/>
+                {users? (<Widget/>) :null}
+                
+                {posts ?(<GraphViews/>):null}
+                
               </div>
             </Grid>
           </Grid>

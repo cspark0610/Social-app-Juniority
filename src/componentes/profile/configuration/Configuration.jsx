@@ -8,6 +8,7 @@ import { db } from "../../../firebase/firebase";
 import { useHistory } from "react-router-dom";
 import { setCurrentUser } from "../../../store/currentUser";
 import AddIcon from "@material-ui/icons/Add";
+import Switch from "@material-ui/core/Switch";
 
 export const Configuration = () => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -33,6 +34,7 @@ export const Configuration = () => {
   const [educationFinishDate, setEducationFinishDate] = useState();
   const [showEducationForm, setShowEducationForm] = useState();
   const [educationDescription, setEducationDescription] = useState();
+  const [openToWork, setOpenToWork] = useState(currentUser.isOpenToWork);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -72,6 +74,7 @@ export const Configuration = () => {
     updatedUser.aboutMe = aboutMeInput;
     updatedUser.experience = experience;
     updatedUser.education = education;
+    updatedUser.isOpenToWork = openToWork;
 
     await db.collection("user").doc(currentUser.id).set(updatedUser);
     dispatch(setCurrentUser(updatedUser));
@@ -125,13 +128,22 @@ export const Configuration = () => {
     setEducationDescription();
   };
 
+  const handleChange = (event) => {
+    setOpenToWork(event.target.checked);
+    console.log(openToWork)
+  };
+
   return (
     <div className={classes.mainContainer}>
       <Navbar></Navbar>
       <div className={classes.container}>
         <div className={classes.paper}>
-          <form onSubmit={(e) => submitHandler(e)} autoComplete='off' className={`${classes.root} ${classes.form}`}>
-            <Typography variant='h5'>
+          <form
+            onSubmit={(e) => submitHandler(e)}
+            autoComplete="off"
+            className={`${classes.root} ${classes.form}`}
+          >
+            <Typography variant="h5">
               <b>Update your profile</b>
             </Typography>
             <TextField
@@ -174,6 +186,14 @@ export const Configuration = () => {
               rows={4}
               variant="outlined"
             />
+            <p className={classes.pWork}>Are you open to work</p>
+            <Switch
+              checked={openToWork}
+              onChange={handleChange}
+              color="primary"
+              name="checkedB"
+              inputProps={{ "aria-label": "primary checkbox" }}
+            /> <br></br>
             <h5 className={classes.experience}>Experience:</h5>{" "}
             <button
               onClick={(e) => addClickHandler(e, setShowExperienceForm)}

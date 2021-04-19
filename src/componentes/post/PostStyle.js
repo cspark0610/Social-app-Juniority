@@ -36,6 +36,7 @@ export default makeStyles({
     margin: "auto",
     width: "89%",
     marginBottom: "2%",
+    marginTop:'3%'
   },
   containerCommentText: {
     textAlign: "start",
