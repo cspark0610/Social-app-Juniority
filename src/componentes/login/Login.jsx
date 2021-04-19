@@ -36,6 +36,7 @@ const Login = () => {
             education: [],
             location: "No info",
             position: "No info",
+            isOpenToWork: false,
             userType: "user",
           };
         } else {
@@ -50,6 +51,7 @@ const Login = () => {
             education: [],
             location: "No info",
             position: "No info",
+            isOpenToWork: false,
             userType: "user",
           };
         }

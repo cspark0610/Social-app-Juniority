@@ -40,15 +40,21 @@ const Widget = () => {
   
   const handleClick = (e, user) => {
     e.preventDefault();
+    let targetUser;
+
     db.collection('user').doc(user).get()
     .then(user => {
-      addFollow(user.data(), currentUser)
-    })
+      targetUser = user.data();
+    }).then(
+      db.collection('user').doc(currentUser.id).get()
+      .then(user => {
+        addFollow(targetUser, user.data());
+      })
+    )
   }
 
   const userClick = (e, id) => {
     e.preventDefault();
-    console.log('PSEEEE')
     history.push(`/profile/${id}`);
     dispatch(setLocationUrl(!locationUrl));
   }
