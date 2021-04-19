@@ -54,6 +54,7 @@ export default function FilterSkills({setJobsOffers}) {
   const [personName, setPersonName] = useState([]);
   const [names, setNames] = useState([]);
   const filter = useSelector((state) => state.filter);
+  const [showAll, setShowAll] = useState(false);
 
   const handleChange = (event) => {
     setPersonName(event.target.value);
@@ -76,14 +77,26 @@ export default function FilterSkills({setJobsOffers}) {
       });
   }, []);
 
-  const clear = () => {
-    setPersonName([]);
-    window.location.reload();
-  };
+  // useEffect(() => {
+  //   db.collection("jobs").orderBy("timestamp", "desc").get()
+  //   .then((shot) => {
+  //     setJobsOffers(
+  //       shot.forEach((doc) => {
+  //         return { ...doc.data(), id: doc.id };
+  //       })
+  //     );
+  //   });
+  // },[showAll])
 
-/*   const clear = () => {
+  // const clear = () => {
+  //   setPersonName([]);
+  //   window.location.reload();
+  // };
+
+const clear = () => {
+    setShowAll(!showAll)
     setPersonName([]);
-  }; */
+};
 
   return (
     <>

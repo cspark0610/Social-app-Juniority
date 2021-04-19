@@ -11,8 +11,6 @@ const styles = makeStyles((theme) => ({
 }));
 
 const Animation = ({ src }) => {
-    
-  
     const container = useRef(null);
   
     useEffect(() => {
