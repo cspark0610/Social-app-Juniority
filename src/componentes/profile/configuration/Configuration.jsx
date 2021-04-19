@@ -34,7 +34,7 @@ export const Configuration = () => {
   const [educationFinishDate, setEducationFinishDate] = useState();
   const [showEducationForm, setShowEducationForm] = useState();
   const [educationDescription, setEducationDescription] = useState();
-  const [openToWork, setOpenToWork] = useState();
+  const [openToWork, setOpenToWork] = useState(currentUser.isOpenToWork);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -57,7 +57,6 @@ export const Configuration = () => {
     setImageUrl(currentUser.avatar);
     setExperience(currentUser.experience);
     setEducation(currentUser.education);
-    setOpenToWork(currentUser.isOpenToWork);
   }, [currentUser]);
 
   useEffect(() => {}, [experience]);
@@ -130,7 +129,8 @@ export const Configuration = () => {
   };
 
   const handleChange = (event) => {
-    setOpenToWork(!openToWork);
+    setOpenToWork(event.target.checked);
+    console.log(openToWork)
   };
 
   return (
