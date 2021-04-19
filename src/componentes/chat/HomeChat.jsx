@@ -17,7 +17,7 @@ const HomeChat = (props) => {
             snapshot.docs.map((doc) => setSelectedUser(doc.data()));
           });
     }, []);
-    //console.log('SELECTED USER DESDE HOMECHAT', selectedUser);
+    
 
     return (
         <div className='home'>

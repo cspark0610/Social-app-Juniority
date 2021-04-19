@@ -14,12 +14,14 @@ import { Link } from 'react-router-dom';
 import { setTargetEmail } from "../../../store/targetEmail";
 
 
+
 export const PostProfile = ({ user }) => {
   const currentUser = useSelector((state) => state.currentUser);//logueado
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  const handleClick= () => {
     dispatch(setTargetEmail(user['email']))
+    
   }
 
   return (
