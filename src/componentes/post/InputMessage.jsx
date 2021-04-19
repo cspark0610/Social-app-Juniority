@@ -58,6 +58,7 @@ const InputMessage = () => {
         messageVideo: inputVideo,
         userId: currentUser.id,
         photo: currentUser.avatar,
+        userPosition: currentUser.position,
         postImage: imageUrl ? imageUrl : "",
         likes: 0,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),

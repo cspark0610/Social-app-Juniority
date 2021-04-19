@@ -22,7 +22,7 @@ import CreateIcon from "@material-ui/icons/Create";
 
 //import { useAvatarStyles, useInputStyles } from "./InputMessageStyle.js";
 
-const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
+const Post = ({ id, message, messageCode, messageVideo, userId, postImage, likes, timestamp, handleOpen, setUsers, setTitle }) => {
   const classes = useStyles();
   
   const inputClasses = inputStyles();
@@ -36,6 +36,16 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
   const [lastKey, setLastKey] = useState("En un comienzo");
   const [viewMore, setViewMore] = useState(true);
   const [show, setShow] = useState(false);
+  const [targetUser, setTargetUser] = useState()
+
+  useEffect(() => {
+    db.collection('user').where('id', '==', userId)
+    .onSnapshot(shot => {
+      shot.forEach(doc => {
+        setTargetUser(doc.data());
+      });
+    });
+  }, []);
 
   const createIconStyle2 = {
     marginLeft: "10px",
@@ -174,13 +184,16 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
   //console.log('current user', currentUser);
 
   return (
+    <>
+    {targetUser && (
+
     <div className={classes.post}>
       <div className={classes.header}>
-        <Avatar src={photo} />
+        <Avatar src={targetUser.avatar} />
         <div className={classes.info}>
           <Link to={`/profile/${userId}`}>
-            <h1 className='font-bold text-transform: uppercase'>{name}</h1>
-            <h4 className='text-gray-400'>{`User`}</h4>
+            <h1 className='font-bold text-transform: uppercase'>{targetUser.fullName}</h1>
+            <h4 className='text-gray-400'>{targetUser.position}</h4>
           </Link>
         </div>
         <p>{moment(date).fromNow()}</p>
@@ -293,6 +306,8 @@ const Post = ({ id, name, message, messageCode, messageVideo, userId, photo, pos
         </div>
       )}
     </div>
+    )}
+    </>
   );
 };
 
