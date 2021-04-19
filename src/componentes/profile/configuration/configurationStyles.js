@@ -57,5 +57,8 @@ export default makeStyles((theme) => ({
   },
   educationButt: {
     marginLeft: '87%'
+  },
+  pWork: {
+    display: 'inline'
   }
 }));

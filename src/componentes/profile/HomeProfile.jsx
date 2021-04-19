@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import TransitionsModal from "../home/TransitionModal";
 import { useHistory } from "react-router-dom";
 import WidgetNotifications from './widgetnotifications/WidgetNotifications';
+import {PersonalInfo} from './personalInfo/personalInfo'
 
 
 const HomeProfile = (props) => {
@@ -84,6 +85,7 @@ const HomeProfile = (props) => {
                   <TransitionsModal open={open} setOpen={setOpen} handleClose={handleClose} users={users} title={title} />
                   <Grid item md={6}>
                     <PostProfile user={selectedUser} />
+                    <PersonalInfo user={selectedUser}/>
                     <Publication handleOpen={handleOpen} setTitle={setTitle} setUsers={setUsers} selectedUser={selectedUser} />
                   </Grid>
                   <Grid item md={3}>
