@@ -22,6 +22,7 @@ export default makeStyles({
   message: {
     textAlign: "justify",
     textJustify: "inter-word",
+    marginBottom: '4em'
   },
   body: {
     overflowWrap: "anywhere",
