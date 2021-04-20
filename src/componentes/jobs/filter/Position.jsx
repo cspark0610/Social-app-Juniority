@@ -63,28 +63,14 @@ export default function Position({ setJobsOffers }) {
     dispatch(setFilter({ ...filter, position: itemName }));
   }, [itemName]);
 
-/*   useEffect(() => {
-    db.collection("Position")
-      .orderBy("position", "desc")
-      .onSnapshot((shot) => {
-        const docs = [];
-        shot.forEach((doc) => {
-          console.log(">>DOC<<", doc.data())
-          docs.push({ ...doc.data(), id: doc.id });
-        });
-        const filterPosition = docs.map((doc) => doc.position);
-        setNames(filterPosition);
-      });
-  }, []); */
-
   useEffect(() => {
    db.collection("Position")
    .onSnapshot((shot)=> {
     let docs = [];
-     console.log(">>shot<<",shot)
+     //console.log(">>shot<<",shot)
      shot.forEach((doc) => {
        docs = [...docs, doc.data()]
-       console.log("data()", doc.data())
+       //console.log("data()", doc.data())
        setNames(docs)
      })
    })

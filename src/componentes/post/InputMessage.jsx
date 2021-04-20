@@ -51,11 +51,13 @@ const InputMessage = () => {
     e.preventDefault();
     db.collection("posts")
       .add({
+        name:currentUser.fullName,
         description: "description",
         message: input,
         messageCode: inputCode,
         messageVideo: inputVideo,
         userId: currentUser.id,
+        photo:currentUser.avatar,
         postImage: imageUrl ? imageUrl : "",
         likes: 0,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -83,6 +85,8 @@ const InputMessage = () => {
         setPosts(docs);
       });
   }, []);
+
+
   useEffect(() => {
     db.collection("posts")
       .orderBy("timestamp", "desc")
@@ -91,10 +95,17 @@ const InputMessage = () => {
         shot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
         });
-        const filtered = docs.filter((doc) => doc.description.toLowerCase().indexOf(keynavbar.toLowerCase()) > -1 || doc.message.toLowerCase().indexOf(keynavbar.toLowerCase()) > -1 || doc.name.toLowerCase().indexOf(keynavbar.toLowerCase()) > -1);
+        //console.log('docs',docs);
+
+        const filtered = docs.filter((doc) =>
+        doc.description.toLowerCase().indexOf(String(keynavbar).toLowerCase()) > -1 ||
+        doc.message.toLowerCase().indexOf(String(keynavbar).toLowerCase()) > -1 ||
+        doc.name.toLowerCase().indexOf(String(keynavbar).toLowerCase()) > -1
+        );
         setPosts(filtered);
       });
   }, [keynavbar]);
+
 
   const onFileChange = async (e) => {
     const file = e.target.files[0];
@@ -169,11 +180,12 @@ const InputMessage = () => {
       </div>
       <CarroselJobs />
       <TransitionsModal open={open} handleClose={handleClose} users={userLikes} title={title} />
-      {posts.map(({ id, likes, message, messageCode, messageVideo, userId, postImage, timestamp }) => (
-        <div className='max-w-full shadow-xl my-3.5 ' style={{ background: "white", borderRadius: "10px" }} key={id}>
-          <Post handleOpen={handleOpen} id={id} message={message} messageCode={messageCode} messageVideo={messageVideo} userId={userId} postImage={postImage} timestamp={timestamp} likes={likes} setUsers={setUserLikes} setTitle={setTitle} />
-        </div>
-      ))}
+      {posts &&
+        posts.map(({ id, likes, name ,message, messageCode, messageVideo, userId, photo ,postImage, timestamp }) => (
+          <div className='max-w-full shadow-xl my-3.5 ' style={{ background: "white", borderRadius: "10px" }} key={id}>
+            <Post handleOpen={handleOpen} id={id} name={name} message={message} messageCode={messageCode} messageVideo={messageVideo} userId={userId} photo={photo} postImage={postImage} timestamp={timestamp} likes={likes} setUsers={setUserLikes} setTitle={setTitle} />
+          </div>
+        ))}
     </>
   );
 };
