@@ -63,20 +63,6 @@ export default function Position({ setJobsOffers }) {
     dispatch(setFilter({ ...filter, position: itemName }));
   }, [itemName]);
 
-/*   useEffect(() => {
-    db.collection("Position")
-      .orderBy("position", "desc")
-      .onSnapshot((shot) => {
-        const docs = [];
-        shot.forEach((doc) => {
-          console.log(">>DOC<<", doc.data())
-          docs.push({ ...doc.data(), id: doc.id });
-        });
-        const filterPosition = docs.map((doc) => doc.position);
-        setNames(filterPosition);
-      });
-  }, []); */
-
   useEffect(() => {
    db.collection("Position")
    .onSnapshot((shot)=> {
