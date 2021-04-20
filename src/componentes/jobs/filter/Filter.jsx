@@ -8,85 +8,69 @@ import Availability from "./Availability";
 import PayRate from "./PayRate";
 import FilterSkills from "./FilterSkills";
 import Position from "./Position";
-import { Grid } from "@material-ui/core";
 
 const Filter = ({ jobsOffers, setJobsOffers }) => {
   const filter = useSelector((state) => state.filter);
 
   const handleClickPosition = () => {
-    const filtered = jobsOffers.filter(
+    const filteredPosition = jobsOffers.filter(
       (job) =>
         job.position.toLowerCase().indexOf(filter.position[0].toLowerCase()) >
         -1
     );
-    setJobsOffers(filtered);
+    setJobsOffers(filteredPosition);
   };
 
   const handleClickSkills = () => {
-    const filtered = jobsOffers.filter(
+    const filteredSkills = jobsOffers.filter(
       (job) =>
         job.skills.toLowerCase().indexOf(filter.position[0].toLowerCase()) > -1
     );
-    setJobsOffers(filtered);
+    setJobsOffers(filteredSkills);
   };
 
   const handleClickAvailability = () => {
-    const filtered = jobsOffers.filter(
+    const filteredAvailability = jobsOffers.filter(
       (job) =>
         job.availability
           .toLowerCase()
           .indexOf(filter.position[0].toLowerCase()) > -1
     );
-    setJobsOffers(filtered);
+    setJobsOffers(filteredAvailability);
   };
 
   const handleClickJobType = () => {
-    const filtered = jobsOffers.filter(
+    const filteredJobType = jobsOffers.filter(
       (job) =>
         job.position.toLowerCase().indexOf(filter.position[0].toLowerCase()) >
         -1
     );
-    setJobsOffers(filtered);
+    setJobsOffers(filteredJobType);
   };
 
   const handleClickPayRate = () => {
-    const filtered = jobsOffers.filter(
+    const filteredPayRate = jobsOffers.filter(
       (job) =>
-        job.payRate.toLowerCase().indexOf(filter.position[0].toLowerCase()) > -1
+        job.salary.toLowerCase().indexOf(filter.position[0].toLowerCase()) > -1
     );
-    setJobsOffers(filtered);
+    setJobsOffers(filteredPayRate);
   };
 
   const handleClickLocation = () => {
-    const filtered = jobsOffers.filter(
+    const filteredLocation = jobsOffers.filter(
       (job) =>
         job.location.toLowerCase().indexOf(filter.position[0].toLowerCase()) >
         -1
     );
-    setJobsOffers(filtered);
-  };
-  const clear = () => {
-    window.location.reload();
+    setJobsOffers(filteredLocation);
   };
 
   return (
     <div className="aling__filter">
-      <div className="back__filters">
-        <Grid container>
-          <Grid item md={6} className="text__aling__left text__aling">
-            <h3 className="h3__filters">Filters</h3>
-          </Grid>
-          <Grid item md={6} className="text__aling__filter">
-            <Button className="button__filter" onClick={clear}>
-              Refresh
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
 
       <div className="back">
         <h3 className="h3__skill">Position</h3>
-        <Position />
+        <Position setJobsOffers={setJobsOffers} />
         <Button className="button__jobs" onClick={handleClickPosition}>
           Search
         </Button>
@@ -94,7 +78,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className="back">
         <h3 className="h3__skill">Skills</h3>
-        <FilterSkills />
+        <FilterSkills setJobsOffers={setJobsOffers} jobsOffers={jobsOffers} />
         <Button className="button__jobs" onClick={handleClickSkills}>
           Search
         </Button>
@@ -102,7 +86,7 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className="back">
         <h3 className="h3__skill">Availability</h3>
-        <Availability />
+        <Availability setJobsOffers={setJobsOffers} jobsOffers={jobsOffers} />
         <Button className="button__jobs" onClick={handleClickAvailability}>
           Search
         </Button>
@@ -110,15 +94,19 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className="back">
         <h3 className="h3__skill">Job Type</h3>
-        <JobType className="select__multiple" />
+        <JobType
+          className="select__multiple"
+          setJobsOffers={setJobsOffers}
+          jobsOffers={jobsOffers}
+        />
         <Button className="button__jobs" onClick={handleClickJobType}>
           Search
         </Button>
       </div>
 
       <div className="back">
-        <h3 className="h3__skill">Pay Rate / Hr ($)</h3>
-        <PayRate />
+        <h3 className="h3__skill">Pay Rate</h3>
+        <PayRate setJobsOffers={setJobsOffers} jobsOffers={jobsOffers} />
         <Button className="button__jobs" onClick={handleClickPayRate}>
           Search
         </Button>
@@ -126,7 +114,11 @@ const Filter = ({ jobsOffers, setJobsOffers }) => {
 
       <div className="back">
         <h3 className="h3__skill">Location</h3>
-        <Location className="select__multiple" />
+        <Location
+          className="select__multiple"
+          setJobsOffers={setJobsOffers}
+          jobsOffers={jobsOffers}
+        />
         <Button className="button__jobs" onClick={handleClickLocation}>
           Search
         </Button>

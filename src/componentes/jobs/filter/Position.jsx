@@ -9,7 +9,7 @@ import { db } from "../../../firebase/firebase";
 import { setFilter } from "../../../store/filter";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
-import Chip from '@material-ui/core/Chip';
+import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -38,53 +38,71 @@ const MenuProps = {
   },
 };
 
-function getStyles(name, personName, theme) {
+function getStyles(name, itemName, theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      itemName.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
 }
 
-export default function Position() {
+export default function Position({ setJobsOffers }) {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [personName, setPersonName] = useState([]);
+  const [itemName, setItemName] = useState([]);
   const [names, setNames] = useState([]);
   const filter = useSelector((state) => state.filter);
 
   const handleChange = (event) => {
-    setPersonName(event.target.value);
+    setItemName(event.target.value);
   };
 
   useEffect(() => {
-    dispatch(setFilter({ ...filter, position: personName }));
-  }, [personName]);
+    dispatch(setFilter({ ...filter, position: itemName }));
+  }, [itemName]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     db.collection("Position")
       .orderBy("position", "desc")
       .onSnapshot((shot) => {
         const docs = [];
         shot.forEach((doc) => {
+          console.log(">>DOC<<", doc.data())
           docs.push({ ...doc.data(), id: doc.id });
         });
         const filterPosition = docs.map((doc) => doc.position);
         setNames(filterPosition);
       });
-  }, []);
+  }, []); */
 
-/*   const clear = () => {
-    setPersonName([]);
-    window.location.reload();
-  }; */
+  useEffect(() => {
+   db.collection("Position")
+   .onSnapshot((shot)=> {
+    let docs = [];
+     console.log(">>shot<<",shot)
+     shot.forEach((doc) => {
+       docs = [...docs, doc.data()]
+       console.log("data()", doc.data())
+       setNames(docs)
+     })
+   })
+  }, [])
 
   const clear = () => {
-    setPersonName([]);
+    db.collection("jobs")
+      .orderBy("timestamp", "desc")
+      .get()
+      .then((shot) => {
+        const docs = [];
+        shot.forEach((doc) => {
+          docs.push({ ...doc.data(), id: doc.id });
+        });
+        setJobsOffers(docs);
+      });
+    setItemName([]);
   };
-
 
   return (
     <>
@@ -96,7 +114,7 @@ export default function Position() {
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
               multiple
-              value={personName}
+              value={itemName}
               onChange={handleChange}
               className="select__multiple"
               input={<Input id="select-multiple-chip" />}
@@ -109,13 +127,14 @@ export default function Position() {
               )}
               MenuProps={MenuProps}
             >
-              {names[0].map((name) => (
+              {names.map((name) => (
                 <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
+                  title={name.info}
+                  key={name.position}
+                  value={name.position}
+                  style={getStyles(name, itemName, theme)}
                 >
-                  <p>{name}</p>
+                  <p>{name.position}</p>
                 </MenuItem>
               ))}
             </Select>
