@@ -38,13 +38,14 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(setKeynavbar(queryNavbar));
-  }, [queryNavbar]);
+  },[queryNavbar]);
 
   useEffect(() => {
     db.collection('user').doc(currentUser.id).collection('notificationMessages')
     .onSnapshot(snapshot =>{
       const docs = [];
-      snapshot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
+      snapshot.docs.map(doc => docs.push({ ...doc.data() }));
+     
       setNotificationMessages(docs);
     })
   },[]);

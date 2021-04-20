@@ -81,10 +81,10 @@ export default function Position({ setJobsOffers }) {
    db.collection("Position")
    .onSnapshot((shot)=> {
     let docs = [];
-     console.log(">>shot<<",shot)
+     //console.log(">>shot<<",shot)
      shot.forEach((doc) => {
        docs = [...docs, doc.data()]
-       console.log("data()", doc.data())
+       //console.log("data()", doc.data())
        setNames(docs)
      })
    })
