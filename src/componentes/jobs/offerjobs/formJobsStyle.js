@@ -35,5 +35,12 @@ export default makeStyles((theme) => ({
       backgroundColor:'white',
     }
   },
+  selectControl: {
+    minWidth: "100%",
+    padding: "9px",
+  },
+  inputSelect: {
+    margin: "10px",
+    }
   
 }));

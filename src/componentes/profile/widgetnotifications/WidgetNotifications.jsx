@@ -32,7 +32,7 @@ const WidgetNotifications = () => {
             <div className={classes.body}>
               <Paper className={classes.top}>
                   <div className={classes.heading}>
-                    <h4><b>People who sent you messages</b></h4>
+                    <h4><b>Messages notifications</b></h4>
                   </div>
                 <hr />
                 {messages.map(message =>(
