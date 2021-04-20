@@ -25,7 +25,6 @@ const HomeProfile = (props) => {
   const locationUrl = useSelector((state) => state.locationUrl);
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
-
   const [messages, setMessages] = useState();
 
   useEffect(()=>{
@@ -36,7 +35,7 @@ const HomeProfile = (props) => {
       setMessages(docs)
     })
   },[])
- 
+  
   
   const handleClose = () => {
     setOpen(false);
@@ -91,7 +90,7 @@ const HomeProfile = (props) => {
                   <Grid item md={3}>
                     <div>
                       <Widget />
-                      {messages ? (<WidgetNotifications />) :null}
+                      {messages ? (<WidgetNotifications messages={messages}/>) :null}
                       
                     </div>
                   </Grid>
