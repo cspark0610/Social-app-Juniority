@@ -28,7 +28,7 @@ const HomeProfile = (props) => {
   const [messages, setMessages] = useState();
 
   useEffect(()=>{
-    db.collection('user').doc(String(currentUser.id)).collection('notificationMessages')
+    db.collection('user').doc(String(currentUser.id)).collection('notificationMessages').orderBy('timestamp', 'desc')
     .onSnapshot(shot =>{
       const docs = [];
       shot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
