@@ -21,7 +21,7 @@ const WidgetNotifications = ( { messages} ) => {
                 {messages.map(message =>(
                 <div className={classes.people}  key={message.id}>
                     <div className={classes.people_left}>
-                        <Avatar>{message.senderName.charAt(0)}</Avatar>
+                        <Avatar>{message.senderName.charAt(0).toUpperCase()}</Avatar>
                     </div>
                     <div className={classes.people_right}>
                         <Typography><Link to={`/chat/${message.roomId}`}>{message.senderName}</Link></Typography>
