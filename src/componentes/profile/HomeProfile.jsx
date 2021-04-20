@@ -12,7 +12,9 @@ import { db } from "../../firebase/firebase";
 import { useSelector } from "react-redux";
 import TransitionsModal from "../home/TransitionModal";
 import { useHistory } from "react-router-dom";
-import { PersonalInfo } from "./personalInfo/personalInfo";
+import WidgetNotifications from './widgetnotifications/WidgetNotifications';
+import {PersonalInfo} from './personalInfo/personalInfo'
+
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
@@ -24,6 +26,18 @@ const HomeProfile = (props) => {
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
 
+  const [messages, setMessages] = useState();
+
+  useEffect(()=>{
+    db.collection('user').doc(String(currentUser.id)).collection('notificationMessages')
+    .onSnapshot(shot =>{
+      const docs = [];
+      shot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
+      setMessages(docs)
+    })
+  },[])
+ 
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -62,36 +76,24 @@ const HomeProfile = (props) => {
                   <Banner />
                 </Grid>
               </Grid>
-              <div className="home__border">
-                <Grid container display="flex" align="center" spacing={3}>
+              <div className='home__border'>
+                <Grid container display='flex' align='center' spacing={3}>
                   <Grid item md={3}>
-                    <Profile
-                      user={selectedUser}
-                      setUsers={setUsers}
-                      handleOpen={handleOpen}
-                      setTitle={setTitle}
-                    />
+                    <Profile user={selectedUser} setUsers={setUsers} handleOpen={handleOpen} setTitle={setTitle} />
                     <Portfolio />
                   </Grid>
-                  <TransitionsModal
-                    open={open}
-                    setOpen={setOpen}
-                    handleClose={handleClose}
-                    users={users}
-                    title={title}
-                  />
+                  <TransitionsModal open={open} setOpen={setOpen} handleClose={handleClose} users={users} title={title} />
                   <Grid item md={6}>
                     <PostProfile user={selectedUser} />
-                    <PersonalInfo user={selectedUser} />
-                    <Publication
-                      handleOpen={handleOpen}
-                      setTitle={setTitle}
-                      setUsers={setUsers}
-                      selectedUser={selectedUser}
-                    />
+                    <PersonalInfo user={selectedUser}/>
+                    <Publication handleOpen={handleOpen} setTitle={setTitle} setUsers={setUsers} selectedUser={selectedUser} />
                   </Grid>
                   <Grid item md={3}>
-                    <Widget />
+                    <div>
+                      <Widget />
+                      {messages ? (<WidgetNotifications />) :null}
+                      
+                    </div>
                   </Grid>
                 </Grid>
               </div>

@@ -14,6 +14,7 @@ const HomeJobs = () => {
   const [jobsOffers, setJobsOffers] = useState([]);
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
+ 
   return (
     <>
       {!currentUser ? (

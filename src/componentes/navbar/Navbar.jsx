@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import logo from "../assets/juniority.svg";
-  import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-
+import DvrOutlinedIcon from '@material-ui/icons/DvrOutlined';
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/ChatBubbleOutline";
 import NotificationsIcon from "@material-ui/icons/NotificationsNone";
@@ -21,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/currentUser";
 import { setLocationUrl } from "../../store/locationUrl";
 import { setKeynavbar } from "../../store/keywordNavbar";
+import { db } from "../../firebase/firebase";
+
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -32,20 +34,29 @@ const Navbar = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [queryNavbar, setQueryNavbar] = useState("");
+  const [notificationMessages, setNotificationMessages] = useState([]);
 
   useEffect(() => {
     dispatch(setKeynavbar(queryNavbar));
   }, [queryNavbar]);
 
+  useEffect(() => {
+    db.collection('user').doc(currentUser.id).collection('notificationMessages')
+    .onSnapshot(snapshot =>{
+      const docs = [];
+      snapshot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
+      setNotificationMessages(docs);
+    })
+  },[]);
+
+
   const handleClickNavbar = (e) => {
     e.preventDefault();
     setQueryNavbar("");
   };
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -90,14 +101,16 @@ const Navbar = () => {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
+      
       <MenuItem>
         <IconButton aria-label='show 11 new notifications'>
           <Badge badgeContent={11} color='secondary'>
             <NotificationsIcon className='iconColor' />
           </Badge>
         </IconButton>
-        <p>Notificationss</p>
+        <p>Notifications</p>
       </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton aria-label='account of current user' aria-controls='primary-search-account-menu' aria-haspopup='true' color='inherit'>
           <AccountCircle className='iconColor' />
@@ -108,6 +121,7 @@ const Navbar = () => {
       </MenuItem>
     </Menu>
   );
+  
 
   return (
     <div>
@@ -130,6 +144,12 @@ const Navbar = () => {
 
         <div className='containerbuttonsNavbar '>
           <div className={classes.sectionDesktop}>
+            <Link to="/courses">
+              <IconButton>
+                <DvrOutlinedIcon className="ibutton" />
+                <div className="letrabutton">Courses</div>
+              </IconButton>
+            </Link>
             <Link to="/jobs">
               <IconButton>
                 <WorkOutlineIcon className="ibutton" />
@@ -142,16 +162,21 @@ const Navbar = () => {
                 <div className="letrabutton">Connection</div>
               </IconButton>
             </Link>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="primary">
-                <MailIcon className="iconColor" />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label='show 17 new notifications' color='inherit'>
-              <Badge badgeContent={17} color='secondary'>
-                <NotificationsIcon className='iconColor' />
-              </Badge>
-            </IconButton>
+            {notificationMessages !=='' ? (
+              <IconButton aria-label='messages notifications' color='inherit'>
+                <Badge badgeContent={notificationMessages.length ? notificationMessages.length :0} color='secondary'>
+                  <MailIcon className='iconColor' />
+                </Badge>
+              </IconButton>
+            ) : null}
+            {currentUser.followers ? (
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={currentUser.followers.length ? currentUser.followers.length :0} color="primary">
+                  <NotificationsIcon className="iconColor" />
+                </Badge>
+              </IconButton>
+            ) : null}
+            
             <IconButton edge='end' aria-label='account of current user' aria-controls={menuId} aria-haspopup='true' onClick={handleProfileMenuOpen} color='inherit'>
               <Avatar src={currentUser.avatar} />
             </IconButton>

@@ -54,6 +54,7 @@ export default function FilterSkills({ setJobsOffers }) {
   const [itemName, setItemName] = useState([]);
   const [names, setNames] = useState([]);
   const filter = useSelector((state) => state.filter);
+  const [showAll, setShowAll] = useState(false);
 
 
   const handleChange = (event) => {

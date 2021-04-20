@@ -7,6 +7,8 @@ import { filterReducer } from "./filter";
 
 import { keywordReducer } from "./keyword";
 import { keynavbarReducer } from "./keywordNavbar";
+import { targetEmailReducer } from "./targetEmail";
+import { roomIdReducer } from "./roomid";
 
 export default configureStore({
     reducer:{
@@ -16,6 +18,8 @@ export default configureStore({
         filter: filterReducer,
         keyword: keywordReducer,
         keynavbar:keynavbarReducer,
-        locationUrl: locationUrlReducer
+        locationUrl: locationUrlReducer,
+        targetEmail: targetEmailReducer,
+        roomId: roomIdReducer,
     }
 });

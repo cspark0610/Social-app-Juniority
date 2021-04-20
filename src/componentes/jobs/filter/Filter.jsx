@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 import "./style.css";
 import Button from "@material-ui/core/Button";
 import JobType from "./JobType";
@@ -9,7 +9,9 @@ import PayRate from "./PayRate";
 import FilterSkills from "./FilterSkills";
 import Position from "./Position";
 
+
 const Filter = ({ jobsOffers, setJobsOffers }) => {
+ 
   const filter = useSelector((state) => state.filter);
 
   const handleClickPosition = () => {

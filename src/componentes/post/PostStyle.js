@@ -22,6 +22,7 @@ export default makeStyles({
   message: {
     textAlign: "justify",
     textJustify: "inter-word",
+    marginBottom: '4em'
   },
   body: {
     overflowWrap: "anywhere",
@@ -36,6 +37,7 @@ export default makeStyles({
     margin: "auto",
     width: "89%",
     marginBottom: "2%",
+    marginTop:'3%'
   },
   containerCommentText: {
     textAlign: "start",
