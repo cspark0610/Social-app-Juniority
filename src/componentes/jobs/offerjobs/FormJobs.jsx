@@ -87,33 +87,14 @@ const FormJobs = () => {
             <b>Post your job offer</b>
           </Typography>
 
-          <TextField
-            required
-            name="position"
-            variant="outlined"
-            label="Position"
-            placeholder="Position"
-            fullWidth
-            value={job.position}
-            onChange={(e) => setJob({ ...job, position: e.target.value })}
-          />
+          <TextField required name="position" variant="outlined" label="Position" placeholder="Position" fullWidth value={job.position} onChange={(e) => setJob({ ...job, position: e.target.value })} />
          
             {names[0] && (
           <FormControl variant="outlined" className={classes.selectControl}>
             <InputLabel id="demo-mutiple-chip-label" className={classes.inputSelect}>Pay Rate</InputLabel>
-            <Select
-              labelId="demo-mutiple-chip-label"
-              id="demo-mutiple-chip"
-              multiple={false}
-              value={itemName}
-              onChange={handleChange}
-              MenuProps={MenuProps}
-            >
+            <Select labelId="demo-mutiple-chip-label" id="demo-mutiple-chip" multiple={false} value={itemName} onChange={handleChange} MenuProps={MenuProps} >
               {names[0].map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                >
+                <MenuItem key={name} value={name} >
                   <p>{name}</p>
                 </MenuItem>
               ))}
@@ -121,47 +102,10 @@ const FormJobs = () => {
           </FormControl>
       )}
  
-          <TextField
-            required
-            name="availability"
-            variant="outlined"
-            label="Availability"
-            placeholder="Availability"
-            fullWidth
-            value={job.availability}
-            onChange={(e) => setJob({ ...job, availability: e.target.value })}
-          />
-          <TextField
-            required
-            name="skills"
-            variant="outlined"
-            label="Skills"
-            placeholder="Skills (Space Separeted)"
-            fullWidth
-            value={job.skills}
-            onChange={(e) => setJob({ ...job, skills: e.target.value })}
-          />
-          <TextField
-            required
-            name="location"
-            variant="outlined"
-            label="Location"
-            placeholder="Location"
-            fullWidth
-            value={job.location}
-            onChange={(e) => setJob({ ...job, location: e.target.value })}
-          />
-          <TextField
-            required
-            name="description"
-            variant="outlined"
-            label="Description"
-            placeholder="Description"
-            multiline
-            fullWidth
-            value={job.description}
-            onChange={(e) => setJob({ ...job, description: e.target.value })}
-          />
+          <TextField required name="availability" variant="outlined" label="Availability" placeholder="Availability" fullWidth value={job.availability} onChange={(e) => setJob({ ...job, availability: e.target.value })} />
+          <TextField required name="skills" variant="outlined" label="Skills" placeholder="Skills (Space Separeted)" fullWidth value={job.skills} onChange={(e) => setJob({ ...job, skills: e.target.value })} />
+          <TextField required name="location" variant="outlined" label="Location" placeholder="Location" fullWidth value={job.location} onChange={(e) => setJob({ ...job, location: e.target.value })} />
+          <TextField required name="description" variant="outlined" label="Description" placeholder="Description" multiline fullWidth value={job.description} onChange={(e) => setJob({ ...job, description: e.target.value })} />
 
           <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth>
             Submit
