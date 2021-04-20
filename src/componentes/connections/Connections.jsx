@@ -14,22 +14,26 @@ import { Link } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import { db } from "../../firebase/firebase";
 import { removeFollower, unFollow } from "../utils/followSystem";
+import { useSelector } from "react-redux";
 
 
-const Connections = ({ user }) => {
+const Connections = () => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([1]);
-  const [currentUser, setCurrentUser] = useState();
+  const currentUser = useSelector(state => state.currentUser);
+  const [actualUser, setactualUser] = useState()
 
   useEffect(() => {
-    db.collection("user")
-      .where("id", "==", user.id)
+    if(currentUser) {
+      db.collection("user")
+      .where("id", "==", currentUser.id)
       .onSnapshot((snapshot) => {
         snapshot.forEach((doc) => {
-          setCurrentUser(doc.data());
+          setactualUser(doc.data());
         });
       });
-  }, []);
+    };
+  }, [currentUser]);
 
   const handleToggle = (value) => async () => {
     const currentIndex = checked.indexOf(value);
@@ -52,7 +56,7 @@ const Connections = ({ user }) => {
         .doc(user.id)
         .get()
         .then((doc) => {
-          unFollow(doc.data(), currentUser);
+          unFollow(doc.data(), actualUser);
         });
     } else {
       db.collection("user")
@@ -60,34 +64,34 @@ const Connections = ({ user }) => {
         .get()
         .then((doc) => {
           console.log(doc);
-          removeFollower(doc.data(), currentUser);
+          removeFollower(doc.data(), actualUser);
         });
     }
   };
 
   return (
     <>
-      {currentUser && (
+      {actualUser && (
         <>
           <Navbar />
           <div className={classes.main}>
             <div className={classes.containerCard}>
-              <img src={currentUser.avatar} width='50px' alt='mi avatar' className={classes.imgCard} />
+              <img src={actualUser.avatar} width='50px' alt='mi avatar' className={classes.imgCard} />
 
               <div className={classes.nameUser}>
                 <div>
-                  <h1 className={classes.nameSpace}> {currentUser.fullName} </h1> <br />
-                  <h7 className={classes.correoSpace}> {currentUser.email} </h7>
+                  <h1 className={classes.nameSpace}> {actualUser.fullName} </h1> <br />
+                  <h7 className={classes.correoSpace}> {actualUser.email} </h7>
                 </div>
               </div>
               <div className={classes.nameUser}>
                 <h1>
-                  Followers <b>{currentUser.followers.length}</b>
+                  Followers <b>{actualUser.followers.length}</b>
                 </h1>{" "}
                 <br />
                 <h7>
                   {" "}
-                  Following <b>{currentUser.follow.length}</b>
+                  Following <b>{actualUser.follow.length}</b>
                 </h7>
               </div>
               <Link to='/profile/configuration'>
