@@ -4,7 +4,7 @@ import { db } from "../../firebase/firebase.js";
 import firebase from "firebase";
 
 import inputStyles from "./InputMessageStyle.js";
-import { Avatar, Card, Typography } from "@material-ui/core";
+import { Avatar, Breadcrumbs, Card, Popover, Typography, Chip } from "@material-ui/core";
 import useStyles from "./PostStyle.js";
 import InputOption from "./InputOption";
 import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -19,6 +19,8 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import ReactPlayer from "react-player";
 import CreateIcon from "@material-ui/icons/Create";
+import {TwitterShareButton, FacebookShareButton, LinkedinShareButton,WhatsappShareButton,  TwitterIcon, FacebookIcon, LinkedinIcon, WhatsappIcon,} from 'react-share'
+import { emphasize, withStyles } from '@material-ui/core/styles';
 
 //import { useAvatarStyles, useInputStyles } from "./InputMessageStyle.js";
 
@@ -37,6 +39,35 @@ const Post = ({ id, message, messageCode, messageVideo, userId, postImage, likes
   const [viewMore, setViewMore] = useState(true);
   const [show, setShow] = useState(false);
   const [targetUser, setTargetUser] = useState()
+  //popOver Share
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const idPopOver = open ? 'simple-popover' : undefined;
+  //popOver
+  //styledBreadCrumb
+  const StyledBreadcrumb = withStyles((theme) => ({
+    root: {
+      backgroundColor: theme.palette.grey[100],
+      height: theme.spacing(3),
+      color: theme.palette.grey[800],
+      fontWeight: theme.typography.fontWeightRegular,
+      '&:hover, &:focus': {
+        backgroundColor: theme.palette.grey[300],
+      },
+      '&:active': {
+        boxShadow: theme.shadows[1],
+        backgroundColor: emphasize(theme.palette.grey[300], 0.12),
+      },
+    },
+  }))(Chip);
 
   useEffect(() => {
     db.collection('user').where('id', '==', userId)
@@ -181,7 +212,6 @@ const Post = ({ id, message, messageCode, messageVideo, userId, postImage, likes
         }
       });
   }, []);
-  //console.log('current user', currentUser);
 
   return (
     <>
@@ -189,7 +219,10 @@ const Post = ({ id, message, messageCode, messageVideo, userId, postImage, likes
 
     <div className={classes.post}>
       <div className={classes.header}>
-        <Avatar src={targetUser.avatar} />
+        <div>
+          <Avatar src={targetUser.avatar} />
+          <Breadcrumbs aria-label='breadcrumb'><StyledBreadcrumb component="span" label={targetUser.userType}/></Breadcrumbs>
+        </div>
         <div className={classes.info}>
           <Link to={`/profile/${userId}`}>
             <h1 className='font-bold text-transform: uppercase'>{targetUser.fullName}</h1>
@@ -231,7 +264,7 @@ const Post = ({ id, message, messageCode, messageVideo, userId, postImage, likes
           <InputOption Icon={inUse} color='#E60026'
             title={
               <div>
-                Likes
+                Likes 
                 <span onClick={openLikes} className={`${classes.likes} zse`}>{likes || 0}</span>
               </div>
             }
@@ -243,7 +276,28 @@ const Post = ({ id, message, messageCode, messageVideo, userId, postImage, likes
         <span onClick={handleCommentCode}>
           <InputOption Icon={SaveOutlinedIcon} title='Respond with code' color='#ADD8E6' />
         </span>
-        <InputOption Icon={ShareOutlinedIcon} title='Share' />
+        <span aria-describedby={idPopOver} onClick={handleClick}>
+          <InputOption Icon={ShareOutlinedIcon} title='Share' />
+        </span>
+        <Popover
+          id={idPopOver}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <TwitterShareButton children={''} url={'https://juniority-deploy.web.app/'} style={{display:'flex'}}><TwitterIcon size={32} round={true} /> Twitter</TwitterShareButton>
+          <FacebookShareButton children={''} url={'https://juniority-deploy.web.app/'} style={{display:'flex'}}><FacebookIcon size={32} round={true} /> Facebook</FacebookShareButton>
+          <LinkedinShareButton children={''} url={'https://juniority-deploy.web.app/'} style={{display:'flex'}}><LinkedinIcon size={32} round={true} /> LinkedIn</LinkedinShareButton>
+          <WhatsappShareButton children={''} url={'https://juniority-deploy.web.app/'} style={{display:'flex'}}><WhatsappIcon size={32} round={true} /> Whatsapp</WhatsappShareButton>
+        </Popover>
       </div>
       <hr />
       {comment && (

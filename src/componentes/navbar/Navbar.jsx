@@ -22,7 +22,7 @@ import { setCurrentUser } from "../../store/currentUser";
 import { setLocationUrl } from "../../store/locationUrl";
 import { setKeynavbar } from "../../store/keywordNavbar";
 import { db } from "../../firebase/firebase";
-
+import juniority from "../assets/juniorityText.png"
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -45,12 +45,12 @@ const Navbar = () => {
     .onSnapshot(snapshot =>{
       const docs = [];
       snapshot.docs.map(doc => docs.push({ ...doc.data() }));
+     
       const unique = (arr , key ) =>{
         return [...new Map(arr.map(item => [item[key], item])).values()]
       }
       const uniqueMessages = unique(docs, 'fromUserEmail') 
-    
-      setNotificationMessages(uniqueMessages);
+      setNotificationMessages(uniqueMessages)
     })
   },[]);
 
@@ -131,10 +131,14 @@ const Navbar = () => {
   return (
     <div>
       <div className='navbar'>
+        <div className="div__logo">
         <Link className='containerLogo' to='/'>
           <img src={logo} className='logo' alt='Logo Juniority' />
         </Link>
-
+        {/* <div className='logo__juniorty'> */}
+        <img src={juniority}  alt='Logo Juniority' className='logo__juniorty'/>
+        {/* </div> */}
+        </div>
         <div className='containerinputNav'>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

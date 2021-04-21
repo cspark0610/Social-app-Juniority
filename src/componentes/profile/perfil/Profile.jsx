@@ -37,7 +37,6 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
         .where("id", "==", user.id)
         .onSnapshot((snapshot) => {
           snapshot.forEach((doc) => {
-           
             setLocalUser(doc.data());
           });
         });

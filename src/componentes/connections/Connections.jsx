@@ -63,7 +63,6 @@ const Connections = () => {
         .doc(user.id)
         .get()
         .then((doc) => {
-          console.log(doc);
           removeFollower(doc.data(), actualUser);
         });
     }

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useFirebaseApp } from "reactfire";
 import useStyles from "./styles";
 
-import { auth, db, providerFacebook, providerGoogle, providerGithub } from "../../firebase/firebase";
+import { auth, db, providerGoogle, providerGithub } from "../../firebase/firebase";
 import { setCurrentUser } from "../../store/currentUser";
 import Alert from "@material-ui/lab/Alert";
 
@@ -24,7 +24,6 @@ const Login = () => {
       .signInWithPopup(method)
       .then((result) => {
         if (result.additionalUserInfo.providerId === "github.com") {
-          //console.log(result.user.email);
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,
@@ -34,6 +33,7 @@ const Login = () => {
             followers: [],
             experience: [],
             education: [],
+            aboutMe:"",
             location: "No info",
             position: "No info",
             isOpenToWork: false,
@@ -141,7 +141,6 @@ const Login = () => {
         <Typography variant='caption' align='center'>
           Or login with a social media
           <i onClick={() => socialLogIn(providerGoogle)} className='fab fa-google w-10' />
-          <i onClick={() => socialLogIn(providerFacebook)} className='fab fa-facebook w-10-my-2' />
           <i onClick={() => socialLogIn(providerGithub)} className='fab fa-github w-10' />
         </Typography>
       </div>
