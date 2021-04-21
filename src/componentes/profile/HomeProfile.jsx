@@ -9,24 +9,26 @@ import Navbar from "../navbar/Navbar";
 import "./style.css";
 import { Publication } from "./post/Publication";
 import { db } from "../../firebase/firebase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TransitionsModal from "../home/TransitionModal";
 import { useHistory } from "react-router-dom";
 import WidgetNotifications from './widgetnotifications/WidgetNotifications';
 import {PersonalInfo} from './personalInfo/personalInfo'
+import { setSelectedUser } from "../../store/selectedUser";
 
 
 const HomeProfile = (props) => {
   const userId = props.match.params.id;
-  const [selectedUser, setSelectedUser] = useState();
+/*   const [selectedUser, setSelectedUser] = useState(); */
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState();
   const locationUrl = useSelector((state) => state.locationUrl);
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
-
   const [messages, setMessages] = useState();
+  const dispatch = useDispatch();
+  const selectedUser = useSelector(state => state.selectedUser);
 
   useEffect(()=>{
     db.collection('user').doc(String(currentUser.id)).collection('notificationMessages')
@@ -49,7 +51,7 @@ const HomeProfile = (props) => {
     db.collection("user")
       .where("id", "==", userId)
       .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => setSelectedUser(doc.data()));
+        snapshot.docs.map((doc) => dispatch(setSelectedUser(doc.data())));
       });
   }, [locationUrl]);
 
@@ -57,7 +59,7 @@ const HomeProfile = (props) => {
     db.collection("user")
       .where("id", "==", userId)
       .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => setSelectedUser(doc.data()));
+        snapshot.docs.map((doc) => dispatch(setSelectedUser(doc.data())));
       });
   }, []);
 

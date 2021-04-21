@@ -22,41 +22,37 @@ const useStyles = makeStyles({
     height: 120,
   },
 });
-const Proyect = () => {
+const Proyect = ({title, description, photo, github, link}) => {
   const classes = useStyles();
 
   return (
     <div>
-    
           <Card className={classes.root}>
-            <a href="https://jovial-lamarr-123387.netlify.app/">
+            <a target='_blank' href={link}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image="https://image.slidesharecdn.com/presentacinproyectox-121111173605-phpapp02/95/proyecto-x-1-638.jpg?cb=1352655626"
+                  image={photo}
                   title="Contemplative Reptile"
                 />
                 <CardContent className="backBody">
                   <Typography gutterBottom variant="h5" component="h2">
-                    Titulo proyecto
+                    {title}
                   </Typography>
                   <Typography variant="body2" component="p">
-                    Descripción - Tecnologías Lorem ipsum dolor, sit amet
-                    consectetur adipisicing elit. Deleniti hic, vel ex
-                    accusantium
+                    {description}
                   </Typography>
                 </CardContent>
               </CardActionArea>
             </a>
             <CardActions>
-              <a href="https://github.com/patriciodfernandez/AllServiceFrontend.git">
+              <a target='_blank' href={github}>
                 <Fab variant="small" className="button">
                   <GitHubIcon />
                 </Fab>
               </a>
             </CardActions>
           </Card>{" "}
-      
     </div>
   );
 };
