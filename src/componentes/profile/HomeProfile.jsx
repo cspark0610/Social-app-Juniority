@@ -26,19 +26,22 @@ const HomeProfile = (props) => {
   const currentUser = useSelector((state) => state.currentUser);
   const history = useHistory();
   const [messages, setMessages] = useState();
-
+  
   useEffect(()=>{
     db.collection('user').doc(String(currentUser.id)).collection('notificationMessages').orderBy('timestamp', 'desc')
     .onSnapshot(shot =>{
       const docs = [];
       shot.docs.map(doc => docs.push({ ...doc.data()}));
-     
-      setMessages(docs)
+      const unique = (arr , key ) =>{
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+      }
+      const uniqueMessages = unique(docs, 'fromUserEmail') 
+      setMessages(uniqueMessages)
     })
   },[])
   
-  //console.log('array messages desde home profile',messages);
-  
+  console.log('array messages desde home profile',messages);
+ 
   const handleClose = () => {
     setOpen(false);
   };
