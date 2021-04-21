@@ -36,7 +36,7 @@ const Courses = () => {
               </Grid>
 
               <Grid item md={6}>
-                <FormCourses />
+                {currentUser.userType === 'company' ? <FormCourses /> : null}
                 <OfferCourses coursesOffers={coursesOffers} setCoursesOffers={setCoursesOffers} setAllCourses={setAllCourses} />
               </Grid>
 
