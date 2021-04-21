@@ -26,7 +26,6 @@ const WidgetNotifications = ( { messages} ) => {
                     <div className={classes.people_right}>
                         <Typography><Link to={`/chat/${message.roomId}`}>{message.senderName}</Link></Typography>
                         <p style={{ color: "gray", fontSize: "11px" }}>{new Date(message.timestamp?.toDate()).toUTCString()}</p>
-                        <p style={{ color: "gray", fontSize: "11px" }}>{`From ${message.senderName} to ${message.toUserEmail.split('@')[0]}`}</p>
                     </div>
                </div>
               ))}
