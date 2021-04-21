@@ -48,7 +48,7 @@ function App() {
 
         <Route path="/connections" render={() => <Connections user={currentUser}/>} />
         <Route path='/courses' component={Courses} />
-        <Route path='/portfolio' component={PortafolioGeneral} />
+        <Route path='/portfolio/:id' render={({ match }) => <PortafolioGeneral match={match} />} />
 
       </Switch>
     </>

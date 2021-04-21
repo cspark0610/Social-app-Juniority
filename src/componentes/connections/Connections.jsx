@@ -21,7 +21,7 @@ const Connections = () => {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([1]);
   const currentUser = useSelector(state => state.currentUser);
-  const [actualUser, setactualUser] = useState()
+  const [actualUser, setactualUser] = useState();
 
   useEffect(() => {
     if(currentUser) {
@@ -65,7 +65,7 @@ const Connections = () => {
         .then((doc) => {
           removeFollower(doc.data(), actualUser);
         });
-    }
+    };
   };
 
   return (
@@ -107,7 +107,7 @@ const Connections = () => {
                       <b>Followers</b>
                     </div>
                     <List dense className={classes.root}>
-                      {currentUser.followers.map((value) => {
+                      {actualUser.followers.map((value) => {
                         const labelId = `checkbox-list-secondary-label-${value}`;
                         return (
                           <ListItem key={value} button>
@@ -135,7 +135,7 @@ const Connections = () => {
                       <b>Following</b>
                     </div>
                     <List dense className={classes.root}>
-                      {currentUser.follow.map((value) => {
+                      {actualUser.follow.map((value) => {
                         const labelId = `checkbox-list-secondary-label-${value}`;
                         return (
                           <ListItem key={value} button>
