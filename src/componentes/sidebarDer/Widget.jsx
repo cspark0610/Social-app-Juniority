@@ -3,19 +3,21 @@ import {  Paper, Typography } from "@material-ui/core";
 import useStyles from "./widgetStyle.js";
 import { Avatar } from "@material-ui/core";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
-import { db, auth } from '../../firebase/firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { db } from '../../firebase/firebase'
+
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { addFollow } from "../utils/followSystem.js";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { setLocationUrl } from "../../store/locationUrl.js";
+import randomUniqueNum from './randomUnique.js';
+
 
 const Widget = () => {
   const history = useHistory();
   const classes = useStyles();
   const [ users, setUsers ]= useState([]);
-  const [ userLogueado ] = useAuthState(auth);
+
   const currentUser = useSelector(state => state.currentUser);
   const dispatch = useDispatch();
   const locationUrl = useSelector(state => state.locationUrl);
@@ -23,20 +25,15 @@ const Widget = () => {
   useEffect(()=>{
     db.collection('user')
     .onSnapshot(shot =>{
-      setUsers(shot.docs.map(doc =>({
-            id: doc.id,
-            data: doc.data(),
-      })
-      ))
+      const docs = [];
+      shot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
+      const usersFiltered = docs.filter(user => user.email !== currentUser.email )
+      setUsers(usersFiltered)
     })
   },[]);
- 
-  const usersFiltered = users.filter(user => user['data'].email !== userLogueado.email )
 
-  const randomIdx1 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length) :null
-  const randomIdx2 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length) :null
-  const randomIdx3 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length) :null
-  const randomIdx4 = usersFiltered ? Math.floor(Math.random()*usersFiltered.length):null
+  let usersLength = users.length>0 ? users.length : 0;
+  const randomArr = randomUniqueNum( usersLength-1 , 4 )
   
   const handleClick = (e, user) => {
     e.preventDefault();
@@ -60,6 +57,7 @@ const Widget = () => {
   }
   
   return (
+   
     <div className={classes.body}>
       <Paper className={classes.top}>
         <div className={classes.heading}>
@@ -68,16 +66,16 @@ const Widget = () => {
         <hr />
         <div className={classes.people}>
           <div className={classes.people_left}>
-            <Avatar>{usersFiltered[randomIdx1]?.data?.fullName.charAt(0).toUpperCase()}</Avatar> 
+            <Avatar>{users[randomArr[0]]?.fullName.charAt(0).toUpperCase()}</Avatar> 
           </div>
           <div className={classes.people_right}>
-            <Typography><button onClick={e => userClick(e, usersFiltered[randomIdx1]?.id)} >{usersFiltered[randomIdx1]?.data?.fullName} </button></Typography>
+            <Typography><button onClick={e => userClick(e, users[randomArr[0]]?.id)} >{users[randomArr[0]]?.fullName} </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
-              {usersFiltered[randomIdx1]?.data?.email}
+              {users[randomArr[0]]?.email}
             </p>
           </div>
           <div className={classes.icon}>
-          <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx1]?.id)}>
+          <IconButton onClick={e => handleClick(e, users[randomArr[0]]?.id)}>
             <PersonAddOutlinedIcon />
             </IconButton>
           </div>
@@ -86,17 +84,17 @@ const Widget = () => {
         <hr />
         <div className={classes.people}>
           <div className={classes.people_left}>
-            <Avatar>{usersFiltered[randomIdx2]?.data?.fullName.charAt(0).toUpperCase()} </Avatar>
+            <Avatar>{users[randomArr[1]]?.fullName.charAt(0).toUpperCase()} </Avatar>
           </div>
           <div className={classes.people_right}>
             <Typography>
-            <button onClick={e => userClick(e, usersFiltered[randomIdx2]?.id)} >{usersFiltered[randomIdx2]?.data?.fullName} </button></Typography>
+            <button onClick={e => userClick(e, users[randomArr[1]]?.id)} >{users[randomArr[1]]?.fullName} </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
-              {usersFiltered[randomIdx2]?.data?.email}
+              {users[randomArr[1]]?.email}
             </p>
           </div>
           <div className={classes.icon}>
-            <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx2]?.id)}>
+            <IconButton onClick={e => handleClick(e, users[randomArr[1]]?.id)}>
             <PersonAddOutlinedIcon />
             </IconButton>
           </div>
@@ -105,19 +103,19 @@ const Widget = () => {
         <hr />
         <div className={classes.people}>
           <div className={classes.people_left}>
-            <Avatar>{usersFiltered[randomIdx3]?.data?.fullName.charAt(0).toUpperCase()} </Avatar>
+            <Avatar>{users[randomArr[2]]?.fullName.charAt(0).toUpperCase()} </Avatar>
           </div>
           <div className={classes.people_right}>
             <Typography>
-            <button onClick={e =>  userClick(e, usersFiltered[randomIdx3]?.id) }>
-              {usersFiltered[randomIdx3]?.data?.fullName}
+            <button onClick={e =>  userClick(e, users[randomArr[2]]?.id) }>
+              {users[randomArr[2]]?.fullName}
               </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
-              {usersFiltered[randomIdx3]?.data?.email}
+              {users[randomArr[2]]?.email}
             </p>
           </div>
           <div className={classes.icon}>
-          <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx3]?.id)}>
+          <IconButton onClick={e => handleClick(e, users[randomArr[2]]?.id)}>
             <PersonAddOutlinedIcon />
             </IconButton>
           </div>
@@ -126,19 +124,19 @@ const Widget = () => {
         <hr />
         <div className={classes.people}>
           <div className={classes.people_left}>
-            <Avatar>{usersFiltered[randomIdx4]?.data?.fullName.charAt(0).toUpperCase()} </Avatar>
+            <Avatar>{users[randomArr[3]]?.fullName.charAt(0).toUpperCase()} </Avatar>
           </div>
           <div className={classes.people_right}>
             <Typography>
-            <button onClick={e => userClick(e, usersFiltered[randomIdx4]?.id) }>
-              {usersFiltered[randomIdx4]?.data?.fullName}
+            <button onClick={e => userClick(e, users[randomArr[3]]?.id) }>
+              {users[randomArr[3]]?.fullName}
               </button></Typography>
             <p style={{ color: "gray", fontSize: "11px" }}>
-              {usersFiltered[randomIdx4]?.data?.email}
+              {users[randomArr[3]]?.email}
             </p>
           </div>
           <div className={classes.icon}>
-          <IconButton onClick={e => handleClick(e, usersFiltered[randomIdx4]?.id)}>
+          <IconButton onClick={e => handleClick(e, users[randomArr[3]]?.id)}>
             <PersonAddOutlinedIcon />
             </IconButton>
           </div>

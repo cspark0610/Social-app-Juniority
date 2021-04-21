@@ -21,7 +21,7 @@ const HomeJobs = () => {
         history.push("/register")
       ) : (
         <>
-          <Navbar />
+          <Navbar/>
 
           <div className="home__borderJob home__border">
             <Grid container display="flex" align="center" spacing={3}>

@@ -11,6 +11,7 @@ import { db } from "../../firebase/firebase";
 import useStyles from "../post/PostStyle";
 import inputStyles from "../post/InputMessageStyle";
 import TransitionsModal from "../home/TransitionModal";
+import moment from "moment";
 
 const OfferJobsPost = ({ courseOffer }) => {
   const inputClasses = inputStyles();
@@ -175,6 +176,7 @@ const OfferJobsPost = ({ courseOffer }) => {
                 <h2>{courseOffer.name}</h2>
               </a>
               <p>Juniority</p>
+              <p>{`Published: ${moment(new Date(courseOffer.timestamp?.toDate()).toUTCString()).fromNow()}`}</p>
             </Grid>
           </Grid>
           <hr className='line__profile__widget' />
