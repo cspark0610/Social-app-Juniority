@@ -140,7 +140,6 @@ export const Configuration = () => {
 
   const handleChange = (event) => {
     setOpenToWork(event.target.checked);
-    console.log(openToWork)
   };
 
   return (

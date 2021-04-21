@@ -212,7 +212,6 @@ const Post = ({ id, message, messageCode, messageVideo, userId, postImage, likes
         }
       });
   }, []);
-  //console.log('current user', currentUser);
 
   return (
     <>

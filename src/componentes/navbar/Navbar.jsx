@@ -46,7 +46,11 @@ const Navbar = () => {
       const docs = [];
       snapshot.docs.map(doc => docs.push({ ...doc.data() }));
      
-      setNotificationMessages(docs);
+      const unique = (arr , key ) =>{
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+      }
+      const uniqueMessages = unique(docs, 'fromUserEmail') 
+      setNotificationMessages(uniqueMessages)
     })
   },[]);
 
