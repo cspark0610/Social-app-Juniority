@@ -208,7 +208,7 @@ export const Configuration = () => {
                 </Button>
               </>
             ) : null}
-            <TextField className={classes.textField} value={portfolioInput} onChange={(e) => setPortfolioInput(e.target.value)} name='portfolio' variant='outlined' label='Portfolio' placeholder='Portfolio' fullWidth />
+            <hr/>
             <label htmlFor='avatar'>Profile photo </label>
             <input onChange={(e) => onFileChange(e)} name='avatar' accept='image/*' id='icon-button-file' type='file' className={classes.avatarInput} />
             <Button className={classes.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth>
