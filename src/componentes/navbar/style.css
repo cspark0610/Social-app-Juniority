@@ -76,6 +76,10 @@
     color:#B4DCD6 ;
 }
 .logo__juniorty{
-    width: 15%;
+    width: 30%;
     height: 70%;
+}
+.div__logo{
+    display: flex;
+    align-items: center;
 }

@@ -4,6 +4,7 @@ export default makeStyles((theme) => ({
   search: {
     position: "relative",
     backgroundColor: fade(theme.palette.common.white, 0.15),
+    marginRight: "70px",
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
