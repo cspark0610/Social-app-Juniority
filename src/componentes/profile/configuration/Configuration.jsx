@@ -152,12 +152,14 @@ export const Configuration = () => {
               <b>Update your profile</b>
             </Typography>
             <TextField className={classes.textField} value={fullNameInput} onChange={(e) => setFullNameInput(e.target.value)} name='fullName' variant='outlined' label='Full Name' placeholder='Full Name' fullWidth />
-            <TextField className={classes.textField} value={positionInput} onChange={(e) => setPositionInput(e.target.value)} name='position' variant='outlined' label='Position' placeholder='Position' fullWidth />
+            {currentUser.userType === 'user' ? (<TextField className={classes.textField} value={positionInput} onChange={(e) => setPositionInput(e.target.value)} name='position' variant='outlined' label='Position' placeholder='Position' fullWidth />):null}
             <TextField className={classes.textField} value={locationInput} onChange={(e) => setLocationInput(e.target.value)} name='location' variant='outlined' label='Location' placeholder='Location' fullWidth />
             <TextField className={classes.textArea} value={aboutMeInput} id='outlined-multiline-static' label='About me' onChange={(e) => setAboutMeInput(e.target.value)} multiline rows={4} variant='outlined' />
-            <p className={classes.pWork}>Are you open to work</p>
+            <p className={classes.pWork}>{currentUser.userType === 'user' ? "Are you open to work" : 'Are you hiring'}</p>
             <Switch checked={openToWork} onChange={handleChange} color='primary' name='checkedB' inputProps={{ "aria-label": "primary checkbox" }} /> <br></br>
-            <h5 className={classes.experience}>Experience:</h5>{" "}
+            {/* experience */}
+            <div>
+            {currentUser.userType === 'user' ? (<> <h5 className={classes.experience}>Experience:</h5>{" "}
             <button onClick={(e) => addClickHandler(e, setShowExperienceForm)} className={(classes.experience, classes.experienceButt)}>
               <AddIcon></AddIcon>
             </button>
@@ -207,7 +209,8 @@ export const Configuration = () => {
                   Add education
                 </Button>
               </>
-            ) : null}
+            ) : null}</>) : null}
+            </div>
             <hr/>
             <label htmlFor='avatar'>Profile photo </label>
             <input onChange={(e) => onFileChange(e)} name='avatar' accept='image/*' id='icon-button-file' type='file' className={classes.avatarInput} />

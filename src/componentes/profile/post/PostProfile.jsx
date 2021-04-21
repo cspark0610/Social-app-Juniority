@@ -28,7 +28,7 @@ export const PostProfile = ({ user }) => {
           <Grid container>
             <Grid item md={6} className='text__aling__left text__aling'>
               <h3 className='uppercase'>{user.fullName}</h3>
-              <p>{user.position}</p>
+              {currentUser.userType === 'user' ? (<p>{user.position}</p>): null}
               <p>
                 <LocationOnIcon />
                 {user.location}
@@ -57,7 +57,8 @@ export const PostProfile = ({ user }) => {
                       <MailOutlineIcon className='message__post' /> Chat Message{" "}
                     </Button>
                   </Link>
-                  <p className='is_open_to_work_p'> {user.isOpenToWork ? "OPEN TO WORK" : "NOT OPEN TO WORK"} </p>
+                  {user.userType === 'user' ? (<p className='is_open_to_work_p'> {user.isOpenToWork ? "OPEN TO WORK" : "NOT OPEN TO WORK"} </p>):
+                  (<p className='is_open_to_work_p'> {user.isOpenToWork ? "IS HIRING" : "NOT CURRENTLY HIRING"}</p>)}
                 </>
               )}
             </Grid>
