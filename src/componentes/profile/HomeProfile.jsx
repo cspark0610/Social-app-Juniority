@@ -31,14 +31,16 @@ const HomeProfile = (props) => {
   const selectedUser = useSelector(state => state.selectedUser);
 
   useEffect(()=>{
-    db.collection('user').doc(String(currentUser.id)).collection('notificationMessages')
+    db.collection('user').doc(String(currentUser.id)).collection('notificationMessages').orderBy('timestamp', 'desc')
     .onSnapshot(shot =>{
       const docs = [];
-      shot.docs.map(doc => docs.push({ ...doc.data(), id: doc.id }));
+      shot.docs.map(doc => docs.push({ ...doc.data()}));
+     
       setMessages(docs)
     })
   },[])
- 
+  
+  //console.log('array messages desde home profile',messages);
   
   const handleClose = () => {
     setOpen(false);
@@ -93,7 +95,7 @@ const HomeProfile = (props) => {
                   <Grid item md={3}>
                     <div>
                       <Widget />
-                      {messages ? (<WidgetNotifications />) :null}
+                      {messages ? (<WidgetNotifications messages={messages}/>) :null}
                       
                     </div>
                   </Grid>
