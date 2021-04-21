@@ -39,6 +39,7 @@ export const Portfolio = () => {
                   photo={portfolio.photo}
                   link={portfolio.link}
                   github={portfolio.github}
+                  user={thisUser}
                 />
               );
             }) : (

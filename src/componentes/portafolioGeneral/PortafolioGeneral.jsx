@@ -87,14 +87,19 @@ const PortafolioGeneral = () => {
                           photo={portfolio.photo}
                           github={portfolio.github}
                           link={portfolio.link}
+                          user={actualUser}
                         />
                       </Grid>
                     ))
                   ) : (
+                    <>
+                    { actualUser.id !== currentUser.id ? (
                     <div className="div_no_info_portfolio">
                       <p className="p_no_info_portfolio">No info provided</p>
                     </div>
-                  )}
+                  ) : null}
+                  </>)
+                  }
                   {actualUser.id === currentUser.id && (
                     <Grid item md={3}>
                       <div className="add_icon_portfolio_div">
