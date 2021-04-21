@@ -5,21 +5,19 @@ import Proyect from "./Proyect";
 import { useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
 
-export const Portfolio = () => {
-  const selectedUser = useSelector((state) => state.selectedUser);
+export const Portfolio = ({ userId }) => {
+
   const [thisUser, setThisUser] = useState();
 
   useEffect(() => {
-    if (selectedUser) {
       db.collection("user")
-        .where("id", "==", selectedUser.id)
+        .where("id", "==", userId)
         .onSnapshot((shot) => {
           shot.forEach((doc) => {
             setThisUser(doc.data());
           });
         });
-    }
-  }, [selectedUser]);
+  }, []);
 
   return (
     <>

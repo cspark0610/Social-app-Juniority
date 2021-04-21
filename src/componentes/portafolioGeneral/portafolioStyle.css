@@ -22,6 +22,7 @@
 }
 
 .portfolio {
+    margin: 20px 0;
     background: white;
     position: sticky;
     border-radius: 10px;
@@ -47,8 +48,7 @@
 
 .add_icon_portfolio {
     position: relative;
-    margin-left: 50%;
-    width: 30%;
+     width: 30%;
     height: 30%;
 }
 
@@ -71,7 +71,7 @@
 
 .div_form_container {
     background: white;
-    margin-top: 5em;
+    margin-top: 1em;
     padding: 2em;
     border-radius: 2%;
 }
@@ -80,4 +80,9 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+}
+
+.inputSpace{
+    padding: 10px !important;
+    margin-top: 20px;
 }

@@ -84,7 +84,7 @@ const HomeProfile = (props) => {
                 <Grid container display='flex' align='center' spacing={3}>
                   <Grid item md={3}>
                     <Profile user={selectedUser} setUsers={setUsers} handleOpen={handleOpen} setTitle={setTitle} />
-                    <Portfolio />
+                    <Portfolio userId={userId}/>
                   </Grid>
                   <TransitionsModal open={open} setOpen={setOpen} handleClose={handleClose} users={users} title={title} />
                   <Grid item md={6}>
