@@ -113,12 +113,6 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
         <h4>{followers.length}</h4>
         <hr className='line__profile' />
         <br />
-
-        <div>
-          <a href={user.portfolio} target='_blank' rel='noreferrer' className='link__profile'>
-            {user.portfolio}
-          </a>
-        </div>
       </div>
     </div>
   );
