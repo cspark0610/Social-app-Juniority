@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 import { setCurrentUser } from "../../store/currentUser";
+import juniority from "../assets/juniorityText.svg"
 
 const Register = () => {
   const firebase = useFirebaseApp();
@@ -111,7 +112,8 @@ const Register = () => {
                 }}
               >
                 <div className='m-10 xl:m-12 pt-0 mt-4 w-full bg-contain bg-center bg-no-repeat'>
-                  <h1 className='text-2xl xl:text-3xl font-black'> JUNIORITY</h1>
+                  <h1 className='text-2xl xl:text-3xl font-black'> <img src={juniority} style={{width:"100%"}} alt='Logo Juniority' className='logo__juniorty'/> </h1>
+                  
                   <Animation src={Learning} />
                   <Typography variant='body2' style={{ backgroundColor: "white" }}>
                     Un lugar donde la gente pueda postear dudas. Un lugar donde juniors, puedan conseguir empleo. Un lugar donde las empresas, puedan conseguir juniors

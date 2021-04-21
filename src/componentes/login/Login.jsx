@@ -24,7 +24,6 @@ const Login = () => {
       .signInWithPopup(method)
       .then((result) => {
         if (result.additionalUserInfo.providerId === "github.com") {
-          //console.log(result.user.email);
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,

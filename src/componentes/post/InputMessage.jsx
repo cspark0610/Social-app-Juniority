@@ -95,7 +95,6 @@ const InputMessage = () => {
         shot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
         });
-        //console.log('docs',docs);
 
         const filtered = docs.filter((doc) =>
         doc.description.toLowerCase().indexOf(String(keynavbar).toLowerCase()) > -1 ||
