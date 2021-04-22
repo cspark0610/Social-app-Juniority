@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+JUNIORITY SOCIAL APP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+    Información
 
-In the project directory, you can run:
+        Juniority es una plataforma social de publicaciones que permite conectar a developers juniors con empresas. Los usuarios se pueden registrar tanto como user o como company. Ambos pueden postear publicaciones (ya sea en formato texto, código, video o imagen), actualizar perfiles individuales, publicar ofertas de trabajo y cursos; e intercambiar mensajes por una sala de chat. Para el deploy, seguir los pasos que se indican en la  documentacion de Firebase (https://firebase.google.com/docs/hosting).
 
-### `npm start`
+    Tecnologias
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+        ReactJs, Firebase, Redux toolkit, CSS, Material-UI 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    Uso
 
-### `npm test`
+        La App se levanta primero instalando las dependencias con npm install y luego haciendo npm start (el proyecto se levantara en localhost :3000). Para el back se debe levantar un proyecto en firebase, copiar y pegar el firebaseConfig en el archivo firebase/firebase.js.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    Organización de carpetas
+        ├── /public
+        ├── /src
+        ├── .gitignore
+        ├── package-lock.json
+        └── package.json
 
-### `npm run build`
+        ├── src
+        │   ├── /componentes
+        │   ├── /firebase
+        │   ├── /store
+        │   ├── App.css
+        │   │── App.js  
+        │   │── index.css  
+        │   |── index.js 
+        |   ├── indexStyle.js
+   
+    Rutas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+        La aplicación tiene un set de rutas ya definido para hacer la página navegable.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+            *  /: la ruta de home que tiene un input para hacer la búsqueda de posts y que muestra el feed de posteos ordenados cronológicamente.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+            *  /jobs  muestra el formulario para postear una oferta de trabajo y filtrar mediante un input por keyword y mediante un widget de filtros por categorías . A su vez renderiza todos las ofertas publicadas cronológicamente.
 
-### `npm run eject`
+            *  /connections  muestra los seguidos y los seguidores de un usuario en particular.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+            *  /courses  muestra el formulario para postear un curso y filtrar mediante un input por keyword . A su vez renderiza todos las ofertas de cursos cronológicamente.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+            *  /chat/:roomId     muestra un listado de mensajes de chat  entre dos usuarios.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+            *  /profile/:id va a mostrar el perfil del usuario con info personal editable.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+            *  /porfolio va a mostrar el portfolio personal del usuario con info de cada proyecto.
+            Lista de funcionalidades. 
 
-## Learn More
+    Con la App podremos:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+        *  Buscar ofertas de trabajo y cursos y filtrarlas.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+        *  Poder ver el feed de todos los posteos en la home y de todas las ofertas de trabajo y de cursos en /jobs y /courses.
 
-### Code Splitting
+        *  Poder aplicar a una oferta de trabajo subiendo tu CV como pdf.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+        *  Poder crear una publicación como texto y poder agregar código, imagen y  video.
 
-### Analyzing the Bundle Size
+        *  Poder comentar una publicación ya sea en formato texto o código, likearla, y poderla compartir en otras redes sociales (WhatApp, Linkedin, Twitter, Facebook)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+        *  Poder seguir o ser seguido entre distintos usuarios (sistema de following followers).
 
-### Making a Progressive Web App
+        *  Poder ver en /connections quienes son mis seguidores y a quienes sigo teniendo también la posibilidad de dejar de seguir o de eliminar a un seguidor.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+        *  Crear usuarios a través de correo de mail. 
 
-### Advanced Configuration
+        *  Logearse con un usuario mediante 3AuthParty Gmail y Github o a través de correo de mail.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+        *  Poder registrarse como User o Company.
 
-### Deployment
+        *  Poder recuperar mi contraseña.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+        *  Ver el perfil de un usuario en particular con información: acerca de, experiencia y educación y de porfolio de proyectos individuales. 
 
-### `npm run build` fails to minify
+        *  Poder editar la información de perfil individual en /profile/:id.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+        *  Poder agregar proyectos en mi portfolio personal.
+
+        *  Poder intercambiar mensajes con otro usuario en particular mediante un ChatRoom.
