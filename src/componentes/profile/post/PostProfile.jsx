@@ -34,8 +34,6 @@ export const PostProfile = ({ user }) => {
                 {user.location}
               </p>
               <div className='post__buttom'>
-                <InputIcon Icon={ArtTrackIcon} title='Feed' color='#3cb4e5' />
-                <InputIcon Icon={InfoOutlinedIcon} title='Info' color='#65BAAF' />
                 <Link to={`/portfolio/${user.id}`}>
                   <InputIcon Icon={WorkOutlineOutlinedIcon} title='Portfolio' color='#65BAAF' />
                 </Link>
@@ -57,7 +55,7 @@ export const PostProfile = ({ user }) => {
                       <MailOutlineIcon className='message__post' /> Chat Message{" "}
                     </Button>
                   </Link>
-                  <p className='is_open_to_work_p'> {user.isOpenToWork ? "OPEN TO WORK" : "NOT OPEN TO WORK"} </p>
+                  {user.userType === 'user' && (<p className='is_open_to_work_p'> {user.isOpenToWork ? "OPEN TO WORK" : "NOT OPEN TO WORK"} </p>)}
                 </>
               )}
             </Grid>

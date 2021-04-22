@@ -45,6 +45,7 @@ export const PersonalInfo = ({ user }) => {
               )}
             </p>
           </div>
+          {localUser.userType === 'user' && (
           <div>
             <div className="personal_info_experience_container">
               <h3>{`${localUser.fullName} experience`}</h3>
@@ -80,7 +81,7 @@ export const PersonalInfo = ({ user }) => {
                 <p className="personal_info_p_no_info">No info provided</p>
               )}
             </div>
-          </div>
+          </div>)}
         </div>
       )}
     </div>

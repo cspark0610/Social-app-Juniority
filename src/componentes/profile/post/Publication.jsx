@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import Post from "../../post/Post";
 import { db } from "../../../firebase/firebase";
+import { useSelector } from "react-redux";
 
 export const Publication = ({ handleOpen, setUsers, setTitle, selectedUser }) => {
   const [posts, setPosts] = useState([]);
+  const locationUrl = useSelector(state => state.locationUrl);
+
   useEffect(() => {
     db.collection("posts").orderBy('timestamp','desc')
       .where("userId", "==", selectedUser.id)
@@ -16,7 +19,23 @@ export const Publication = ({ handleOpen, setUsers, setTitle, selectedUser }) =>
           }))
         );
       });
-  }, [selectedUser.id]);
+      console.log('PASEE')
+  }, []);
+
+  useEffect( async () => {
+    setPosts([])
+    await db.collection("posts").orderBy('timestamp','desc')
+      .where("userId", "==", selectedUser.id)
+      .onSnapshot((snapshot) => {
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        );
+      });
+      console.log(posts)
+  }, [locationUrl]);
 
   return (
     <>
