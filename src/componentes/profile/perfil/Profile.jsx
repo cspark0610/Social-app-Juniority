@@ -85,11 +85,11 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
         </div>
         <br />
 
-        {user.id === currentUser.id ? (
-          <>
-          <p>{currentUser.fullName}</p> <p className='is_open_to_work_profile_p'>{currentUser.isOpenToWork ? '#OpenToWork' : '#NotOpenToWork'}</p>
-          </>
-        ) : !isFollowing ? (
+        <p>{user.fullName}</p> {user.userType === "user" ? (<p className='is_open_to_work_profile_p'>{user.isOpenToWork ? '#OpenToWork' : '#NotOpenToWork'}</p>) : (
+          <p className='is_open_to_work_profile_p'>{user.isOpenToWork ? '#Hiring' : '#NotHiring'}</p>
+        )}
+        {currentUser.id !== user.id ? (<>
+        {!isFollowing ? (
           <Button onClick={(e) => followHandler(e)} className='button__profile__follow'>
             Follow
           </Button>
@@ -98,7 +98,8 @@ export const Profile = ({ user, setUsers, handleOpen, setTitle }) => {
             Unfollow
           </Button>
         )}
-        {user.id === currentUser.id ? null : <Button className='button__profile__hire'>Hire</Button>}
+        {user.userType === "user" ? (<Button className='button__profile__hire'>Hire</Button>): null}
+        </>):null}
         <br />
         <hr className='line__profile' />
         <button onClick={(e) => openFollowModal(e, following, "Following")}>
