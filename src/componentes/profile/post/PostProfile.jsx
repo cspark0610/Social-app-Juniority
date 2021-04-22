@@ -34,8 +34,6 @@ export const PostProfile = ({ user }) => {
                 {user.location}
               </p>
               <div className='post__buttom'>
-                <InputIcon Icon={ArtTrackIcon} title='Feed' color='#3cb4e5' />
-                <InputIcon Icon={InfoOutlinedIcon} title='Info' color='#65BAAF' />
                 <Link to={`/portfolio/${user.id}`}>
                   <InputIcon Icon={WorkOutlineOutlinedIcon} title='Portfolio' color='#65BAAF' />
                 </Link>
