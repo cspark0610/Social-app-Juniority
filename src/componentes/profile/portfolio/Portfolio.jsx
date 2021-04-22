@@ -6,9 +6,8 @@ import { useSelector } from "react-redux";
 import { db } from "../../../firebase/firebase";
 
 export const Portfolio = ({ userId }) => {
-  const locationUrl = useSelector(state => state.locationUrl)
-  const [thisUser, setThisUser] = useState();
-
+const locationUrl = useSelector(state => state.locationUrl)
+const [thisUser, setThisUser] = useState();
   useEffect(() => {
       db.collection("user")
         .where("id", "==", userId)

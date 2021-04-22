@@ -4,6 +4,8 @@ import { Profile } from "./perfil/Profile";
 import { Portfolio } from "./portfolio/Portfolio";
 import { PostProfile } from "./post/PostProfile";
 import Widget from "../sidebarDer/Widget";
+import WidgetProfile from "./widget/WidgetProfile";
+
 import { Banner } from "./banner/Banner";
 import Navbar from "../navbar/Navbar";
 import "./style.css";
@@ -94,7 +96,7 @@ const HomeProfile = (props) => {
                   </Grid>
                   <Grid item md={3}>
                     <div>
-                      <Widget />
+                      <WidgetProfile />
                       {messages ? (<WidgetNotifications messages={messages}/>) :null}
                       
                     </div>
