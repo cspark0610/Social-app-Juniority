@@ -34,5 +34,18 @@ const useStyles = makeStyles({
       letterSpacing: "0.0938em",
     },
   },
+  companyOrUser: {
+    margin: "auto",
+    padding: "auto",
+    textAlign: "center",
+    border: "solid #3cb4e5 1px",
+    width: "65%",
+    borderRadius: "5px",
+  },
+  button: {
+    "&:focus": {
+      outline: "none",
+    },
+  },
 });
 export default useStyles;

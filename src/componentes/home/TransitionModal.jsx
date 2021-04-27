@@ -5,6 +5,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { setLocationUrl } from "../../store/locationUrl";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -24,6 +27,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TransitionsModal({ handleClose, open, users, title }) {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const locationUrl = useSelector(state => state.locationUrl);
+
+  const clickHandler = (e, id) => {
+    e.preventDefault();
+    history.push(`/profile/${id}`);
+    dispatch(setLocationUrl(!locationUrl));
+    handleClose();
+  }
 
   return (
     <div>
@@ -51,7 +64,7 @@ export default function TransitionsModal({ handleClose, open, users, title }) {
               {users.map((user) => (
                 <div style={{ display: "flex", backgroundColor: '#E3EFF1', marginBottom: "0.5rem", borderRadius: "10px" }}>
                   <Avatar style={{marginRight:'0.3rem'}} src={user.photo} />
-                  <Link to={`/profile/${user.userId}`}>{user.userName}</Link>
+                  <button onClick={e => clickHandler(e, user.userId)}>{user.userName}</button>
                 </div>
               ))}
             </p>

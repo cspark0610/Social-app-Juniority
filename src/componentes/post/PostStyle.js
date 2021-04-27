@@ -22,13 +22,15 @@ export default makeStyles({
   message: {
     textAlign: "justify",
     textJustify: "inter-word",
+    marginBottom: '4em',
+    
   },
   body: {
     overflowWrap: "anywhere",
   },
   buttons: {
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     marginBottom: "15px",
   },
   containerComment: {
@@ -36,14 +38,16 @@ export default makeStyles({
     margin: "auto",
     width: "89%",
     marginBottom: "2%",
+    marginTop:'3%'
   },
   containerCommentText: {
     textAlign: "start",
     backgroundColor: "#E3EFF1",
-    borderRadius: "10px",
+    borderRadius: "5px",
     marginLeft: "2%",
     fontSize: "85%",
     marginBottom: "3%",
+    width:'92%',
   },
   titleComment: {
     fontWeight: "500",
@@ -57,5 +61,9 @@ export default makeStyles({
       color: "#3cb4e5",
     },
     cursor: "pointer",
+  },
+  optionsIcons: {
+    display: "flex",
+    justifyContent: "space-between",
   },
 });

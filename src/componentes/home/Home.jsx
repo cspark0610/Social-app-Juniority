@@ -2,28 +2,45 @@ import React, { useEffect, useState } from "react";
 import InputMessage from "../post/InputMessage";
 import Navbar from "../navbar/Navbar";
 import Widget from "../sidebarDer/Widget";
+import GraphViews from "../sidebarDer/GraphViews";
 import { Profile } from "../profile/perfil/Profile";
 import Jobs from "../sidebarIzq/Jobs";
-import { Button, Grid } from "@material-ui/core";
-import { useFirebaseApp } from "reactfire";
+import { Grid } from "@material-ui/core";
 import { useHistory } from "react-router";
 import { db } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser } from "../../store/currentUser";
 import "./style.css";
 import { removeSelectedUserPosts } from "../../store/selectedUserPosts";
 import { setSelectedUser } from "../../store/selectedUser";
 import TransitionsModal from "../home/TransitionModal";
 
+
+
 const Home = () => {
-  const firebase = useFirebaseApp();
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.currentUser);
-  const selectedUser = useSelector((state) => state.selectedUser);
-  const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState()
+  const [title, setTitle] = useState();
+  const [posts, setPosts] = useState(); //aca 
+  const [users, setUsers] = useState([]); //aca 
+    
+  useEffect(() => {
+      db.collection('user').onSnapshot((shot)=>{
+        const docs = [];
+        shot.forEach(doc => docs.push({ ...doc.data(), id: doc.id}))
+        setUsers(docs);
+      })
+      db.collection("posts")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((shot) => {
+            const docs = [];
+            shot.forEach((doc) => {
+              docs.push({ ...doc.data(), id: doc.id });
+            });
+            setPosts(docs);
+          });
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -33,6 +50,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    
     if (currentUser) {
       db.collection("user")
         .where("id", "==", currentUser.id)
@@ -57,40 +75,25 @@ const Home = () => {
       ) : (
         <>
           <Navbar />
-          <Grid
-            container
-            display="flex"
-            align="center"
-            style={{
-              position: "absolute",
-              top: 70,
-              background: "lightgrey",
-              paddingLeft: 70,
-              paddingRight: 70,
-            }}
-            spacing={3}
-          >
+          <Grid container display='flex' align='center'
+            style={{position:"absolute",top: 70,background: "lightgrey",paddingLeft: 70,paddingRight: 70,}}spacing={3}>
             <Grid item md={3} style={{ paddingTop: 100 }}>
-              <Profile
-                user={currentUser}
-                setUsers={setUsers}
-                handleOpen={handleOpen}
-                setTitle={setTitle}
-              />
-              <Jobs />
+              <Profile user={currentUser} setUsers={setUsers} handleOpen={handleOpen} setTitle={setTitle} />
+              <Jobs title={'Courses'} type={'courses'}/>
             </Grid>
 
             <Grid item md={6}>
-              <TransitionsModal
-                open={open}
-                handleClose={handleClose}
-                users={users}
-                title={title}
-              />
+              <TransitionsModal open={open} handleClose={handleClose} users={users} title={title} />
               <InputMessage />
             </Grid>
-            <Grid item md={3}>
-              <Widget />
+
+            <Grid item md={3} >
+              <div>
+                {users? (<Widget/>) :null}
+                
+                {posts ?(<GraphViews/>):null}
+                
+              </div>
             </Grid>
           </Grid>
         </>

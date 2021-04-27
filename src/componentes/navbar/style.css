@@ -75,3 +75,11 @@
 .ibutton{
     color:#B4DCD6 ;
 }
+.logo__juniorty{
+    width: 15%;
+    height: 55%;
+}
+.div__logo{
+    display: flex;
+    align-items: center;
+}

@@ -105,3 +105,13 @@
     border-bottom: none;
     font-size: 12px !important;
 }
+
+.p_no_post {
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.is_open_to_work_p {
+    font-size: 70%;
+    padding-left: 30%;
+}

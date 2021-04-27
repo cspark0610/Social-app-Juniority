@@ -78,3 +78,7 @@
   justify-content: center;
   align-items: center;
 }
+
+.is_open_to_work_profile_p {
+  font-size: 70%;
+}

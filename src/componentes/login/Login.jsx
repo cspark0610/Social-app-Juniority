@@ -1,21 +1,13 @@
 import { Button, TextField, Typography } from "@material-ui/core";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useFirebaseApp } from "reactfire";
 import useStyles from "./styles";
-import firbaseTime from "firebase";
-import {
-  auth,
-  db,
-  providerFacebook,
-  providerGoogle,
-  providerGithub,
-} from "../../firebase/firebase";
+
+import { auth, db, providerGoogle, providerGithub } from "../../firebase/firebase";
 import { setCurrentUser } from "../../store/currentUser";
 import Alert from "@material-ui/lab/Alert";
-
-import juniority from "../assets/juniority.svg";
 
 const Login = () => {
   const firebase = useFirebaseApp();
@@ -35,21 +27,35 @@ const Login = () => {
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.username,
-            email: result.additionalUserInfo.profile.email,
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            email: result.user.email,
             avatar: result.additionalUserInfo.profile.avatar_url,
             follow: [],
             followers: [],
+            experience: [],
+            education: [],
+            portfolio: [],
+            aboutMe: "",
+            location: "No info",
+            position: "No info",
+            isOpenToWork: false,
+            userType: "user",
           };
         } else {
           data = {
             id: result.user.uid,
             fullName: result.additionalUserInfo.profile.name,
-            email: result.additionalUserInfo.profile.email,
-            timeStamp: firbaseTime.firestore.FieldValue.serverTimestamp(),
+            email: result.user.email,
             avatar: result.additionalUserInfo.profile.picture,
             follow: [],
             followers: [],
+            experience: [],
+            education: [],
+            portfolio: [],
+            aboutMe: "",
+            location: "No info",
+            position: "No info",
+            isOpenToWork: false,
+            userType: "user",
           };
         }
         if (result.additionalUserInfo.isNewUser) {
@@ -67,7 +73,7 @@ const Login = () => {
           history.push("/");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setMessageError(err.message));
   };
 
   const handleChange = (text) => (e) => {
@@ -104,37 +110,10 @@ const Login = () => {
           marginBottom: "2rem",
         }}
       >
-        <span
-          style={{
-            borderBottom: "solid 1px #3cb4e5",
-            paddingBottom: "1%",
-          }}
-        >
-          Log in
-        </span>
+        <span style={{ borderBottom: "solid 1px #3cb4e5", paddingBottom: "1%" }}>Log in</span>
       </Typography>
-      <TextField
-        className={classes.textField}
-        id="outlined-search"
-        label="Email"
-        type="search"
-        variant="outlined"
-        placeholder="example@gmail.com"
-        size="small"
-        onChange={handleChange("email")}
-        value={email}
-      />
-      <TextField
-        className={classes.textField}
-        id="outlined-password-input"
-        label="Password"
-        type="password"
-        variant="outlined"
-        placeholder="Password"
-        size="small"
-        onChange={handleChange("password1")}
-        value={password1}
-      />
+      <TextField className={classes.textField} id='outlined-search' label='Email' type='search' variant='outlined' placeholder='example@gmail.com' size='small' onChange={handleChange("email")} value={email} />
+      <TextField className={classes.textField} id='outlined-password-input' label='Password' type='password' variant='outlined' placeholder='Password' size='small' onChange={handleChange("password1")} value={password1} />
       <Typography
         style={{
           textAlign: "end",
@@ -144,7 +123,7 @@ const Login = () => {
           marginTop: "6%",
         }}
       >
-        <a href="/password-recovery">Forgot Password?</a>
+        <a href='/password-recovery'>Forgot Password?</a>
       </Typography>
       <Typography
         style={{
@@ -154,32 +133,18 @@ const Login = () => {
           marginTop: "3%",
         }}
       >
-        <Button type="submit" color="primary" variant="contained">
-          <i className="fas fa-sign-in-alt fa 1x w-6-ml-2" />
-          <span className="ml-3">LOG IN </span>
+        <Button type='submit' color='primary' variant='contained'>
+          <i className='fas fa-sign-in-alt fa 1x w-6-ml-2' />
+          <span className='ml-3'>LOG IN </span>
         </Button>
       </Typography>
 
-      <div
-        style={{
-          marginTop: "2rem",
-        }}
-      >
-        {messageError && <Alert severity="error">{messageError}</Alert>}
-        <Typography variant="caption" align="center">
+      <div style={{ marginTop: "2rem" }}>
+        {messageError && <Alert severity='error'>{messageError}</Alert>}
+        <Typography variant='caption' align='center'>
           Or login with a social media
-          <i
-            onClick={() => socialLogIn(providerGoogle)}
-            className="fab fa-google w-10"
-          />
-          <i
-            onClick={() => socialLogIn(providerFacebook)}
-            className="fab fa-facebook w-10-my-2"
-          />
-          <i
-            onClick={() => socialLogIn(providerGithub)}
-            className="fab fa-github w-10"
-          />
+          <i onClick={() => socialLogIn(providerGoogle)} className='fab fa-google w-10' />
+          <i onClick={() => socialLogIn(providerGithub)} className='fab fa-github w-10' />
         </Typography>
       </div>
     </form>
